@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistante Barbara</title>
+    <link rel="icon" type="image/png" href="logo-ab.png">
+    <link rel="apple-touch-icon" href="logo-ab.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --text: #34495e;
+            --muted: #7f8c8d;
+            --border: #e1e8ed;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #fafbfc;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Subtle animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(1deg); }
+            66% { transform: translate(-20px, 20px) rotate(-1deg); }
+        }
+
+        /* Smooth reveal animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Menu hamburger (caché par défaut sur desktop) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            background: transparent;
+            border: none;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-8px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+            transition: transform 0.3s ease;
+            object-fit: cover;
+        }
+
+        .logo:hover .logo-img {
+            transform: scale(1.05);
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-add {
+            background: var(--gradient);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        /* Section titles */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 60px;
+        }
+
+        /* Espacement supplémentaire sur mobile */
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 60px;
+            }
+
+            .hero h2 {
+                margin-top: 30px;
+            }
+
+            .section-title {
+                margin-top: 40px;
+                padding-top: 20px;
+            }
+
+            .features {
+                padding: 80px 0 60px;
+            }
+
+            .commands-section {
+                padding: 80px 0 60px;
+            }
+
+            .partners-section {
+                padding: 100px 0 80px;
+            }
+
+            .docs {
+                padding: 80px 0 60px;
+            }
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .hero .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 60px 0;
+        }
+
+        /* Section titles */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1.2) rotate(5deg) translateY(0); }
+            50% { transform: scale(1.2) rotate(5deg) translateY(-10px); }
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* Commands Section */
+        .commands-section {
+            padding: 60px 0;
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .command-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            transition: all 0.2s ease;
+        }
+
+        .command-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .command-card h4 {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .command-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* Feedback Section */
+        .feedback-section {
+            padding: 80px 30px;
+            margin: 60px auto;
+            max-width: 1200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 20px;
+            opacity: 0.95;
+        }
+
+        .feedback-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
+        }
+
+        .feedback-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+
+        .feedback-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .feedback-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .feedback-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feedback-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .feedback-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        .feedback-feature span:first-child {
+            font-size: 1.5rem;
+        }
+
+        .btn-feedback {
+            background: white;
+            color: var(--primary);
+            padding: 18px 45px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.15rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-feedback:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Partners Section */
+        .partners-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .partners-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .partners-intro p {
+            font-size: 1.15rem;
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .partner-cta {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            text-align: left;
+            margin-top: 40px;
+            transition: all 0.2s ease;
+        }
+
+        .partner-cta h3 {
+            color: var(--dark);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .partner-cta p {
+            color: var(--muted);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .partner-cta .btn-partner {
+            background: var(--gradient);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .partner-cta .btn-partner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .partners-carousel {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .partners-wrapper {
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        .partners-track {
+            display: flex;
+            gap: 30px;
+            animation: scroll 30s linear infinite;
+            width: fit-content;
+        }
+
+        .partners-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .partner-card {
+            flex-shrink: 0;
+            width: 280px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .partner-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .partner-card:hover .partner-logo {
+            transform: scale(1.1);
+        }
+
+        .partner-card h4 {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .partner-card p {
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .partner-placeholder {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px dashed var(--border);
+        }
+
+        .partner-placeholder .partner-logo {
+            background: transparent;
+            border: 2px dashed var(--border);
+        }
+
+        .partner-placeholder:hover {
+            border-color: var(--primary);
+            border-style: solid;
+        }
+
+        /* Documentation */
+        .docs {
+            padding: 60px 0;
+        }
+
+        .accordion-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .accordion-header {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .accordion-header:hover {
+            background: #f8f9fa;
+        }
+
+        .accordion-header h4 {
+            font-size: 1.15rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .accordion-header .tag {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .accordion-body {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .accordion-item.open .accordion-body {
+            max-height: 5000px;
+            padding: 25px;
+        }
+
+        .accordion-body h3 {
+            color: var(--dark);
+            margin: 25px 0 15px;
+            font-size: 1.2rem;
+        }
+
+        .accordion-body p, .accordion-body li {
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .accordion-body ul {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+
+        .accordion-body strong {
+            color: var(--dark);
+        }
+
+        .accordion-body a {
+            color: var(--primary);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .accordion-body a:hover {
+            border-bottom-color: var(--primary);
+        }
+
+        .highlight-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            margin: 20px 0;
+        }
+
+        .contact-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 30px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 15px 20px;
+            }
+
+            /* Afficher le bouton hamburger sur mobile */
+            .menu-toggle {
+                display: flex;
+            }
+
+            /* Navigation mobile */
+            .nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                padding: 80px 30px 30px;
+                gap: 25px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s ease;
+                overflow-y: auto;
+            }
+
+            .nav.active {
+                right: 0;
+            }
+
+            .nav-link {
+                font-size: 1.1rem;
+                padding: 10px 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .btn-add {
+                width: 100%;
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+            /* Overlay sombre quand le menu est ouvert */
+            .nav-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .nav-overlay.active {
+                display: block;
+            }
+
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+
+            .features-grid, .commands-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .feedback-section {
+                padding: 60px 20px;
+            }
+
+            .feedback-section h2 {
+                font-size: 2rem;
+            }
+
+            .feedback-features {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .btn-feedback {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .partners-carousel {
+                padding: 20px 0;
+            }
+
+            .partners-track {
+                gap: 20px;
+            }
+
+            .partner-card {
+                width: 240px;
+            }
+        }
+
+        /* Page visibility */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="javascript:void(0)" onclick="showPage('home')" class="logo">
+                <img src="logo-ab.png" alt="Assistante Barbara" class="logo-img">
+                <div class="logo-text">
+                    <h1>Assistante Barbara</h1>
+                    <p>Discord · IA · Musique</p>
+                </div>
+            </a>
+            
+            <!-- Bouton hamburger (visible uniquement sur mobile) -->
+            <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav" id="mainNav">
+                <a href="javascript:void(0)" class="nav-link" onclick="showPage('home'); closeMenu()">Accueil</a>
+                <a href="javascript:void(0)" class="nav-link" onclick="showPage('docs'); closeMenu()">Documentation</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=992854932107579392" class="btn-add" target="_blank">
+                    ➕ Ajouter le bot
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Overlay sombre (visible uniquement sur mobile quand menu ouvert) -->
+        <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero -->
+        <section class="hero container">
+            <h2 class="fade-in">
+                Votre assistante Discord<br>
+                <span class="gradient-text">polyvalente et intelligente</span>
+            </h2>
+            <p class="fade-in">
+                Assistante Barbara combine intelligence artificielle, commandes utiles et musique libre pour améliorer l'expérience de vos serveurs Discord.
+            </p>
+            <div class="hero-buttons fade-in">
+                <a href="https://discord.com/oauth2/authorize?client_id=992854932107579392" class="btn-primary" target="_blank">
+                    Ajouter à Discord
+                </a>
+                <a href="javascript:void(0)" onclick="showPage('docs')" class="btn-secondary">
+                    Voir la documentation
+                </a>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features container">
+            <h2 class="section-title fade-in">Principales fonctionnalités</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <span class="feature-icon">🤖</span>
+                    <h3>Intelligence artificielle</h3>
+                    <p>Assistante Barbara utilise OpenAI et Mistral AI pour répondre intelligemment à vos questions et vous accompagner dans vos tâches quotidiennes.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <span class="feature-icon">🎵</span>
+                    <h3>Musique libre</h3>
+                    <p>Écoutez de la musique libre de droits via Jamendo. Recherche, file d'attente, contrôles de lecture et modes de répétition inclus.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <span class="feature-icon">⚙️</span>
+                    <h3>Commandes utilitaires</h3>
+                    <p>Informations sur les utilisateurs, salons et serveurs. Gestion des messages et générateur de nombres aléatoires.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <span class="feature-icon">🔒</span>
+                    <h3>Respect de la vie privée</h3>
+                    <p>Aucune donnée personnelle conservée en permanence. Logs temporaires supprimés automatiquement. Conformité RGPD.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <span class="feature-icon">🌍</span>
+                    <h3>Multilingue</h3>
+                    <p>Interface et commandes disponibles en français. L'IA peut communiquer dans plusieurs langues selon vos besoins.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Rapide et fiable</h3>
+                    <p>Hébergement optimisé sur Katabump pour une disponibilité maximale. Réponses rapides et déconnexion automatique intelligente.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Commands -->
+        <section class="commands-section container">
+            <h2 class="section-title">Commandes disponibles</h2>
+            <div class="commands-grid">
+                <div class="command-card fade-in">
+                    <h4>/play [titre]</h4>
+                    <p>Recherche et joue une chanson depuis Jamendo avec menu de sélection.</p>
+                </div>
+                <div class="command-card fade-in">
+                    <h4>/stop</h4>
+                    <p>Arrête la musique et déconnecte le bot du salon vocal.</p>
+                </div>
+                <div class="command-card fade-in">
+                    <h4>/queue</h4>
+                    <p>Affiche la file d'attente musicale actuelle.</p>
+                </div>
+                <div class="command-card fade-in">
+                    <h4>/utilisateur [user]</h4>
+                    <p>Affiche les informations détaillées d'un utilisateur.</p>
+                </div>
+                <div class="command-card fade-in">
+                    <h4>/salon [channel]</h4>
+                    <p>Affiche les informations d'un salon Discord.</p>
+                </div>
+                <div class="command-card fade-in">
+                    <h4>/serveur</h4>
+                    <p>Affiche les statistiques et infos du serveur.</p>
+                </div>
+                <div class="command-card fade-in">
+                    <h4>/clear [nombre]</h4>
+                    <p>Supprime un nombre spécifique de messages (permissions requises).</p>
+                </div>
+                <div class="command-card fade-in">
+                    <h4>/nombre</h4>
+                    <p>Génère un nombre aléatoire entre 1 et 10.</p>
+                </div>
+                <div class="command-card fade-in">
+                    <h4>Chatbot IA</h4>
+                    <p>Mentionnez @Assistante Barbara ou écrivez dans les salons configurés pour discuter avec l'IA.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Section -->
+        <section class="feedback-section">
+            <div class="feedback-background"></div>
+            <div class="feedback-pattern"></div>
+            <div class="feedback-content">
+                <div class="feedback-icon">⭐</div>
+                <h2 class="fade-in">Votre avis compte !</h2>
+                <p class="fade-in">
+                    Aidez-nous à améliorer Assistante Barbara en partageant votre expérience. 
+                    Vos retours sont essentiels pour nous permettre d'évoluer.
+                </p>
+                
+                <div class="feedback-features fade-in">
+                    <div class="feedback-feature">
+                        <span>⚡</span>
+                        <span>Rapide (2 minutes)</span>
+                    </div>
+                    <div class="feedback-feature">
+                        <span>🔒</span>
+                        <span>Anonyme possible</span>
+                    </div>
+                    <div class="feedback-feature">
+                        <span>💡</span>
+                        <span>Toutes suggestions bienvenues</span>
+                    </div>
+                </div>
+                
+                <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback fade-in" target="_blank">
+                    <span>📝</span> Donner mon avis
+                </a>
+            </div>
+        </section>
+
+        <!-- Partners Section -->
+        <section class="partners-section container">
+            <h2 class="section-title fade-in">Nos partenaires</h2>
+            
+            <div class="partners-intro fade-in">
+                <p>
+                    Assistante Barbara est fière de collaborer avec des partenaires qui partagent notre vision 
+                    d'améliorer l'expérience Discord. Ensemble, nous créons des solutions innovantes pour la communauté.
+                </p>
+            </div>
+
+            <div class="partners-carousel">
+                <div class="partners-wrapper">
+                    <div class="partners-track">
+                        <!-- Partner Cards - Première série -->
+                        <div class="partner-card partner-placeholder">
+                            <div class="partner-logo">🤝</div>
+                            <h4>Votre entreprise</h4>
+                            <p>Devenez partenaire et soutenez notre projet</p>
+                        </div>
+
+                        <div class="partner-card">
+                            <div class="partner-logo">🎮</div>
+                            <h4>Gaming Corp</h4>
+                            <p>Partenaire gaming depuis 2024</p>
+                        </div>
+
+                        <div class="partner-card">
+                            <div class="partner-logo">🎨</div>
+                            <h4>Design Studio</h4>
+                            <p>Support créatif et design</p>
+                        </div>
+
+                        <div class="partner-card">
+                            <div class="partner-logo">💻</div>
+                            <h4>Dev Community</h4>
+                            <p>Partenaire technique</p>
+                        </div>
+
+                        <div class="partner-card partner-placeholder">
+                            <div class="partner-logo">✨</div>
+                            <h4>Rejoignez-nous</h4>
+                            <p>Nous cherchons de nouveaux partenaires</p>
+                        </div>
+
+                        <!-- Partner Cards - Copie pour boucle infinie -->
+                        <div class="partner-card partner-placeholder">
+                            <div class="partner-logo">🤝</div>
+                            <h4>Votre entreprise</h4>
+                            <p>Devenez partenaire et soutenez notre projet</p>
+                        </div>
+
+                        <div class="partner-card">
+                            <div class="partner-logo">🎮</div>
+                            <h4>Gaming Corp</h4>
+                            <p>Partenaire gaming depuis 2024</p>
+                        </div>
+
+                        <div class="partner-card">
+                            <div class="partner-logo">🎨</div>
+                            <h4>Design Studio</h4>
+                            <p>Support créatif et design</p>
+                        </div>
+
+                        <div class="partner-card">
+                            <div class="partner-logo">💻</div>
+                            <h4>Dev Community</h4>
+                            <p>Partenaire technique</p>
+                        </div>
+
+                        <div class="partner-card partner-placeholder">
+                            <div class="partner-logo">✨</div>
+                            <h4>Rejoignez-nous</h4>
+                            <p>Nous cherchons de nouveaux partenaires</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="partner-cta fade-in">
+                <h3>🚀 Devenez partenaire</h3>
+                <p>
+                    Vous souhaitez soutenir Assistante Barbara ou collaborer avec nous ? 
+                    Nous recherchons des partenaires motivés pour nous aider à grandir et à offrir 
+                    le meilleur service possible à notre communauté. Contactez-nous pour discuter des opportunités !
+                </p>
+                <a href="mailto:assistante.barbara.contact@gmail.com?subject=Demande%20de%20partenariat" class="btn-partner">
+                    <span>📧</span> Nous contacter
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Documentation Page -->
+    <div id="docs" class="page">
+        <section class="docs container">
+            <h2 class="section-title">Documentation & mentions légales</h2>
+
+            <!-- Privacy FR -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <h4>🇫🇷 Politique de confidentialité</h4>
+                        <p class="tag">Dernière mise à jour : 25 octobre 2025</p>
+                    </div>
+                    <span style="color: var(--muted);">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>Bienvenue sur <strong>Assistante Barbara</strong>. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données lors de l'utilisation de notre bot Discord.</p>
+
+                    <h3>1. Identité du responsable</h3>
+                    <p><strong>Nom du bot :</strong> Assistante Barbara<br>
+                    <strong>Nature :</strong> Application Discord (bot)<br>
+                    <strong>Hébergement :</strong> Katabump et serveurs locaux (maintenance)</p>
+
+                    <h3>2. Données collectées</h3>
+                    <div class="highlight-box">
+                        <strong>Assistante Barbara collecte un minimum absolu de données :</strong>
+                        <ul>
+                            <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande) sont temporairement stockées dans les logs système.</li>
+                            <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application.</li>
+                            <li><strong>Aucune donnée personnelle persistante :</strong> Aucun message, identifiant utilisateur, historique de conversation, préférence musicale ou autre donnée personnelle n'est conservée de manière permanente.</li>
+                        </ul>
+                    </div>
+
+                    <h3>3. Utilisation des APIs tierces</h3>
+                    <p>Assistante Barbara utilise les services suivants :</p>
+                    <ul>
+                        <li><strong>Discord API :</strong> Pour fonctionner sur Discord. Consultez la <a href="https://discord.com/privacy" target="_blank">politique de confidentialité de Discord</a>.</li>
+                        <li><strong>OpenAI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Les messages envoyés aux salons configurés sont traités par OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
+                        <li><strong>Mistral AI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Consultez la <a href="https://mistral.ai/privacy" target="_blank">politique de confidentialité de Mistral AI</a>.</li>
+                        <li><strong>Jamendo API :</strong> Pour les fonctionnalités musicales. Consultez la <a href="https://www.jamendo.com/legal/privacy" target="_blank">politique de confidentialité de Jamendo</a>.</li>
+                    </ul>
+                    <p><strong>Important :</strong> Les conversations avec l'IA et les recherches musicales sont transmises à ces APIs pour traitement mais ne sont pas stockées par Assistante Barbara elle-même.</p>
+
+                    <h3>4. Finalité du traitement</h3>
+                    <p>Les données temporaires collectées (logs de commandes) sont utilisées uniquement pour :</p>
+                    <ul>
+                        <li>Assurer le bon fonctionnement technique du bot</li>
+                        <li>Déboguer et corriger d'éventuels problèmes</li>
+                        <li>Améliorer les performances</li>
+                    </ul>
+
+                    <h3>5. Conservation des données</h3>
+                    <p><strong>Durée maximale :</strong> Les logs sont conservés jusqu'au prochain redémarrage de l'application (généralement quelques jours maximum).</p>
+
+                    <h3>6. Droits des utilisateurs (RGPD)</h3>
+                    <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
+                    <ul>
+                        <li><strong>Droit d'accès :</strong> Obtenir une copie de vos données</li>
+                        <li><strong>Droit de rectification :</strong> Corriger des données inexactes</li>
+                        <li><strong>Droit à l'effacement :</strong> Demander la suppression de vos données</li>
+                        <li><strong>Droit d'opposition :</strong> Vous opposer au traitement</li>
+                        <li><strong>Droit à la limitation :</strong> Limiter le traitement</li>
+                    </ul>
+                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de ces droits est généralement sans objet. Néanmoins, vous pouvez nous contacter pour toute question.</p>
+
+                    <h3>7. Sécurité</h3>
+                    <p>Nous mettons en œuvre des mesures techniques appropriées pour protéger les données traitées temporairement :</p>
+                    <ul>
+                        <li>Hébergement sécurisé (Katabump)</li>
+                        <li>Accès restreint aux logs système</li>
+                        <li>Suppression automatique des données temporaires</li>
+                    </ul>
+
+                    <h3>8. Transfert de données</h3>
+                    <p>Les données peuvent être transférées vers :</p>
+                    <ul>
+                        <li><strong>États-Unis :</strong> OpenAI, Discord</li>
+                        <li><strong>France/Europe :</strong> Mistral AI</li>
+                        <li><strong>Luxembourg :</strong> Jamendo</li>
+                    </ul>
+                    <p>Ces transferts sont effectués conformément aux clauses contractuelles types de l'UE ou autres mécanismes légaux appropriés.</p>
+
+                    <h3>9. Modifications</h3>
+                    <p>Cette politique peut être modifiée occasionnellement. La date de dernière mise à jour sera toujours indiquée en haut du document.</p>
+
+                    <div class="contact-box">
+                        <h4>10. Contact</h4>
+                        <p>Pour toute question concernant cette politique de confidentialité :</p>
+                        <ul>
+                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms FR -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <h4>🇫🇷 Conditions générales d'utilisation</h4>
+                        <p class="tag">Dernière mise à jour : 25 octobre 2025</p>
+                    </div>
+                    <span style="color: var(--muted);">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>En utilisant <strong>Assistante Barbara</strong>, vous acceptez les présentes Conditions Générales d'Utilisation (CGU). Veuillez les lire attentivement.</p>
+
+                    <h3>1. Description du service</h3>
+                    <p><strong>Assistante Barbara</strong> est une application Discord polyvalente offrant :</p>
+                    <ul>
+                        <li>Une variété de commandes slash utilitaires</li>
+                        <li>Des fonctionnalités musicales (via Jamendo)</li>
+                        <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
+                    </ul>
+
+                    <h3>2. Acceptation des conditions</h3>
+                    <p>L'utilisation d'Assistante Barbara implique votre acceptation complète et sans réserve des présentes CGU. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le bot.</p>
+
+                    <h3>3. Utilisation autorisée</h3>
+                    <div class="highlight-box">
+                        <strong>Vous vous engagez à :</strong>
+                        <ul>
+                            <li>Utiliser le bot conformément aux <a href="https://discord.com/terms" target="_blank">Conditions d'Utilisation de Discord</a></li>
+                            <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
+                            <li>Ne pas tenter de contourner les limitations techniques</li>
+                            <li>Respecter les autres utilisateurs</li>
+                            <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
+                        </ul>
+                    </div>
+
+                    <h3>4. Fonctionnalités d'intelligence artificielle</h3>
+                    <p><strong>Important :</strong></p>
+                    <ul>
+                        <li>Les réponses de l'IA sont générées automatiquement et peuvent contenir des erreurs</li>
+                        <li>Ne vous fiez pas exclusivement aux réponses de l'IA pour des décisions importantes</li>
+                        <li>Les conversations avec l'IA sont traitées par des services tiers (OpenAI, Mistral AI)</li>
+                        <li>Nous ne sommes pas responsables du contenu généré par l'IA</li>
+                    </ul>
+
+                    <h3>5. Fonctionnalités musicales</h3>
+                    <ul>
+                        <li>La musique est fournie via <strong>Jamendo</strong> (musique libre de droits)</li>
+                        <li>Le catalogue est limité au contenu disponible sur Jamendo</li>
+                        <li>La disponibilité du service musical peut varier</li>
+                        <li>Respectez les droits d'auteur et les <a href="https://www.jamendo.com/legal/terms-of-use" target="_blank">CGU de Jamendo</a></li>
+                    </ul>
+
+                    <h3>6. Disponibilité du service</h3>
+                    <p>Nous nous efforçons de maintenir Assistante Barbara opérationnelle 24/7, mais :</p>
+                    <ul>
+                        <li>Le service peut être interrompu pour maintenance</li>
+                        <li>Des interruptions peuvent survenir en cas de problème technique</li>
+                        <li>Nous ne garantissons pas une disponibilité absolue</li>
+                        <li>Aucun remboursement n'est applicable (service gratuit)</li>
+                    </ul>
+
+                    <h3>7. Limitation de responsabilité</h3>
+                    <div class="highlight-box">
+                        <p><strong>Assistante Barbara est fournie "en l'état".</strong> Nous déclinons toute responsabilité concernant :</p>
+                        <ul>
+                            <li>Les dommages directs ou indirects résultant de l'utilisation du bot</li>
+                            <li>La précision des informations fournies par l'IA</li>
+                            <li>Les pertes de données ou interruptions de service</li>
+                            <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
+                        </ul>
+                    </div>
+
+                    <h3>8. Propriété intellectuelle</h3>
+                    <ul>
+                        <li>Assistante Barbara et son code source appartiennent à leur créateur</li>
+                        <li>Les réponses générées par l'IA suivent les politiques de propriété intellectuelle d'OpenAI et Mistral AI</li>
+                        <li>La musique est soumise aux licences de Jamendo</li>
+                        <li>Discord et son logo sont des marques déposées de Discord Inc.</li>
+                    </ul>
+
+                    <h3>9. Modifications du service</h3>
+                    <p>Nous nous réservons le droit de :</p>
+                    <ul>
+                        <li>Modifier, suspendre ou arrêter le service à tout moment</li>
+                        <li>Modifier les fonctionnalités disponibles</li>
+                        <li>Bloquer l'accès à des utilisateurs en cas d'abus</li>
+                    </ul>
+
+                    <h3>10. Conformité légale</h3>
+                    <p>Ce service est conforme à :</p>
+                    <ul>
+                        <li>RGPD (Règlement Général sur la Protection des Données)</li>
+                        <li>Conditions d'Utilisation de Discord</li>
+                        <li>Lois françaises et européennes applicables</li>
+                    </ul>
+
+                    <h3>11. Résiliation</h3>
+                    <p>Vous pouvez cesser d'utiliser Assistante Barbara à tout moment en :</p>
+                    <ul>
+                        <li>Retirant le bot de votre serveur Discord</li>
+                        <li>Cessant d'interagir avec le bot</li>
+                    </ul>
+                    <p>Nous pouvons également bloquer votre accès en cas de violation des présentes CGU.</p>
+
+                    <h3>12. Droit applicable</h3>
+                    <p>Les présentes CGU sont régies par le droit français. Tout litige sera soumis aux tribunaux compétents français.</p>
+
+                    <div class="contact-box">
+                        <h4>13. Contact</h4>
+                        <p>Pour toute question concernant ces CGU :</p>
+                        <ul>
+                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy EN -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <h4>🇺🇸 Privacy Policy</h4>
+                        <p class="tag">Last updated: October 25, 2025</p>
+                    </div>
+                    <span style="color: var(--muted);">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>Welcome to <strong>Assistante Barbara</strong>. This privacy policy explains how we collect, use, and protect your data when using our Discord bot.</p>
+
+                    <h3>1. Data controller identity</h3>
+                    <p><strong>Bot name:</strong> Assistante Barbara<br>
+                    <strong>Nature:</strong> Discord Application (bot)<br>
+                    <strong>Hosting:</strong> Katabump and local servers (maintenance)</p>
+
+                    <h3>2. Data collected</h3>
+                    <div class="highlight-box">
+                        <strong>Assistante Barbara collects an absolute minimum of data:</strong>
+                        <ul>
+                            <li><strong>Command logs:</strong> Information related to executed commands (timestamp, command type) is temporarily stored in system logs.</li>
+                            <li><strong>Automatic deletion:</strong> These logs are automatically deleted during regular application restarts.</li>
+                            <li><strong>No persistent personal data:</strong> No messages, user identifiers, conversation history, music preferences, or other personal data is permanently stored.</li>
+                        </ul>
+                    </div>
+
+                    <h3>3. Third-party APIs usage</h3>
+                    <p>Assistante Barbara uses the following services:</p>
+                    <ul>
+                        <li><strong>Discord API:</strong> To operate on Discord. See <a href="https://discord.com/privacy" target="_blank">Discord's privacy policy</a>.</li>
+                        <li><strong>OpenAI API:</strong> For artificial intelligence features. Messages sent to configured channels are processed by OpenAI in accordance with their <a href="https://openai.com/privacy" target="_blank">privacy policy</a>.</li>
+                        <li><strong>Mistral AI API:</strong> For artificial intelligence features. See <a href="https://mistral.ai/privacy" target="_blank">Mistral AI's privacy policy</a>.</li>
+                        <li><strong>Jamendo API:</strong> For music features. See <a href="https://www.jamendo.com/legal/privacy" target="_blank">Jamendo's privacy policy</a>.</li>
+                    </ul>
+                    <p><strong>Important:</strong> AI conversations and music searches are transmitted to these APIs for processing but are not stored by Assistante Barbara itself.</p>
+
+                    <h3>4. Purpose of processing</h3>
+                    <p>Temporary data collected (command logs) is used solely to:</p>
+                    <ul>
+                        <li>Ensure proper technical functioning of the bot</li>
+                        <li>Debug and fix potential issues</li>
+                        <li>Improve performance</li>
+                    </ul>
+
+                    <h3>5. Data retention</h3>
+                    <p><strong>Maximum duration:</strong> Logs are kept until the next application restart (typically a few days maximum).</p>
+
+                    <h3>6. User rights (GDPR)</h3>
+                    <p>In accordance with the General Data Protection Regulation (GDPR), you have the following rights:</p>
+                    <ul>
+                        <li><strong>Right of access:</strong> Obtain a copy of your data</li>
+                        <li><strong>Right to rectification:</strong> Correct inaccurate data</li>
+                        <li><strong>Right to erasure:</strong> Request deletion of your data</li>
+                        <li><strong>Right to object:</strong> Object to processing</li>
+                        <li><strong>Right to restriction:</strong> Limit processing</li>
+                    </ul>
+                    <p><strong>Note:</strong> Since we do not permanently store any personal data, exercising these rights is generally not applicable. However, you may contact us with any questions.</p>
+
+                    <h3>7. Security</h3>
+                    <p>We implement appropriate technical measures to protect temporarily processed data:</p>
+                    <ul>
+                        <li>Secure hosting (Katabump)</li>
+                        <li>Restricted access to system logs</li>
+                        <li>Automatic deletion of temporary data</li>
+                    </ul>
+
+                    <h3>8. Data transfers</h3>
+                    <p>Data may be transferred to:</p>
+                    <ul>
+                        <li><strong>United States:</strong> OpenAI, Discord</li>
+                        <li><strong>France/Europe:</strong> Mistral AI</li>
+                        <li><strong>Luxembourg:</strong> Jamendo</li>
+                    </ul>
+                    <p>These transfers are made in accordance with EU standard contractual clauses or other appropriate legal mechanisms.</p>
+
+                    <h3>9. Changes</h3>
+                    <p>This policy may be modified occasionally. The last update date will always be indicated at the top of the document.</p>
+
+                    <div class="contact-box">
+                        <h4>10. Contact</h4>
+                        <p>For any questions regarding this privacy policy:</p>
+                        <ul>
+                            <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
+                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms EN -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <h4>🇺🇸 Terms of Service</h4>
+                        <p class="tag">Last updated: October 25, 2025</p>
+                    </div>
+                    <span style="color: var(--muted);">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>By using <strong>Assistante Barbara</strong>, you agree to these Terms of Service (ToS). Please read them carefully.</p>
+
+                    <h3>1. Service description</h3>
+                    <p><strong>Assistante Barbara</strong> is a versatile Discord application offering:</p>
+                    <ul>
+                        <li>A variety of utility slash commands</li>
+                        <li>Music features (via Jamendo)</li>
+                        <li>An AI-powered assistance chatbot (OpenAI and Mistral AI)</li>
+                    </ul>
+
+                    <h3>2. Acceptance of terms</h3>
+                    <p>Using Assistante Barbara implies your complete and unreserved acceptance of these ToS. If you do not accept these terms, please do not use the bot.</p>
+
+                    <h3>3. Authorized use</h3>
+                    <div class="highlight-box">
+                        <strong>You agree to:</strong>
+                        <ul>
+                            <li>Use the bot in accordance with <a href="https://discord.com/terms" target="_blank">Discord's Terms of Service</a></li>
+                            <li>Not abuse features (spam, flooding, etc.)</li>
+                            <li>Not attempt to bypass technical limitations</li>
+                            <li>Respect other users</li>
+                            <li>Not use the bot for illegal or malicious purposes</li>
+                        </ul>
+                    </div>
+
+                    <h3>4. Artificial intelligence features</h3>
+                    <p><strong>Important:</strong></p>
+                    <ul>
+                        <li>AI responses are automatically generated and may contain errors</li>
+                        <li>Do not rely exclusively on AI responses for important decisions</li>
+                        <li>Conversations with AI are processed by third-party services (OpenAI, Mistral AI)</li>
+                        <li>We are not responsible for content generated by AI</li>
+                    </ul>
+
+                    <h3>5. Music features</h3>
+                    <ul>
+                        <li>Music is provided via <strong>Jamendo</strong> (royalty-free music)</li>
+                        <li>The catalog is limited to content available on Jamendo</li>
+                        <li>Music service availability may vary</li>
+                        <li>Respect copyrights and <a href="https://www.jamendo.com/legal/terms-of-use" target="_blank">Jamendo's ToS</a></li>
+                    </ul>
+
+                    <h3>6. Service availability</h3>
+                    <p>We strive to keep Assistante Barbara operational 24/7, but:</p>
+                    <ul>
+                        <li>The service may be interrupted for maintenance</li>
+                        <li>Interruptions may occur due to technical issues</li>
+                        <li>We do not guarantee absolute availability</li>
+                        <li>No refunds are applicable (free service)</li>
+                    </ul>
+
+                    <h3>7. Limitation of liability</h3>
+                    <div class="highlight-box">
+                        <p><strong>Assistante Barbara is provided "as is".</strong> We disclaim all liability for:</p>
+                        <ul>
+                            <li>Direct or indirect damages resulting from bot use</li>
+                            <li>Accuracy of information provided by AI</li>
+                            <li>Data loss or service interruptions</li>
+                            <li>Content generated by AI or provided by third-party APIs</li>
+                        </ul>
+                    </div>
+
+                    <h3>8. Intellectual property</h3>
+                    <ul>
+                        <li>Assistante Barbara and its source code belong to their creator</li>
+                        <li>AI-generated responses follow OpenAI and Mistral AI's intellectual property policies</li>
+                        <li>Music is subject to Jamendo licenses</li>
+                        <li>Discord and its logo are registered trademarks of Discord Inc.</li>
+                    </ul>
+
+                    <h3>9. Service modifications</h3>
+                    <p>We reserve the right to:</p>
+                    <ul>
+                        <li>Modify, suspend, or discontinue the service at any time</li>
+                        <li>Modify available features</li>
+                        <li>Block access to users in case of abuse</li>
+                    </ul>
+
+                    <h3>10. Legal compliance</h3>
+                    <p>This service complies with:</p>
+                    <ul>
+                        <li>GDPR (General Data Protection Regulation)</li>
+                        <li>Discord's Terms of Service</li>
+                        <li>Applicable French and European laws</li>
+                    </ul>
+
+                    <h3>11. Termination</h3>
+                    <p>You may stop using Assistante Barbara at any time by:</p>
+                    <ul>
+                        <li>Removing the bot from your Discord server</li>
+                        <li>Ceasing to interact with the bot</li>
+                    </ul>
+                    <p>We may also block your access in case of violation of these ToS.</p>
+
+                    <h3>12. Applicable law</h3>
+                    <p>These ToS are governed by French law. Any dispute will be submitted to competent French courts.</p>
+
+                    <div class="contact-box">
+                        <h4>13. Contact</h4>
+                        <p>For any questions regarding these ToS:</p>
+                        <ul>
+                            <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
+                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h3>Assistante Barbara</h3>
+            <p>Bot Discord polyvalent propulsé par l'IA</p>
+            <p style="margin-bottom: 0;">© 2025 - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Menu mobile toggle
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            const overlay = document.getElementById('navOverlay');
+            const toggle = document.querySelector('.menu-toggle');
+            
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            toggle.classList.toggle('active');
+            
+            // Empêcher le scroll du body quand le menu est ouvert
+            if (nav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Fermer le menu mobile
+        function closeMenu() {
+            const nav = document.getElementById('mainNav');
+            const overlay = document.getElementById('navOverlay');
+            const toggle = document.querySelector('.menu-toggle');
+            
+            nav.classList.remove('active');
+            overlay.classList.remove('active');
+            toggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Accordion toggle
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isOpen = item.classList.contains('open');
+            
+            // Close all accordions
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('open');
+            });
+            
+            // Open clicked accordion if it wasn't open
+            if (!isOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // Smooth scroll reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
