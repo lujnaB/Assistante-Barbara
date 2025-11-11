@@ -1045,23 +1045,23 @@
                 }
             }
 
-            /* Animation automatique des icônes sur mobile - SYNCHRONISÉES */
-            .feature-icon {
-                animation: icon-float-mobile 3s ease-in-out infinite;
+            /* Animation automatique des icônes sur mobile - PARFAITEMENT SYNCHRONISÉES */
+            .features-grid {
+                animation: breathe-icons 3s ease-in-out infinite;
             }
 
-            /* Suppression du délai pour synchroniser toutes les icônes */
-            /* .feature-card:nth-child(even) .feature-icon {
-                animation-delay: 1.5s;
-            } */
-
-            @keyframes icon-float-mobile {
+            @keyframes breathe-icons {
                 0%, 100% {
                     transform: translateY(0px);
                 }
                 50% {
                     transform: translateY(-10px);
                 }
+            }
+
+            /* Désactiver l'animation individuelle des icônes sur mobile */
+            .feature-icon {
+                animation: none;
             }
 
             /* Animation des cartes de commandes sur mobile */
