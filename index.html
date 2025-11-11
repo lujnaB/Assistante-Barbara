@@ -1045,23 +1045,18 @@
                 }
             }
 
-            /* Animation automatique des icônes sur mobile - PARFAITEMENT SYNCHRONISÉES */
-            .features-grid {
-                animation: breathe-icons 3s ease-in-out infinite;
+            /* Animation zoom uniquement des icônes sur mobile - SYNCHRONISÉE */
+            .feature-icon {
+                animation: icon-zoom-mobile 3s ease-in-out infinite;
             }
 
-            @keyframes breathe-icons {
+            @keyframes icon-zoom-mobile {
                 0%, 100% {
-                    transform: translateY(0px);
+                    transform: scale(1);
                 }
                 50% {
-                    transform: translateY(-10px);
+                    transform: scale(1.15);
                 }
-            }
-
-            /* Désactiver l'animation individuelle des icônes sur mobile */
-            .feature-icon {
-                animation: none;
             }
 
             /* Animation des cartes de commandes sur mobile */
