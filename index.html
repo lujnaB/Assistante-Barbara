@@ -1045,14 +1045,15 @@
                 }
             }
 
-            /* Animation automatique des icônes sur mobile */
+            /* Animation automatique des icônes sur mobile - SYNCHRONISÉES */
             .feature-icon {
                 animation: icon-float-mobile 3s ease-in-out infinite;
             }
 
-            .feature-card:nth-child(even) .feature-icon {
+            /* Suppression du délai pour synchroniser toutes les icônes */
+            /* .feature-card:nth-child(even) .feature-icon {
                 animation-delay: 1.5s;
-            }
+            } */
 
             @keyframes icon-float-mobile {
                 0%, 100% {
