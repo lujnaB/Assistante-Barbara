@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
+<html lang="fr" data-theme="light"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assistante Barbara</title>
@@ -23,15 +22,47 @@
             --border: #e1e8ed;
             --shadow: rgba(0, 0, 0, 0.08);
             --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            
+            /* Variables pour le mode sombre */
+            --bg-body: #fafbfc;
+            --bg-card: white;
+            --bg-header: rgba(255, 255, 255, 0.95);
+            --bg-header-mobile-nav: white;
+            --bg-highlight: #f8f9fa;
+            --bg-placeholder-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        html[data-theme='dark'] {
+            --dark: #ecf0f1; /* Devient couleur claire (titres) */
+            --light: #2c3e50; /* Devient couleur foncée (fond carte) */
+            --text: #bdc3c7; /* Texte principal */
+            --muted: #95a5a6; /* Texte atténué */
+            --border: #4a637c; /* Bordure foncée */
+            --shadow: rgba(0, 0, 0, 0.25);
+
+            /* Variables de fond pour le mode sombre */
+            --bg-body: #1c2833;
+            --bg-card: #2c3e50;
+            --bg-header: rgba(44, 62, 80, 0.95);
+            --bg-header-mobile-nav: #2c3e50;
+            --bg-highlight: #34495e;
+            --bg-placeholder-gradient: linear-gradient(135deg, var(--bg-highlight) 0%, var(--bg-card) 100%);
         }
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: #fafbfc;
+            background: var(--bg-body);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+        
+        /* Transition douce pour les éléments changeant de couleur */
+        .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .partner-cta, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
+            transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+        }
+
 
         /* Subtle animated background */
         body::before {
@@ -74,7 +105,7 @@
 
         /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-header);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
             position: sticky;
@@ -210,6 +241,25 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
+        
+        /* Bouton Mode Sombre */
+        .theme-toggle-btn {
+            background: var(--border);
+            border: none;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            line-height: 1;
+            transition: all 0.3s ease;
+            color: var(--dark);
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--bg-highlight);
+            transform: scale(1.1);
+        }
+
 
         /* Container */
         .container {
@@ -314,7 +364,7 @@
         }
 
         .btn-secondary {
-            background: white;
+            background: var(--bg-card);
             color: var(--primary);
             padding: 16px 40px;
             border-radius: 12px;
@@ -328,7 +378,7 @@
         .btn-secondary:hover {
             border-color: var(--primary);
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 25px var(--shadow);
         }
 
         /* Features Grid */
@@ -352,7 +402,7 @@
         }
 
         .feature-card {
-            background: white;
+            background: var(--bg-card);
             padding: 40px;
             border-radius: 16px;
             border: 1px solid var(--border);
@@ -375,7 +425,7 @@
 
         .feature-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 40px var(--shadow);
         }
 
         .feature-card:hover::before {
@@ -465,7 +515,7 @@
         }
 
         .command-card {
-            background: white;
+            background: var(--bg-card);
             padding: 25px;
             border-radius: 12px;
             border: 1px solid var(--border);
@@ -475,7 +525,7 @@
 
         .command-card:hover {
             transform: translateX(5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 20px var(--shadow);
         }
 
         .command-card h4 {
@@ -577,7 +627,7 @@
         }
 
         .btn-feedback {
-            background: white;
+            background: var(--bg-card);
             color: var(--primary);
             padding: 18px 45px;
             border-radius: 12px;
@@ -599,7 +649,7 @@
         /* Partners Section */
         .partners-section {
             padding: 80px 0;
-            background: #fafbfc;
+            background: var(--bg-body);
         }
 
         .partners-intro {
@@ -616,7 +666,7 @@
         }
 
         .partner-cta {
-            background: #f8f9fa;
+            background: var(--bg-highlight);
             padding: 30px;
             border-radius: 12px;
             border-left: 4px solid var(--primary);
@@ -694,7 +744,7 @@
         .partner-card {
             flex-shrink: 0;
             width: 280px;
-            background: white;
+            background: var(--bg-card);
             border: 2px solid var(--border);
             border-radius: 16px;
             padding: 40px 30px;
@@ -705,7 +755,7 @@
 
         .partner-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 35px var(--shadow);
             border-color: var(--primary);
         }
 
@@ -714,7 +764,7 @@
             height: 100px;
             margin: 0 auto 20px;
             border-radius: 12px;
-            background: #f8f9fa;
+            background: var(--bg-highlight);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -740,7 +790,7 @@
         }
 
         .partner-placeholder {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: var(--bg-placeholder-gradient);
             border: 2px dashed var(--border);
         }
 
@@ -760,7 +810,7 @@
         }
 
         .accordion-item {
-            background: white;
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
             margin-bottom: 15px;
@@ -769,7 +819,7 @@
         }
 
         .accordion-item:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 20px var(--shadow);
         }
 
         .accordion-header {
@@ -782,7 +832,7 @@
         }
 
         .accordion-header:hover {
-            background: #f8f9fa;
+            background: var(--bg-highlight);
         }
 
         .accordion-header h4 {
@@ -842,7 +892,7 @@
         }
 
         .highlight-box {
-            background: #f8f9fa;
+            background: var(--bg-highlight);
             padding: 20px;
             border-radius: 8px;
             border-left: 4px solid var(--primary);
@@ -850,7 +900,7 @@
         }
 
         .contact-box {
-            background: #f8f9fa;
+            background: var(--bg-highlight);
             padding: 25px;
             border-radius: 12px;
             margin-top: 30px;
@@ -922,7 +972,7 @@
                 right: -100%;
                 width: 280px;
                 height: 100vh;
-                background: white;
+                background: var(--bg-header-mobile-nav);
                 flex-direction: column;
                 padding: 80px 30px 30px;
                 gap: 25px;
@@ -947,6 +997,14 @@
                 justify-content: center;
                 margin-top: 20px;
             }
+            
+            /* Style mobile pour le bouton de thème */
+            .theme-toggle-btn {
+                width: 100%;
+                padding: 12px;
+                font-size: 1.1rem;
+            }
+
 
             /* Overlay sombre quand le menu est ouvert */
             .nav-overlay {
@@ -1114,7 +1172,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-content">
             <a href="javascript:void(0)" onclick="showPage('home')" class="logo">
@@ -1125,7 +1182,6 @@
                 </div>
             </a>
             
-            <!-- Bouton hamburger (visible uniquement sur mobile) -->
             <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
@@ -1138,16 +1194,14 @@
                 <a href="https://discord.com/oauth2/authorize?client_id=992854932107579392" class="btn-add" target="_blank">
                     ➕ Ajouter le bot
                 </a>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Changer le thème">☀️</button>
             </nav>
         </div>
         
-        <!-- Overlay sombre (visible uniquement sur mobile quand menu ouvert) -->
         <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
     </header>
 
-    <!-- Home Page -->
     <div id="home" class="page active">
-        <!-- Hero -->
         <section class="hero container">
             <h2 class="fade-in">
                 Votre assistante Discord<br>
@@ -1166,7 +1220,6 @@
             </div>
         </section>
 
-        <!-- Features -->
         <section class="features container">
             <h2 class="section-title fade-in">Principales fonctionnalités</h2>
             <div class="features-grid">
@@ -1203,7 +1256,6 @@
             </div>
         </section>
 
-        <!-- Commands -->
         <section class="commands-section container">
             <h2 class="section-title">Commandes disponibles</h2>
             <div class="commands-grid">
@@ -1246,7 +1298,6 @@
             </div>
         </section>
 
-        <!-- Feedback Section -->
         <section class="feedback-section">
             <div class="feedback-background"></div>
             <div class="feedback-pattern"></div>
@@ -1279,7 +1330,6 @@
             </div>
         </section>
 
-        <!-- Partners Section -->
         <section class="partners-section container">
             <h2 class="section-title fade-in">Nos partenaires</h2>
             
@@ -1293,7 +1343,6 @@
             <div class="partners-carousel">
                 <div class="partners-wrapper">
                     <div class="partners-track">
-                        <!-- Partner Cards - Première série -->
                         <div class="partner-card partner-placeholder">
                             <div class="partner-logo">🤝</div>
                             <h4>Votre entreprise</h4>
@@ -1324,7 +1373,6 @@
                             <p>Nous cherchons de nouveaux partenaires</p>
                         </div>
 
-                        <!-- Partner Cards - Copie pour boucle infinie -->
                         <div class="partner-card partner-placeholder">
                             <div class="partner-logo">🤝</div>
                             <h4>Votre entreprise</h4>
@@ -1372,12 +1420,10 @@
         </section>
     </div>
 
-    <!-- Documentation Page -->
     <div id="docs" class="page">
         <section class="docs container">
             <h2 class="section-title">Documentation & mentions légales</h2>
 
-            <!-- Privacy FR -->
             <div class="accordion-item">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
@@ -1501,7 +1547,6 @@
                 </div>
             </div>
 
-            <!-- Terms FR -->
             <div class="accordion-item">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
@@ -1668,7 +1713,6 @@
                 </div>
             </div>
 
-            <!-- Privacy EN -->
             <div class="accordion-item">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
@@ -1792,7 +1836,6 @@
                 </div>
             </div>
 
-            <!-- Terms EN -->
             <div class="accordion-item">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
@@ -1871,7 +1914,7 @@
                         <li>No compensation can be claimed in case of unavailability</li>
                     </ul>
 
-                    <h3>6 bis. Force majeure</h3>
+                    <h3>6. bis. Force majeure</h3>
                     <p>We shall not be held liable for service interruptions resulting from force majeure events, including:</p>
                     <ul>
                         <li>Infrastructure or hosting failures (Katabump, servers)</li>
@@ -1961,7 +2004,6 @@
         </section>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="container">
@@ -1974,6 +2016,35 @@
     </footer>
 
     <script>
+        // --- NOUVEAU CODE POUR LE MODE SOMBRE ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        /**
+         * Applique le thème (light/dark) à l'élément HTML, met à jour l'icône du bouton
+         * et sauvegarde le choix dans localStorage.
+         * @param {string} theme - Le thème à appliquer ("light" ou "dark").
+         */
+        function applyTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            themeToggleBtn.innerText = theme === 'light' ? '☀️' : '🌙';
+            localStorage.setItem('theme', theme);
+        }
+
+        // Appliquer le thème sauvegardé au chargement de la page
+        const savedTheme = localStorage.getItem('theme') || 'light'; // Défaut en mode lumineux
+        applyTheme(savedTheme);
+
+        // Gérer le clic sur le bouton de basculement
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(newTheme);
+        });
+
+        // --- FIN DU NOUVEAU CODE ---
+
+
         // Page navigation
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
