@@ -946,12 +946,19 @@
                 border-bottom: 1px solid var(--border);
             }
             
-            /* --- NOUVEAU STYLE POUR LE BADGE SUR MOBILE --- */
-            .nav-link iframe {
-                width: 100% !important; /* Forcer le badge à prendre toute la largeur */
-                padding: 5px 0;
+            /* --- MODIFICATIONS CSS POUR LE BADGE SUR MOBILE --- */
+            .status-badge-wrapper {
+                border-bottom: none !important; /* Retire la barre en dessous */
+                display: flex;
+                justify-content: center; /* Centre le badge */
+                padding: 10px 0 !important; /* Garde un padding cohérent */
             }
-            /* --- FIN --- */
+
+            .status-badge-wrapper iframe {
+                /* S'assure que l'iframe n'essaie pas d'être en pleine largeur */
+                width: 200px !important; 
+            }
+            /* --- FIN DES MODIFICATIONS CSS --- */
 
             .btn-add {
                 width: 100%;
@@ -1153,9 +1160,9 @@
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('home'); closeMenu()">Accueil</a>
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('docs'); closeMenu()">Documentation</a>
                
-                <!-- BADGE DE STATUT (RESTAURÉ) -->
-                <!-- C'est la version qui fonctionne, avec le <iframe> -->
-                <div class="nav-link" style="padding: 5px 0;" title="Statut des services">
+                <!-- BADGE DE STATUT (MODIFIÉ) -->
+                <!-- J'ai ajouté la classe "status-badge-wrapper" et retiré le style="padding..." -->
+                <div class="nav-link status-badge-wrapper" title="Statut des services">
                     <iframe src="https://assistante-barbara.betteruptime.com/badge?theme=dark" 
                             width="200" height="30" frameborder="0" scrolling="no" 
                             style="color-scheme: normal; border-radius: 4px; vertical-align: middle;"></iframe>
@@ -1776,10 +1783,10 @@
                     <h3>2.
                     Data Collected and Source</h3>
                     <div class="highlight-box">
-                        <strong>Assistante Barbara collects a bare minimum of data:</strong>
+                        <strong>Assistante Barbara collecte un minimum absolu de données :</strong>
                         <ul>
-                            <li><strong>Command logs:</strong> Information related to executed commands (timestamp, command type, server identifier) is temporarily stored in system logs to ensure proper service functioning.</li>
-                            <li><strong>Automatic deletion:</strong> These logs are automatically deleted during regular application restarts (maximum a few days).</li>
+                            <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande, identifiant du serveur) sont temporairement stockées dans les logs système pour assurer le bon fonctionnement du service.</li>
+                            <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
                             <li><strong>No 
                             persistent personal data:</strong> No messages, personal user identifiers, conversation history, music preferences, or other identifiable personal data is permanently stored in our systems.</li>
                             <li><strong>Discord data:</strong> The bot temporarily accesses necessary information provided by Discord (usernames, server identifiers) only to execute requested commands.</li>
@@ -1868,7 +1875,7 @@
                         <li><strong>United States:</strong> OpenAI, Discord.
                         These transfers are governed by the EU-US Data Privacy Framework or, when not applicable, by European Union standard contractual clauses.</li>
                         <li><strong>France/Europe:</strong> Mistral AI, Katabump (GDPR compliant)</li>
-                        <li><strong>Luxembourg:</strong> Jamendo (European Union, GDPR compliant)</li>
+                        <li><strong>Luxembourg :</strong> Jamendo (European Union, GDPR compliant)</li>
                     </ul>
                     <p>These transfers are made in accordance with Chapter V of the GDPR and are governed by appropriate safeguards.</p>
 
