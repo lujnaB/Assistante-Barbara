@@ -2140,11 +2140,12 @@
             // --- NOUVELLE MODIFICATION POUR SYNCHRONISER LE BADGE ---
             const badgeIframe = document.getElementById('status-badge-iframe');
             if (badgeIframe) {
-                // Si le thème de la page est "light", on met le badge en "light".
-                // Si le thème de la page est "dark", on met le badge en "dark".
                 const badgeTheme = (theme === 'light') ? 'light' : 'dark';
-                // Note: BetterUptime peut avoir un cache, donc le changement peut ne pas être instantané.
-                badgeIframe.src = `https://assistante-barbara.betteruptime.com/badge?theme=${badgeTheme}`;
+                
+                // --- MODIFICATION AVEC CACHE BUSTER ---
+                // Ajoute l'heure actuelle pour forcer le rechargement de l'iframe
+                const cacheBuster = new Date().getTime();
+                badgeIframe.src = `https://assistante-barbara.betteruptime.com/badge?theme=${badgeTheme}&v=${cacheBuster}`;
             }
             // --- FIN DE LA MODIFICATION ---
         }
@@ -2234,9 +2235,7 @@
                 observer.observe(el);
             });
             
-            // --- JAVASCRIPT SUPPRIMÉ ---
-            // Tout le code pour "checkBotStatus" a été supprimé.
-            // L'iframe se met à jour tout seul (via le code de thème ci-dessus).
+            // Le JavaScript pour "checkBotStatus" est supprimé.
         });
     </script>
 </body>
