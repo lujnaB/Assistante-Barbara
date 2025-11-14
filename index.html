@@ -908,6 +908,13 @@
             border-radius: 3px;
         }
 
+        /* --- NOUVELLE MODIFICATION : Supprimer le soulignement hover sur le badge --- */
+        .status-badge-wrapper::after {
+            display: none !important; /* Cache le pseudo-élément (la barre en dégradé) */
+        }
+        /* --- FIN DE LA MODIFICATION --- */
+
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -1811,8 +1818,8 @@
                         <li><strong>Discord API:</strong> Discord acts as joint controller for data processed through its platform in accordance with its own <a 
                         href="https://discord.com/privacy" target="_blank">privacy policy</a>.</li>
                         <li><strong>OpenAI API:</strong> For artificial intelligence features.
-                        Messages sent to configured channels are processed by OpenAI in accordance with their <a href="https://openai.com/privacy" target="_blank">privacy policy</a>.</li>
-                        <li><strong>Mistral AI API:</strong> For artificial intelligence features.
+                        Messages sent to configured channels are processed by OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
+                        <li><strong>Mistral AI API:</strong> Pour les fonctionnalités d'intelligence artificielle.
                         See <a href="https://mistral.ai/privacy" target="_blank">Mistral AI's privacy policy</a>.</li>
                         <li><strong>Jamendo API:</strong> For music features.
                         See <a href="https://www.jamendo.com/legal/privacy" target="_blank">Jamendo's privacy policy</a>.</li>
