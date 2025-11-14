@@ -1169,7 +1169,7 @@
                
                 <!-- BADGE DE STATUT (MODIFIÉ) -->
                 <!-- J'ai ajouté l'ID "status-badge-container" pour le script -->
-                <div class.="nav-link status-badge-wrapper" title="Statut des services" id="status-badge-container">
+                <div class="nav-link status-badge-wrapper" title="Statut des services" id="status-badge-container">
                     <!-- L'iframe sera injecté ici par le script ci-dessous -->
                 </div>
                 <!-- FIN DU BADGE -->
@@ -1408,7 +1408,7 @@
                     le meilleur service possible à notre communauté.
                     Contactez-nous pour discuter des opportunités !
                 </p>
-                <a href="mailto:assistante.barbara.contact@gmail.com?subject=Demande%20de%20partenariat" class="btn-partner">
+                <a href="mailto:assistante.barbara.contact@gmail.com?subject=Demande%20de%2Spartenariat" class="btn-partner">
                     <span>📧</span> Nous contacter
                 </a>
             </div>
@@ -1795,7 +1795,7 @@
                             <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
                             <li><strong>No 
                             persistent personal data:</strong> No messages, personal user identifiers, conversation history, music preferences, or other identifiable personal data is permanently stored in our systems.</li>
-                            <li><strong>Discord data:</strong> The bot temporarily accesses necessary information provided by Discord (usernames, server identifiers) only to execute requested commands.</li>
+                            <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
                         </ul>
                         <p><strong>Data source:</strong> All processed data originates exclusively from interactions between users and the bot on the Discord platform, and is never obtained from third parties.</p>
                     </div>
@@ -2033,7 +2033,7 @@
                         <p><strong>No warranty:</strong> We do not 
                         guarantee that the service will be uninterrupted, error-free, secure, or free from viruses or other harmful components.</p>
                     </div>
-                    <p><strong>Indemnification:</strong> You agree to indemnify and hold harmless the Assistante Barbara team against any claim resulting from your use of the service in violation of these ToS.</p>
+                    <p><strong>Indemnisation:</strong> You agree to indemnify and hold harmless the Assistante Barbara team against any claim resulting from your use of the service in violation of these ToS.</p>
 
                     <h3>8. Intellectual property</h3>
                     <ul>
@@ -2066,7 +2066,7 @@
 
                     <h3>11.
                     Termination</h3>
-                    <p><strong>By user:</strong> You may stop using Assistante Barbara at any time by:</p>
+                    <p><strong>Par l'utilisateur :</strong> You may stop using Assistante Barbara at any time by:</p>
                     <ul>
                         <li>Removing the bot from your Discord server</li>
                         <li>Ceasing to interact with the bot</li>
@@ -2143,9 +2143,13 @@
             if (badgeContainer) {
                 // 2. Déterminer le thème du badge
                 const badgeTheme = (theme === 'light') ? 'light' : 'dark';
-
+                
                 // 3. Ajoute l'heure actuelle pour forcer le rechargement de l'iframe (cache buster)
                 const cacheBuster = new Date().getTime();
+                
+                // --- MODIFICATION FINALE : Ajout de color-scheme ---
+                // Cela force l'iframe lui-même à adopter le bon mode de rendu
+                const colorSchemeStyle = (theme === 'light') ? 'light' : 'dark';
 
                 // 4. Créer le NOUVEL iframe sous forme de chaîne de caractères
                 const newIframeHTML = `
@@ -2153,7 +2157,7 @@
                         id="status-badge-iframe" 
                         src="https://assistante-barbara.betteruptime.com/badge?theme=${badgeTheme}&v=${cacheBuster}" 
                         width="200" height="30" frameborder="0" scrolling="no" 
-                        style="color-scheme: normal; border-radius: 4px; vertical-align: middle;">
+                        style="color-scheme: ${colorSchemeStyle}; border-radius: 4px; vertical-align: middle;">
                     </iframe>
                 `;
                 
