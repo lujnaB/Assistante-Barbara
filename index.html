@@ -1167,8 +1167,8 @@
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('home'); closeMenu()">Accueil</a>
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('docs'); closeMenu()">Documentation</a>
                
-                <!-- BADGE DE STATUT (MODIFIÉ) -->
-                <!-- J'ai ajouté l'ID "status-badge-container" pour le script -->
+                <!-- BADGE DE STATUT (CORRIGÉ) -->
+                <!-- La faute de frappe "class." a été corrigée en "class" -->
                 <div class="nav-link status-badge-wrapper" title="Statut des services" id="status-badge-container">
                     <!-- L'iframe sera injecté ici par le script ci-dessous -->
                 </div>
@@ -2015,7 +2015,8 @@
                         decisions</li>
                         <li>Natural disasters or any other event beyond our reasonable control</li>
                     </ul>
-                    <p>In case of force majeure, our obligations will be suspended for the duration of the event, without commitment from us regarding a restoration timeline.</p>
+                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant 
+                    à un délai de rétablissement.</p>
 
                     <h3>7.
                     Limitation de responsabilité</h3>
@@ -2152,10 +2153,12 @@
                 const colorSchemeStyle = (theme === 'light') ? 'light' : 'dark';
 
                 // 4. Créer le NOUVEL iframe sous forme de chaîne de caractères
+                // NOUS UTILISONS L'URL SANS LE PARAMETRE ?theme=, car nous laissons "System" sur BetterUptime s'en charger
+                // MAIS nous gardons le style color-scheme pour forcer le navigateur.
                 const newIframeHTML = `
                     <iframe 
                         id="status-badge-iframe" 
-                        src="https://assistante-barbara.betteruptime.com/badge?theme=${badgeTheme}&v=${cacheBuster}" 
+                        src="https://assistante-barbara.betteruptime.com/badge?v=${cacheBuster}" 
                         width="200" height="30" frameborder="0" scrolling="no" 
                         style="color-scheme: ${colorSchemeStyle}; border-radius: 4px; vertical-align: middle;">
                     </iframe>
