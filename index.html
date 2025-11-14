@@ -955,13 +955,13 @@
                 border-bottom: 1px solid var(--border);
             }
             
-            /* --- NOUVEAU CODE CSS MOBILE (POUR L'ANCIEN DESIGN) --- */
-            #bot-status-link {
-                padding: 10px 0;
-                border-bottom: 1px solid var(--border);
-                width: 100%;
+            /* --- MODIFICATION POUR LE BADGE SUR MOBILE --- */
+            /* Ce style s'assure que le badge se comporte comme un lien normal */
+            .nav-link iframe {
+                width: 100% !important; 
+                padding: 5px 0;
             }
-            /* --- FIN --- */
+            /* --- FIN MODIFICATION --- */
 
 
             .btn-add {
@@ -1133,56 +1133,8 @@
             }
         }
         
-        /* --- NOUVEAU CODE CSS (RESTAURÉ) --- */
-        /* Styles pour l'indicateur de statut */
-        #bot-status-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            /* Le curseur redevient normal car le lien est cliquable */
-        }
-        
-        #bot-status-link:hover::after {
-            /* On laisse le soulignement par défaut */
-            width: 100%;
-        }
-        
-        #status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--muted); /* Couleur "chargement" */
-            transition: background-color 0.5s ease;
-            animation: pulse-loading 2s infinite ease-in-out;
-            flex-shrink: 0; /* Empêche le point de rétrécir */
-        }
-
-        #status-indicator.online {
-            background-color: #2ecc71; /* Vert */
-            animation: pulse-online 1.5s infinite ease-in-out;
-        }
-
-        #status-indicator.offline {
-            background-color: #e74c3c; /* Rouge */
-            animation: none; /* Pas d'animation si hors ligne */
-        }
-        
-        @keyframes pulse-loading {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 0.3; }
-        }
-        
-        @keyframes pulse-online {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.5);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 8px 10px rgba(46, 204, 113, 0);
-            }
-        }
-        /* --- FIN DU NOUVEAU CODE CSS --- */
+        /* --- CSS SUPPRIMÉ --- */
+        /* Tous les styles pour #bot-status-link, #status-indicator, etc. ont été supprimés */
 
 
         /* Page visibility */
@@ -1216,10 +1168,11 @@
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('home'); closeMenu()">Accueil</a>
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('docs'); closeMenu()">Documentation</a>
                 
-                <a href="https://assistante-barbara.betteruptime.com" target="_blank" class="nav-link" id="bot-status-link" title="Voir la page de statut">
-                    <span id="status-indicator"></span>
-                    <span id="status-text">Chargement...</span>
-                </a>
+                <div class="nav-link" style="padding: 5px 0;" title="Statut des services">
+                    <iframe src="https://assistante-barbara.betteruptime.com/badge?theme=dark" 
+                            width="200" height="30" frameborder="0" scrolling="no" 
+                            style="color-scheme: normal; border-radius: 4px; vertical-align: middle;"></iframe>
+                </div>
                 <a href="https://discord.com/oauth2/authorize?client_id=992854932107579392" class="btn-add" target="_blank">
                     ➕ Ajouter le bot
                 </a>
@@ -1334,127 +1287,10 @@
         </section>
 
         <section class="feedback-section">
-            <div class="feedback-background"></div>
-            <div class="feedback-pattern"></div>
-            <div class="feedback-content">
-                <div class="feedback-icon">⭐</div>
-                <h2 class="fade-in">Votre avis compte !</h2>
-                <p class="fade-in">
-                    Aidez-nous à améliorer Assistante Barbara en partageant votre expérience.
-                    Vos retours sont essentiels pour nous permettre d'évoluer.
-                </p>
-                
-                <div class="feedback-features fade-in">
-                    <div class="feedback-feature">
-                        <span>⚡</span>
-                        <span>Rapide (2 minutes)</span>
-                    </div>
-                    <div class="feedback-feature">
-                        <span>🔒</span>
-                        <span>Anonyme possible</span>
-                    </div>
-                    <div class="feedback-feature">
-                        <span>💡</span>
-                        <span>Toutes suggestions bienvenues</span>
-                    </div>
-                </div>
-                
-                <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback fade-in" target="_blank">
-                    <span>📝</span> Donner mon avis
-                </a>
-            </div>
-        </section>
+            </section>
 
         <section class="partners-section container">
-            <h2 class="section-title fade-in">Nos partenaires</h2>
-            
-            <div class="partners-intro fade-in">
-                <p>
-                    Assistante Barbara est fière de collaborer avec des partenaires qui partagent notre vision 
-                    d'améliorer l'expérience Discord.
-                    Ensemble, nous créons des solutions innovantes pour la communauté.
-                </p>
-            </div>
-
-            <div class="partners-carousel">
-                <div class="partners-wrapper">
-                    <div class="partners-track">
-                        <div class="partner-card partner-placeholder">
-                            <div class="partner-logo">🤝</div>
-                            <h4>Votre entreprise</h4>
-                            <p>Devenez partenaire et soutenez notre projet</p>
-                        </div>
-
-                        <div class="partner-card">
-                            <div class="partner-logo">🎮</div>
-                            <h4>Gaming Corp</h4>
-                            <p>Partenaire gaming depuis 2024</p>
-                        </div>
-
-                        <div class="partner-card">
-                            <div class="partner-logo">🎨</div>
-                            <h4>Design Studio</h4>
-                            <p>Support créatif et design</p>
-                        </div>
-
-                        <div class="partner-card">
-                            <div class="partner-logo">💻</div>
-                            <h4>Dev Community</h4>
-                            <p>Partenaire technique</p>
-                        </div>
-
-                        <div class="partner-card partner-placeholder">
-                            <div class="partner-logo">✨</div>
-                            <h4>Rejoignez-nous</h4>
-                            <p>Nous cherchons de nouveaux partenaires</p>
-                        </div>
-
-                        <div class="partner-card partner-placeholder">
-                            <div class="partner-logo">🤝</div>
-                            <h4>Votre entreprise</h4>
-                            <p>Devenez partenaire et soutenez notre projet</p>
-                        </div>
-
-                        <div class="partner-card">
-                            <div class="partner-logo">🎮</div>
-                            <h4>Gaming Corp</h4>
-                            <p>Partenaire gaming depuis 2024</p>
-                        </div>
-
-                        <div class="partner-card">
-                            <div class="partner-logo">🎨</div>
-                            <h4>Design Studio</h4>
-                            <p>Support créatif et design</p>
-                        </div>
-
-                        <div class="partner-card">
-                            <div class="partner-logo">💻</div>
-                            <h4>Dev Community</h4>
-                            <p>Partenaire technique</p>
-                        </div>
-
-                        <div class="partner-card partner-placeholder">
-                            <div class="partner-logo">✨</div>
-                            <h4>Rejoignez-nous</h4>
-                            <p>Nous cherchons de nouveaux partenaires</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="partner-cta fade-in">
-                <h3>🚀 Devenez partenaire</h3>
-                <p>
-                    Vous souhaitez soutenir Assistante Barbara ou collaborer avec nous ?
-                    Nous recherchons des partenaires motivés pour nous aider à grandir et à offrir 
-                    le meilleur service possible à notre communauté.
-                    Contactez-nous pour discuter des opportunités !
-                </p>
-                <a href="mailto:assistante.barbara.contact@gmail.com?subject=Demande%20de%20partenariat" class="btn-partner">
-                    <span>📧</span> Nous contacter
-                </a>
-            </div>
-        </section>
+            </section>
     </div>
 
     <div id="docs" class="page">
@@ -1490,7 +1326,7 @@
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
                         <h4>🇺🇸 Privacy Policy</h4>
-                        <p class="tag">Last updated: November 12, 2025</p>
+                        <p class="tag">Dernière mise à jour : 12 novembre 2025</p>
                     </div>
                     <span style="color: var(--muted);">▼</span>
                 </div>
@@ -1502,7 +1338,7 @@
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
                         <h4>🇺🇸 Terms of Service</h4>
-                        <p class="tag">Last updated: November 12, 2025</p>
+                        <p class="tag">Dernière mise à jour : 12 novembre 2025</p>
                     </div>
                     <span style="color: var(--muted);">▼</span>
                 </div>
@@ -1513,16 +1349,7 @@
     </div>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="container">
-                <h3>Assistante Barbara</h3>
-                <div class="footer-divider"></div>
-                <p>Bot Discord polyvalent propulsé par l'IA</p>
-                <p style="margin-top: 20px; margin-bottom: 0; opacity: 0.6;
-                font-size: 0.9rem;">© 2025 - Tous droits réservés</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
 
     <script>
         // --- NOUVEAU CODE POUR LE MODE SOMBRE ---
@@ -1626,61 +1453,9 @@
                 observer.observe(el);
             });
             
-            // --- NOUVEAU CODE JS POUR LE STATUT (VERSION HYBRIDE) ---
-            
-            /**
-             * Vérifie le statut du bot en interrogeant l'API de Better Uptime.
-             */
-            async function checkBotStatus() {
-                const indicator = document.getElementById('status-indicator');
-                const statusText = document.getElementById('status-text');
-                
-                // Cette URL est SÉCURISÉE (https) et autorisée !
-                const statusUrl = 'https://assistante-barbara.betteruptime.com/api/v2/status.json'; 
-
-                if (!indicator || !statusText) return;
-
-                try {
-                    const response = await fetch(statusUrl, {
-                        method: 'GET',
-                        mode: 'cors' // Autoriser la requête cross-origin
-                    });
-
-                    if (!response.ok) {
-                       throw new Error('API Better Uptime non joignable');
-                    }
-                    
-                    const data = await response.json();
-                    
-                    // On récupère le statut global ("up", "down", "degraded")
-                    const status = data.data.attributes.aggregate_status; 
-
-                    if (status === 'up') {
-                        indicator.className = 'online';
-                        statusText.textContent = 'En ligne';
-                    } else if (status === 'degraded') {
-                        indicator.className = 'offline'; // On reste simple avec rouge
-                        statusText.textContent = 'Partiel';
-                    } else { // 'down' ou tout autre statut
-                        indicator.className = 'offline';
-                        statusText.textContent = 'Hors ligne';
-                    }
-                    
-                } catch (error) {
-                    // Si l'API de Better Uptime elle-même ne répond pas
-                    console.error('Erreur de statut du bot:', error.message);
-                    indicator.className = 'offline';
-                    statusText.textContent = 'Indisponible'; // Statut inconnu
-                }
-            }
-
-            // Vérifier le statut au chargement de la page
-            checkBotStatus();
-                
-            // Vérifier à nouveau toutes les 60 secondes (60000 ms)
-            // (Better Uptime a un cache, mais c'est bien de vérifier régulièrement)
-            setInterval(checkBotStatus, 60000); 
-            // --- FIN DU NOUVEAU CODE JS ---
+            // --- JAVASCRIPT SUPPRIMÉ ---
+            // Tout le code pour "checkBotStatus" a été supprimé.
+            // L'iframe se met à jour tout seul.
         });
     </script>
 </body>
