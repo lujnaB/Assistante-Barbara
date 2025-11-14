@@ -1170,7 +1170,8 @@
                 <!-- BADGE DE STATUT (MODIFIÉ) -->
                 <!-- J'ai ajouté la classe "status-badge-wrapper" et retiré le style="padding..." -->
                 <div class="nav-link status-badge-wrapper" title="Statut des services">
-                    <iframe src="https://assistante-barbara.betteruptime.com/badge?theme=dark" 
+                    <!-- NOUVELLE MODIFICATION : Ajout de id="status-badge-iframe" -->
+                    <iframe id="status-badge-iframe" src="https://assistante-barbara.betteruptime.com/badge?theme=dark" 
                             width="200" height="30" frameborder="0" scrolling="no" 
                             style="color-scheme: normal; border-radius: 4px; vertical-align: middle;"></iframe>
                 </div>
@@ -2019,7 +2020,7 @@
                     <p>In case of force majeure, our obligations will be suspended for the duration of the event, without commitment from us regarding a restoration timeline.</p>
 
                     <h3>7.
-                    Limitation of liability</h3>
+                    Limitation de responsabilité</h3>
                     <div class="highlight-box">
                         <p><strong>Assistante Barbara is provided "as is" and "as available".</strong> To the fullest extent permitted by applicable law, we disclaim all liability for:</p>
                         <ul>
@@ -2135,6 +2136,17 @@
             htmlElement.setAttribute('data-theme', theme);
             themeToggleBtn.innerText = theme === 'light' ? '☀️' : '🌙';
             localStorage.setItem('theme', theme);
+
+            // --- NOUVELLE MODIFICATION POUR SYNCHRONISER LE BADGE ---
+            const badgeIframe = document.getElementById('status-badge-iframe');
+            if (badgeIframe) {
+                // Si le thème de la page est "light", on met le badge en "light".
+                // Si le thème de la page est "dark", on met le badge en "dark".
+                const badgeTheme = (theme === 'light') ? 'light' : 'dark';
+                // Note: BetterUptime peut avoir un cache, donc le changement peut ne pas être instantané.
+                badgeIframe.src = `https://assistante-barbara.betteruptime.com/badge?theme=${badgeTheme}`;
+            }
+            // --- FIN DE LA MODIFICATION ---
         }
 
         // Appliquer le thème sauvegardé au chargement de la page
@@ -2224,7 +2236,7 @@
             
             // --- JAVASCRIPT SUPPRIMÉ ---
             // Tout le code pour "checkBotStatus" a été supprimé.
-            // L'iframe se met à jour tout seul.
+            // L'iframe se met à jour tout seul (via le code de thème ci-dessus).
         });
     </script>
 </body>
