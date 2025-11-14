@@ -1168,12 +1168,9 @@
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('docs'); closeMenu()">Documentation</a>
                
                 <!-- BADGE DE STATUT (MODIFIÉ) -->
-                <!-- J'ai ajouté la classe "status-badge-wrapper" et retiré le style="padding..." -->
-                <div class="nav-link status-badge-wrapper" title="Statut des services">
-                    <!-- NOUVELLE MODIFICATION : Ajout de id="status-badge-iframe" -->
-                    <iframe id="status-badge-iframe" src="https://assistante-barbara.betteruptime.com/badge?theme=dark" 
-                            width="200" height="30" frameborder="0" scrolling="no" 
-                            style="color-scheme: normal; border-radius: 4px; vertical-align: middle;"></iframe>
+                <!-- J'ai ajouté l'ID "status-badge-container" pour le script -->
+                <div class.="nav-link status-badge-wrapper" title="Statut des services" id="status-badge-container">
+                    <!-- L'iframe sera injecté ici par le script ci-dessous -->
                 </div>
                 <!-- FIN DU BADGE -->
 
@@ -1189,6 +1186,7 @@
     </header>
 
     <div id="home" class="page active">
+        <!-- ... (Tout le contenu de la page "home" reste identique) ... -->
         <section class="hero container">
             <h2 class="fade-in">
                 Votre assistante Discord<br>
@@ -1814,7 +1812,7 @@
 
                     <h3>4.
                     Third-Party APIs Usage and Joint Controllership</h3>
-                    <p>Assistante Barbara uses the following third-party services, which have their own privacy policies:</p>
+                    <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
                     <ul>
                         <li><strong>Discord API:</strong> Discord acts as joint controller for data processed through its platform in accordance with its own <a 
                         href="https://discord.com/privacy" target="_blank">privacy policy</a>.</li>
@@ -2137,17 +2135,32 @@
             themeToggleBtn.innerText = theme === 'light' ? '☀️' : '🌙';
             localStorage.setItem('theme', theme);
 
-            // --- NOUVELLE MODIFICATION POUR SYNCHRONISER LE BADGE ---
-            const badgeIframe = document.getElementById('status-badge-iframe');
-            if (badgeIframe) {
+            // --- NOUVELLE LOGIQUE : Détruire et recréer l'iframe ---
+            
+            // 1. Trouver le conteneur
+            const badgeContainer = document.getElementById('status-badge-container');
+            
+            if (badgeContainer) {
+                // 2. Déterminer le thème du badge
                 const badgeTheme = (theme === 'light') ? 'light' : 'dark';
-                
-                // --- MODIFICATION AVEC CACHE BUSTER ---
-                // Ajoute l'heure actuelle pour forcer le rechargement de l'iframe
+
+                // 3. Ajoute l'heure actuelle pour forcer le rechargement de l'iframe (cache buster)
                 const cacheBuster = new Date().getTime();
-                badgeIframe.src = `https://assistante-barbara.betteruptime.com/badge?theme=${badgeTheme}&v=${cacheBuster}`;
+
+                // 4. Créer le NOUVEL iframe sous forme de chaîne de caractères
+                const newIframeHTML = `
+                    <iframe 
+                        id="status-badge-iframe" 
+                        src="https://assistante-barbara.betteruptime.com/badge?theme=${badgeTheme}&v=${cacheBuster}" 
+                        width="200" height="30" frameborder="0" scrolling="no" 
+                        style="color-scheme: normal; border-radius: 4px; vertical-align: middle;">
+                    </iframe>
+                `;
+                
+                // 5. Remplacer le contenu du conteneur (détruit l'ancien iframe, ajoute le nouveau)
+                badgeContainer.innerHTML = newIframeHTML;
             }
-            // --- FIN DE LA MODIFICATION ---
+            // --- FIN DE LA NOUVELLE LOGIQUE ---
         }
 
         // Appliquer le thème sauvegardé au chargement de la page
