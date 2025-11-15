@@ -84,24 +84,30 @@
             66% { transform: translate(-20px, 20px) rotate(-1deg); }
         }
 
-        /* Smooth reveal animations */
-        .fade-in {
+        /* --- NOUVEAU SYSTÈME D'ANIMATION (REMPLACE .fade-in) --- */
+        .animated-element {
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeIn 0.6s ease forwards;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .animated-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
+        
+        /* Décalage pour les éléments groupés */
+        .animated-element.is-visible:nth-child(1) { transition-delay: 0.1s; }
+        .animated-element.is-visible:nth-child(2) { transition-delay: 0.2s; }
+        .animated-element.is-visible:nth-child(3) { transition-delay: 0.3s; }
+        .animated-element.is-visible:nth-child(4) { transition-delay: 0.4s; }
+        .animated-element.is-visible:nth-child(5) { transition-delay: 0.5s; }
+        .animated-element.is-visible:nth-child(6) { transition-delay: 0.6s; }
+        .animated-element.is-visible:nth-child(7) { transition-delay: 0.7s; }
+        .animated-element.is-visible:nth-child(8) { transition-delay: 0.8s; }
+        .animated-element.is-visible:nth-child(9) { transition-delay: 0.9s; }
+        /* --- FIN DU NOUVEAU SYSTÈME --- */
 
-        .fade-in:nth-child(1) { animation-delay: 0.1s; }
-        .fade-in:nth-child(2) { animation-delay: 0.2s; }
-        .fade-in:nth-child(3) { animation-delay: 0.3s; }
-        .fade-in:nth-child(4) { animation-delay: 0.4s; }
 
         /* Header */
         .header {
@@ -1056,84 +1062,7 @@
                 width: 240px;
             }
 
-            /* Animations mobiles pour les cartes de fonctionnalités */
-            .feature-card {
-                animation: fade-in-up 0.6s ease-out forwards;
-            }
-
-            .feature-card:nth-child(1) { animation-delay: 0.1s; }
-            .feature-card:nth-child(2) { animation-delay: 0.2s; }
-            .feature-card:nth-child(3) { animation-delay: 0.3s; }
-            .feature-card:nth-child(4) { animation-delay: 0.4s; }
-            .feature-card:nth-child(5) { animation-delay: 0.5s; }
-            .feature-card:nth-child(6) { animation-delay: 0.6s; }
-
-            @keyframes fade-in-up {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            /* Animation zoom uniquement des icônes sur mobile - SYNCHRONISÉE */
-            .feature-icon {
-                animation: icon-zoom-mobile 3s ease-in-out infinite;
-            }
-
-            @keyframes icon-zoom-mobile {
-                0%, 100% {
-                    transform: scale(1);
-                }
-                50% {
-                    transform: scale(1.15);
-                }
-            }
-
-            /* Animation des cartes de commandes sur mobile */
-            .command-card {
-                animation: slide-in-right 0.5s ease-out forwards;
-            }
-
-            .command-card:nth-child(1) { animation-delay: 0.1s; }
-            .command-card:nth-child(2) { animation-delay: 0.15s; }
-            .command-card:nth-child(3) { animation-delay: 0.2s; }
-            .command-card:nth-child(4) { animation-delay: 0.25s; }
-            .command-card:nth-child(5) { animation-delay: 0.3s; }
-            .command-card:nth-child(6) { animation-delay: 0.35s; }
-            .command-card:nth-child(7) { animation-delay: 0.4s; }
-            .command-card:nth-child(8) { animation-delay: 0.45s; }
-            .command-card:nth-child(9) { animation-delay: 0.5s; }
-
-            @keyframes slide-in-right {
-                from {
-                    opacity: 0;
-                    transform: translateX(-20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-
-            /* Animation des cartes partenaires visible au défilement */
-            .partner-card {
-                animation: scale-in 0.4s ease-out forwards;
-            }
-
-            @keyframes scale-in {
-                from {
-                    opacity: 0;
-                    transform: scale(0.9);
-                }
-                to {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-            }
+            /* Les anciennes animations mobiles @keyframes ont été supprimées */
         }
 
         /* Page visibility */
@@ -1185,15 +1114,15 @@
 
     <div id="home" class="page active">
         <section class="hero container">
-            <h2 class="fade-in">
+            <h2 class="animated-element">
                 Votre assistante Discord<br>
                 <span class="gradient-text">polyvalente et intelligente</span>
             </h2>
-            <p class="fade-in">
+            <p class="animated-element">
  
                Assistante Barbara combine intelligence artificielle, commandes variées et musique libre pour améliorer l'expérience de vos serveurs Discord.
             </p>
-            <div class="hero-buttons fade-in">
+            <div class="hero-buttons animated-element">
                 <a href="https://discord.com/oauth2/authorize?client_id=992854932107579392" class="btn-primary" target="_blank">
                     Ajouter à Discord
                 </a>
@@ -1205,39 +1134,39 @@
         </section>
 
         <section class="features container">
-            <h2 class="section-title fade-in">Principales fonctionnalités</h2>
+            <h2 class="section-title animated-element">Principales fonctionnalités</h2>
             <div class="features-grid">
               
-                <div class="feature-card fade-in">
+                <div class="feature-card animated-element">
                     <span class="feature-icon">🤖</span>
                     <h3>Intelligence artificielle</h3>
                     <p>Assistante Barbara utilise OpenAI et Mistral AI pour répondre intelligemment à vos questions et vous accompagner dans vos tâches quotidiennes.</p>
                 </div>
-                <div class="feature-card fade-in">
+                <div class="feature-card animated-element">
                     <span class="feature-icon">🎵</span>
                     <h3>Musique libre</h3>
                     <p>Écoutez de la musique libre de droits via Jamendo.
                     Recherche, file d'attente, contrôles de lecture et modes de répétition inclus.</p>
                 </div>
-                <div class="feature-card fade-in">
+                <div class="feature-card animated-element">
                     <span class="feature-icon">⚙️</span>
                     <h3>Commandes variées</h3>
                     <p>Informations sur les utilisateurs, salons et serveurs.
                     Gestion des messages, générateur de nombres aléatoires et bien plus encore.</p>
                 </div>
-                <div class="feature-card fade-in">
+                <div class="feature-card animated-element">
                     <span class="feature-icon">🔒</span>
                     <h3>Respect de la vie privée</h3>
                     <p>Aucune donnée personnelle conservée en permanence. Logs temporaires supprimés automatiquement.
                     Conformité RGPD.</p>
                 </div>
-                <div class="feature-card fade-in">
+                <div class="feature-card animated-element">
                     <span class="feature-icon">🌍</span>
                     <h3>Multilingue</h3>
                     <p>Interface et commandes disponibles 
                     en français. L'IA peut communiquer dans plusieurs langues selon vos besoins.</p>
                 </div>
-                <div class="feature-card fade-in">
+                <div class="feature-card animated-element">
                     <span class="feature-icon">⚡</span>
                     <h3>Rapide et fiable</h3>
                     <p>Hébergement optimisé sur Katabump pour une disponibilité maximale.
@@ -1247,41 +1176,41 @@
         </section>
 
         <section class="commands-section container">
-            <h2 class="section-title">Commandes disponibles</h2>
+            <h2 class="section-title animated-element">Commandes disponibles</h2>
             <div class="commands-grid">
-                <div class="command-card fade-in">
+                <div class="command-card animated-element">
                     <h4>/play [titre]</h4>
                     <p>Recherche et joue une chanson depuis Jamendo avec menu de sélection.</p>
                 </div>
-                <div class="command-card fade-in">
+                <div class="command-card animated-element">
                     <h4>/stop</h4>
                     <p>Arrête la musique et déconnecte le bot du salon vocal.</p>
                 </div>
-                <div class="command-card fade-in">
+                <div class="command-card animated-element">
                     <h4>/queue</h4>
                     <p>Affiche la file d'attente musicale actuelle.</p>
                 </div>
-                <div class="command-card fade-in">
+                <div class="command-card animated-element">
                     <h4>/utilisateur [user]</h4>
                     <p>Affiche les informations détaillées d'un utilisateur.</p>
                 </div>
-                <div class="command-card fade-in">
+                <div class="command-card animated-element">
                     <h4>/salon [channel]</h4>
                     <p>Affiche les informations d'un salon Discord.</p>
                 </div>
-                <div class="command-card fade-in">
+                <div class="command-card animated-element">
                     <h4>/serveur</h4>
                     <p>Affiche les statistiques et infos du serveur.</p>
                 </div>
-                <div class="command-card fade-in">
+                <div class="command-card animated-element">
                     <h4>/clear [nombre]</h4>
                     <p>Supprime un nombre spécifique de messages (permissions requises).</p>
                 </div>
-                <div class="command-card fade-in">
+                <div class="command-card animated-element">
                     <h4>/nombre</h4>
                     <p>Génère un nombre aléatoire entre 1 et 10.</p>
                 </div>
-                <div class="command-card fade-in">
+                <div class="command-card animated-element">
                     <h4>Chatbot IA</h4>
                     <p>Mentionnez @Assistante Barbara ou écrivez dans les salons configurés pour discuter avec l'IA.</p>
                 </div>
@@ -1293,13 +1222,13 @@
             <div class="feedback-pattern"></div>
             <div class="feedback-content">
                 <div class="feedback-icon">⭐</div>
-                <h2 class="fade-in">Votre avis compte !</h2>
-                <p class="fade-in">
+                <h2 class="animated-element">Votre avis compte !</h2>
+                <p class="animated-element">
                     Aidez-nous à améliorer Assistante Barbara en partageant votre expérience.
                     Vos retours sont essentiels pour nous permettre d'évoluer.
                 </p>
                 
-                <div class="feedback-features fade-in">
+                <div class="feedback-features animated-element">
                     <div class="feedback-feature">
                         <span>⚡</span>
                         <span>Rapide (2 minutes)</span>
@@ -1314,16 +1243,16 @@
                     </div>
                 </div>
                 
-                <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback fade-in" target="_blank">
+                <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback animated-element" target="_blank">
                     <span>📝</span> Donner mon avis
                 </a>
             </div>
         </section>
 
         <section class="partners-section container">
-            <h2 class="section-title fade-in">Nos partenaires</h2>
+            <h2 class="section-title animated-element">Nos partenaires</h2>
             
-            <div class="partners-intro fade-in">
+            <div class="partners-intro animated-element">
                 <p>
                     Assistante Barbara est fière de collaborer avec des partenaires qui partagent notre vision 
                     d'améliorer l'expérience Discord.
@@ -1331,7 +1260,7 @@
                 </p>
             </div>
 
-            <div class="partners-carousel">
+            <div class="partners-carousel animated-element">
                 <div class="partners-wrapper">
                     <div class="partners-track">
                         <div class="partner-card partner-placeholder">
@@ -1397,7 +1326,7 @@
                 </div>
             </div>
 
-            <div class="partner-cta fade-in">
+            <div class="partner-cta animated-element">
                 <h3>🚀 Devenez partenaire</h3>
                 <p>
                     Vous souhaitez soutenir Assistante Barbara ou collaborer avec nous ?
@@ -1414,9 +1343,9 @@
 
     <div id="docs" class="page">
         <section class="docs container">
-            <h2 class="section-title">Documentation & mentions légales</h2>
+            <h2 class="section-title animated-element">Documentation & mentions légales</h2>
 
-            <div class="accordion-item">
+            <div class="accordion-item animated-element">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
                         <h4>🇫🇷 Politique de confidentialité</h4>
@@ -1569,7 +1498,7 @@
                 </div>
             </div>
 
-            <div class="accordion-item">
+            <div class="accordion-item animated-element">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
                         <h4>🇫🇷 Conditions générales d'utilisation</h4>
@@ -1757,7 +1686,7 @@
                 </div>
             </div>
 
-            <div class="accordion-item">
+            <div class="accordion-item animated-element">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
                         <h4>🇺🇸 Privacy Policy</h4>
@@ -1909,7 +1838,7 @@
                 </div>
             </div>
 
-            <div class="accordion-item">
+            <div class="accordion-item animated-element">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
                         <h4>🇺🇸 Terms of Service</h4>
@@ -2210,27 +2139,29 @@
             }
         }
 
-        // Smooth scroll reveal animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
+        // --- NOUVEAU SYSTÈME D'ANIMATION (REMPLACE L'ANCIEN OBSERVER) ---
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
+            const animatedElements = document.querySelectorAll('.animated-element');
+
+            const animationObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Quand l'élément devient visible
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // On arrête de l'observer pour ne pas répéter l'animation
+                        animationObserver.unobserve(entry.target);
+                    }
+                });
+            }, { 
+                threshold: 0.1 // Déclenche quand 10% de l'élément est visible
             });
-            
-            // Le JavaScript pour "checkBotStatus" est supprimé.
+
+            // On observe tous les éléments animés
+            animatedElements.forEach(el => {
+                animationObserver.observe(el);
+            });
         });
+        // --- FIN DU NOUVEAU SYSTÈME ---
     </script>
 </body>
 </html>
