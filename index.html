@@ -117,17 +117,7 @@ animation: float 20s ease-in-out infinite;
         .animated-element.is-visible:nth-child(9) { transition-delay: 0.36s; }
         /* --- FIN DU NOUVEAU SYSTÈME --- */
 
-        /* --- NOUVELLE ANIMATION : Feedback Section (Zoom In) --- */
-        .animated-feedback {
-            opacity: 0;
-            transform: scale(0.95); /* Commence légèrement plus petit */
-            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-        
-        .animated-feedback.is-visible {
-            opacity: 1;
-            transform: scale(1); /* Finit à sa taille normale */
-        }
+        /* --- ANIMATION Feedback Section (Supprimée) --- */
 
         /* --- NOUVELLE ANIMATION : Partners Section (Gentle Fade) --- */
         .animated-partners-container {
@@ -1277,19 +1267,19 @@ l'IA.</p>
             </div>
         </section>
 
-        <section class="feedback-section animated-feedback">
+        <section class="feedback-section">
             <div class="feedback-background"></div>
             <div class="feedback-pattern"></div>
             <div class="feedback-content">
                 
 <div class="feedback-icon">⭐</div>
-                <h2 class="animated-element">Votre avis compte !</h2>
-                <p class="animated-element">
+                <h2>Votre avis compte !</h2>
+                <p>
                     Aidez-nous à améliorer Assistante Barbara en partageant votre expérience.
 Vos retours sont essentiels pour nous permettre d'évoluer.
                 </p>
                 
-                <div class="feedback-features animated-element">
+                <div class="feedback-features">
                     <div class="feedback-feature">
                         <span>⚡</span>
              
@@ -1307,7 +1297,7 @@ Vos retours sont essentiels pour nous permettre d'évoluer.
               </div>
                 </div>
                 
-                <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback animated-element" target="_blank">
+                <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback" target="_blank">
                     <span>📝</span> Donner mon avis
            
      </a>
@@ -2337,8 +2327,8 @@ const isOpen = item.classList.contains('open');
         // --- SYSTÈME D'ANIMATION MIS À JOUR ---
         document.addEventListener('DOMContentLoaded', () => {
             
-            // MODIFICATION JAVASCRIPT: On observe les anciennes ET les nouvelles classes
-            const animatedElements = document.querySelectorAll('.animated-element, .animated-feedback, .animated-partners-container');
+            // MODIFICATION JAVASCRIPT: Suppression de '.animated-feedback'
+            const animatedElements = document.querySelectorAll('.animated-element, .animated-partners-container');
 
             const animationObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
