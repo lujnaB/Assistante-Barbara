@@ -643,50 +643,8 @@
             line-height: 1.8;
             margin-bottom: 30px;
         }
-
-        .partner-cta {
-            background: var(--bg-highlight);
-            padding: 30px;
-            border-radius: 12px;
-            border-left: 4px solid var(--primary);
-            text-align: left;
-            margin-top: 40px;
-        }
-
-        .partner-cta h3 {
-            color: var(--dark);
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .partner-cta p {
-            color: var(--muted);
-            margin-bottom: 20px;
-            line-height: 1.7;
-        }
-
-        .partner-cta .btn-partner {
-            background: var(--gradient);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .partner-cta .btn-partner:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
+        
+        /* NOTE: .partner-cta styles removed as requested */
 
         .partners-carousel {
             position: relative;
@@ -717,7 +675,8 @@
 
         .partners-track {
             display: flex;
-            gap: 30px;
+            /* --- MODIFICATION : 'gap' supprimé pour un défilement parfait --- */
+            /* gap: 30px; */ 
             animation: scroll 30s linear infinite;
             width: fit-content;
         }
@@ -731,7 +690,7 @@
                 transform: translateX(0);
             }
             100% {
-                transform: translateX(-50%);
+                transform: translateX(-50%); /* Ceci est maintenant mathématiquement correct */
             }
         }
 
@@ -745,6 +704,9 @@
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            
+            /* --- MODIFICATION : Ajout de 'margin-right' pour remplacer 'gap' --- */
+            margin-right: 30px;
         }
 
         .partner-card:hover {
@@ -1092,11 +1054,14 @@
             }
 
             .partners-track {
-                gap: 20px;
+                /* --- MODIFICATION : 'gap' mobile supprimé --- */
+                /* gap: 20px; */
             }
 
-            .partners-card {
+            .partner-card {
                 width: 240px;
+                /* --- MODIFICATION : 'margin-right' mobile pour remplacer 'gap' --- */
+                margin-right: 20px;
             }
 
             /* Les anciennes animations mobiles @keyframes ont été supprimées */
@@ -1355,7 +1320,7 @@
                 </div>
             </div>
 
-        </section>
+            </section>
     </div>
 
     <div id="docs" class="page">
