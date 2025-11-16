@@ -434,16 +434,18 @@
             overflow: hidden;
         }
 
+        /* --- MODIFICATION : Animation de la barre de survol --- */
         .feature-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            left: 50%; /* 1. Centrer horizontalement */
+            width: 0;  /* 2. Commencer à 0 de largeur */
             height: 4px;
             background: var(--gradient);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            transform: translateX(-50%); /* 3. Centrer parfaitement */
+            transition: width 0.3s ease; /* 4. Animer la largeur */
+            border-radius: 3px; /* 5. Arrondir les bords */
         }
 
         .feature-card:hover {
@@ -452,8 +454,9 @@
         }
 
         .feature-card:hover::before {
-            transform: scaleX(1);
+            width: 98%; /* 6. Animer à 98% (pour ne pas être coupé par overflow:hidden) */
         }
+        /* --- FIN DE LA MODIFICATION --- */
 
         .feature-icon {
             font-size: 3rem;
@@ -890,7 +893,7 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.05) 0%, transparent 50%);
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -1711,7 +1714,7 @@
                     </ul>
 
                     <h3>7. User Rights (GDPR)</h3>
-                    <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
+                    <p>In accordance with the General Data Protection Regulation (GDPR), you have the following rights:</p>
                     <ul>
                         <li><strong>Droit d'accès (Article 15):</strong> Obtain confirmation of data processing and access to it</li>
                         <li><strong>Droit de rectification (Article 16):</strong> Correct inaccurate or incomplete data</li>
