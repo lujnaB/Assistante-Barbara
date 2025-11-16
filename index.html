@@ -681,11 +681,13 @@
         }
 
         .partners-track {
-            display: flex;
-            /* --- MODIFICATION : 'gap' supprimé pour un défilement parfait --- */
-            /* gap: 30px; */ 
-            animation: scroll 30s linear infinite;
-            width: fit-content;
+            /* --- NOUVELLE MODIFICATION : Remplacement de flex+fit-content --- */
+            display: inline-flex; 
+            /* width: fit-content; */ /* Supprimé */
+            /* --- FIN DE LA MODIFICATION --- */
+            
+            /* 'gap' est bien supprimé */
+            animation: scroll 60s linear infinite; /* Animation ralentie */
         }
 
         .partners-track:hover {
@@ -697,7 +699,7 @@
                 transform: translateX(0);
             }
             100% {
-                transform: translateX(-50%); /* Ceci est maintenant mathématiquement correct */
+                transform: translateX(-50%); /* Ceci est mathématiquement correct */
             }
         }
 
@@ -712,7 +714,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             
-            /* --- MODIFICATION : Ajout de 'margin-right' pour remplacer 'gap' --- */
+            /* 'margin-right' est bien présent pour remplacer 'gap' */
             margin-right: 30px;
         }
 
