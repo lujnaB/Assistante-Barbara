@@ -682,8 +682,8 @@
 
         .partners-track {
             display: flex;
-            /* --- MODIFICATION : 'gap' est revenu --- */
-            gap: 30px; 
+            /* --- MODIFICATION : 'gap' supprimé pour un défilement parfait --- */
+            /* gap: 30px; */ 
             animation: scroll 30s linear infinite;
             width: fit-content;
         }
@@ -697,7 +697,7 @@
                 transform: translateX(0);
             }
             100% {
-                transform: translateX(-50%); /* Le "saut" peut réapparaître, comme demandé */
+                transform: translateX(-50%); /* Ceci est maintenant mathématiquement correct */
             }
         }
 
@@ -712,8 +712,8 @@
             transition: all 0.3s ease;
             cursor: pointer;
             
-            /* --- MODIFICATION : 'margin-right' a été retiré --- */
-            /* margin-right: 30px; */
+            /* --- MODIFICATION : Ajout de 'margin-right' pour remplacer 'gap' --- */
+            margin-right: 30px;
         }
 
         .partner-card:hover {
@@ -1061,14 +1061,14 @@
             }
 
             .partners-track {
-                /* --- MODIFICATION : 'gap' mobile est revenu --- */
-                gap: 20px;
+                /* --- MODIFICATION : 'gap' mobile supprimé --- */
+                /* gap: 20px; */
             }
 
             .partner-card {
                 width: 240px;
-                /* --- MODIFICATION : 'margin-right' mobile a été retiré --- */
-                /* margin-right: 20px; */
+                /* --- MODIFICATION : 'margin-right' mobile pour remplacer 'gap' --- */
+                margin-right: 20px;
             }
 
             /* Les anciennes animations mobiles @keyframes ont été supprimées */
