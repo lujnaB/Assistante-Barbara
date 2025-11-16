@@ -53,6 +53,13 @@
             --bg-placeholder-gradient: linear-gradient(135deg, var(--bg-highlight) 0%, var(--bg-card) 100%);
         }
 
+        /* --- MODIFICATION : Dégradé Footer mode sombre --- */
+        html[data-theme='dark'] .footer {
+            /* Surcharge le 'background' pour le mode sombre pour un dégradé plus subtil */
+            background: linear-gradient(135deg, var(--bg-card) 0%, #1a252f 100%);
+        }
+        /* --- FIN DE LA MODIFICATION --- */
+
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background: var(--bg-body);
@@ -675,8 +682,8 @@
 
         .partners-track {
             display: flex;
-            /* --- MODIFICATION : 'gap' supprimé pour un défilement parfait --- */
-            /* gap: 30px; */ 
+            /* --- MODIFICATION : 'gap' est revenu --- */
+            gap: 30px; 
             animation: scroll 30s linear infinite;
             width: fit-content;
         }
@@ -690,7 +697,7 @@
                 transform: translateX(0);
             }
             100% {
-                transform: translateX(-50%); /* Ceci est maintenant mathématiquement correct */
+                transform: translateX(-50%); /* Le "saut" peut réapparaître, comme demandé */
             }
         }
 
@@ -705,8 +712,8 @@
             transition: all 0.3s ease;
             cursor: pointer;
             
-            /* --- MODIFICATION : Ajout de 'margin-right' pour remplacer 'gap' --- */
-            margin-right: 30px;
+            /* --- MODIFICATION : 'margin-right' a été retiré --- */
+            /* margin-right: 30px; */
         }
 
         .partner-card:hover {
@@ -1054,14 +1061,14 @@
             }
 
             .partners-track {
-                /* --- MODIFICATION : 'gap' mobile supprimé --- */
-                /* gap: 20px; */
+                /* --- MODIFICATION : 'gap' mobile est revenu --- */
+                gap: 20px;
             }
 
             .partner-card {
                 width: 240px;
-                /* --- MODIFICATION : 'margin-right' mobile pour remplacer 'gap' --- */
-                margin-right: 20px;
+                /* --- MODIFICATION : 'margin-right' mobile a été retiré --- */
+                /* margin-right: 20px; */
             }
 
             /* Les anciennes animations mobiles @keyframes ont été supprimées */
@@ -1740,7 +1747,7 @@
                     <p>This website does not use any tracking, advertising, or analytics cookies. Only strictly necessary cookies for site functionality may be used.</p>
 
                     <h3>12. Policy Changes</h3>
-                    <p>This policy may be modified occasionally to reflect service developments or legislative changes. The last update date will always be indicated at the top of the document. In case of substantial changes, we will endeavor to inform users.</p>
+                    <p>This policy may be modified occasionnellement to reflect service developments or legislative changes. The last update date will always be indicated at the top of the document. In case of substantial changes, we will endeavor to inform users.</p>
 
                     <div class="contact-box">
                         <h4>13. Contact and Exercise of Your Rights</h4>
