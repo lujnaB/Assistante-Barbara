@@ -14,7 +14,7 @@
         }
 
         :root {
-            /* --- Mode Clair (inchangé) --- */
+            /* --- Couleurs de marque & Mode Clair --- */
             --primary: #667eea;
             --secondary: #764ba2;
             --dark: #2c3e50;
@@ -34,37 +34,29 @@
         }
 
         html[data-theme='dark'] {
-            /* --- NOUVELLE PALETTE DARK MODE (Modern Deep Slate) --- */
+            /* --- PALETTE DARK MODE (Modern Deep Slate) --- */
             
-            /* Textes & Titres */
-            --dark: #f1f5f9;      /* Titres (blanc cassé très clair) */
-            --light: #1e293b;     /* Inverse (utilisé rarement) */
+            /* Textes */
+            --dark: #f1f5f9;      /* Titres (blanc cassé) */
+            --light: #1e293b;     
             --text: #cbd5e1;      /* Texte courant (gris clair doux) */
             --muted: #94a3b8;     /* Texte secondaire (gris ardoise) */
             
             /* Fonds */
-            --bg-body: #0f172a;   /* Fond principal (Bleu nuit très profond/Noir) */
+            --bg-body: #0f172a;   /* Fond principal (Bleu nuit très profond) */
             --bg-card: #1e293b;   /* Fond des cartes (Gris ardoise foncé) */
             
             /* Navigation */
-            --bg-header: rgba(15, 23, 42, 0.95); /* Semi-transparent sombre */
+            --bg-header: rgba(15, 23, 42, 0.95); 
             --bg-header-mobile-nav: #1e293b;
             
             /* Éléments UI */
-            --bg-highlight: #334155; /* Boites de mise en avant */
-            --border: #334155;       /* Bordures subtiles */
-            --shadow: rgba(0, 0, 0, 0.5); /* Ombres plus marquées pour la profondeur */
+            --bg-highlight: #334155; 
+            --border: #334155;       
+            --shadow: rgba(0, 0, 0, 0.5); 
             
             --bg-placeholder-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
         }
-
-        /* --- MODIFICATION : Dégradé Footer mode sombre --- */
-        html[data-theme='dark'] .footer {
-            /* Ajustement pour fondre le footer avec le nouveau background sombre */
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-top: 1px solid var(--border);
-        }
-        /* --- FIN DE LA MODIFICATION --- */
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -75,7 +67,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        /* Transition douce pour les éléments changeant de couleur */
+        /* Transition douce pour les éléments */
         .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .partner-cta, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
             transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
@@ -170,7 +162,7 @@
         .menu-toggle span {
             width: 25px;
             height: 3px;
-            background: var(--text); /* Changé à var(--text) pour être visible en dark mode */
+            background: var(--text);
             border-radius: 3px;
             transition: all 0.3s ease;
         }
@@ -210,7 +202,7 @@
         .logo-text h1 {
             font-size: 1.4rem;
             font-weight: 600;
-            color: var(--dark); /* S'adapte au thème */
+            color: var(--dark);
             letter-spacing: -0.02em;
         }
 
@@ -276,7 +268,7 @@
         
         /* Bouton Mode Sombre */
         .theme-toggle-btn {
-            background: var(--bg-highlight); /* Plus subtil */
+            background: var(--bg-highlight);
             border: 1px solid var(--border);
             cursor: pointer;
             padding: 8px 10px;
@@ -449,7 +441,7 @@
         .feature-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px var(--shadow);
-            border-color: var(--border); /* Garder la bordure subtile */
+            border-color: var(--border);
         }
 
         .feature-card:hover::before {
@@ -858,16 +850,17 @@
             margin-top: 30px;
         }
 
-        /* Footer */
+        /* --- FOOTER UNIFIÉ (MODE CLAIR ET SOMBRE) --- */
         .footer {
-            /* Le background est défini pour le thème clair et surchargé pour le thème sombre */
-            background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%);
+            /* Utilisation du dégradé de la marque pour les deux modes */
+            background: var(--gradient);
             color: white;
             padding: 50px 0 35px;
             text-align: center;
             margin-top: 80px;
             position: relative;
             overflow: hidden;
+            border: none;
         }
 
         .footer::before {
@@ -891,7 +884,7 @@
             font-size: 1.5rem;
             margin-bottom: 12px;
             font-weight: 600;
-            color: white; /* Force white in footer */
+            color: white; /* Toujours blanc */
         }
 
         .footer p {
@@ -903,7 +896,8 @@
         .footer-divider {
             width: 60px;
             height: 3px;
-            background: var(--gradient);
+            /* Blanc semi-transparent car le fond est déjà coloré */
+            background: rgba(255, 255, 255, 0.3);
             margin: 20px auto;
             border-radius: 3px;
         }
