@@ -850,17 +850,25 @@
             margin-top: 30px;
         }
 
-        /* --- FOOTER UNIFIÉ SANS BARRE --- */
+        /* --- FOOTER FINALISÉ (ALIGNEMENT PARFAIT) --- */
         .footer {
-            /* Utilisation du dégradé de la marque pour les deux modes */
             background: var(--gradient);
             color: white;
-            padding: 60px 0 40px; /* Un peu plus d'espace */
-            text-align: center;
+            padding: 60px 0; /* Padding haut et bas identiques = centrage vertical */
             margin-top: 80px;
             position: relative;
             overflow: hidden;
             border: none;
+        }
+
+        /* Conteneur Flexbox pour un alignement mathématique */
+        .footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centre horizontalement */
+            justify-content: center; /* Centre verticalement */
+            gap: 15px; /* Espace ÉGAL entre chaque élément (titre, sous-titre, copyright) */
+            height: 100%;
         }
 
         .footer::before {
@@ -881,19 +889,25 @@
         }
 
         .footer h3 {
-            font-size: 1.8rem; /* Légèrement plus grand */
-            margin-bottom: 10px; /* Espace réduit sans la barre */
+            font-size: 1.8rem;
             font-weight: 700;
-            color: white; /* Toujours blanc */
+            color: white;
+            margin: 0; /* Suppression des marges pour laisser le flex-gap gérer l'espace */
+            line-height: 1.2;
         }
 
         .footer p {
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 8px;
             font-size: 1rem;
+            margin: 0; /* Suppression des marges */
         }
         
-        /* Suppression de la classe .footer-divider */
+        /* Classe spécifique pour le copyright pour l'éloigner un peu plus si besoin */
+        .footer .copyright {
+            margin-top: 20px; /* Petit espacement supplémentaire juste pour le copyright */
+            opacity: 0.6;
+            font-size: 0.85rem;
+        }
 
         /* Status badge */
         .status-badge-wrapper::after {
@@ -1562,24 +1576,21 @@
                         <li>Retirant le bot de votre serveur Discord</li>
                         <li>Cessant d'interagir avec le bot</li>
                     </ul>
-                    <p><strong>By Assistante Barbara:</strong> We may suspend or block your access to the service, immediately and without notice, in case of:</p>
+                    <p><strong>Par Assistante Barbara :</strong> Nous pouvons suspendre ou bloquer votre accès au service, immédiatement et sans préavis, en cas de :</p>
                     <ul>
-                        <li>Violation of these ToS</li>
-                        <li>Violation of Discord's Terms of Service</li>
-                        <li>Abusive or fraudulent use of the service</li>
-                        <li>Harmful 
-                        behavior toward other users</li>
-                        <li>Illegal activity</li>
+                        <li>Violation des présentes CGU</li>
+                        <li>Violation des Conditions d'Utilisation de Discord</li>
+                        <li>Utilisation abusive ou frauduleuse du service</li>
+                        <li>Comportement nuisible envers d'autres utilisateurs</li>
+                        <li>Activité illégale</li>
                     </ul>
-                    <p><strong>Effects of termination:</strong> Upon termination, you immediately 
-                    lose all rights to use the service.
-                    Provisions of these ToS that by their nature should survive termination (including liability limitations) will remain in effect.</p>
+                    <p><strong>Effets de la résiliation :</strong> En cas de résiliation, vous perdez immédiatement tout droit d'utiliser le service. Les dispositions des présentes CGU qui, par leur nature, doivent survivre à la résiliation (notamment les limitations de responsabilité) resteront en vigueur.</p>
 
-                    <h3>12. Applicable law and jurisdiction</h3>
-                    <p>These ToS are governed by and construed in accordance with French law, without regard to conflict of law principles.</p>
-                    <p><strong>Dispute resolution:</strong> In the event of a dispute relating to the interpretation or execution of these ToS, the parties will endeavor to resolve it amicably. Failing that, French courts shall have exclusive jurisdiction.</p>
-                    <p><strong>Mediation:</strong> In accordance with Articles L.611-1 et seq. of the French Consumer Code, if you are a consumer, you have the right to use a consumer mediator free of charge in the event of a dispute.</p>
-                    <p><strong>Severability:</strong> If any provision of these ToS is deemed invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
+                    <h3>12. Droit applicable et juridiction</h3>
+                    <p>Les présentes CGU sont régies et interprétées conformément au droit français, sans égard aux principes de conflits de lois.</p>
+                    <p><strong>Résolution des litiges :</strong> En cas de litige relatif à l'interprétation ou à l'exécution des présentes CGU, les parties s'efforceront de le résoudre à l'amiable. À défaut, les tribunaux français seront seuls compétents.</p>
+                    <p><strong>Médiation :</strong> Conformément aux articles L.611-1 et suivants du Code de la consommation, si vous êtes un consommateur, vous avez le droit de recourir gratuitement à un médiateur de la consommation en cas de litige.</p>
+                    <p><strong>Divisibilité :</strong> Si une disposition des présentes CGU est jugée invalide ou inapplicable, les autres dispositions resteront en vigueur.</p>
 
                     <div class="contact-box">
                         <h4>13. Contact</h4>
@@ -1904,7 +1915,7 @@
             <div class="container">
                 <h3>Assistante Barbara</h3>
                 <p>Application Discord polyvalente propulsée par l'IA</p>
-                <p style="margin-top: 30px; opacity: 0.6; font-size: 0.85rem;">© 2025 - Tous droits réservés</p>
+                <p class="copyright">© 2025 - Tous droits réservés</p>
             </div>
         </div>
     </footer>
