@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="logo-ab.png">
     <link rel="apple-touch-icon" href="logo-ab.png">
     <style>
-        /* --- RESET & VARIABLES --- */
+        /* --- RESET GLOBAL --- */
         * {
             margin: 0;
             padding: 0;
@@ -35,7 +35,7 @@
         }
 
         html[data-theme='dark'] {
-            /* Mode Sombre "Modern Deep Slate" */
+            /* Mode Sombre */
             --dark: #f1f5f9;
             --light: #1e293b;     
             --text: #cbd5e1;
@@ -59,12 +59,12 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        /* Transitions douces */
+        /* Transitions */
         .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
             transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Background animé */
+        /* Background */
         body::before {
             content: '';
             position: fixed;
@@ -82,7 +82,7 @@
             66% { transform: translate(-20px, 20px) rotate(-1deg); }
         }
 
-        /* Animations d'apparition */
+        /* Animations */
         .animated-element {
             opacity: 0;
             transform: translateY(10px);
@@ -96,7 +96,7 @@
         .animated-partners-container { opacity: 0; transition: opacity 0.8s ease-in-out; }
         .animated-partners-container.is-visible { opacity: 1; }
 
-        /* --- STRUCTURE & ESPACEMENTS UNIFIÉS --- */
+        /* --- RÉGLAGES DES ESPACEMENTS (PADDING) --- */
         
         .container {
             max-width: 1200px;
@@ -104,28 +104,28 @@
             padding: 0 30px;
         }
 
-        /* 1. Règle universelle pour toutes les sections principales */
+        /* Règle UNIFIÉE : 50px pour tout le monde. 
+           C'est compact sur PC, mais suffisamment aéré sur mobile.
+        */
         section {
-            padding: 80px 0; /* Standard Desktop: 80px haut/bas */
+            padding: 50px 0; 
             position: relative;
         }
 
-        /* 2. Règle universelle pour les titres de section */
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 2.2rem; /* Légèrement réduit pour être plus élégant */
             font-weight: 700;
             color: var(--dark);
-            margin-top: 0; /* Suppression impérative de la marge haute */
-            margin-bottom: 60px; /* Espace standard entre titre et contenu */
-            padding-top: 0;
+            margin-top: 0;
+            margin-bottom: 40px; /* Espace réduit sous le titre */
             line-height: 1.2;
         }
 
-        /* Hero spécifique (plus d'espace en haut pour le header sticky) */
+        /* Hero a besoin d'un peu plus en haut à cause du menu fixe */
         .hero {
-            padding-top: 100px; 
-            padding-bottom: 80px;
+            padding-top: 80px; 
+            padding-bottom: 50px;
             text-align: center;
         }
 
@@ -148,7 +148,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 80px; /* Hauteur fixe pour éviter les sauts */
+            height: 70px; /* Header un peu plus compact */
         }
 
         /* Navigation */
@@ -159,10 +159,10 @@
         .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
 
         .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-        .logo-img { width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15); transition: transform 0.3s ease; object-fit: cover; }
+        .logo-img { width: 45px; height: 45px; border-radius: 12px; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15); transition: transform 0.3s ease; object-fit: cover; }
         .logo:hover .logo-img { transform: scale(1.05); }
-        .logo-text h1 { font-size: 1.4rem; font-weight: 600; color: var(--dark); letter-spacing: -0.02em; }
-        .logo-text p { font-size: 0.85rem; color: var(--muted); }
+        .logo-text h1 { font-size: 1.3rem; font-weight: 600; color: var(--dark); letter-spacing: -0.02em; }
+        .logo-text p { font-size: 0.8rem; color: var(--muted); }
 
         .nav { display: flex; gap: 30px; align-items: center; }
         .nav-link { color: var(--text); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; position: relative; }
@@ -170,71 +170,71 @@
         .nav-link:hover { color: var(--primary); }
         .nav-link:hover::after { width: 100%; }
 
-        .btn-add { background: var(--gradient); color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-add { background: var(--gradient); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; }
         .btn-add:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); color: white; }
         
         .theme-toggle-btn { background: var(--bg-highlight); border: 1px solid var(--border); cursor: pointer; padding: 8px 10px; border-radius: 10px; font-size: 1.2rem; line-height: 1; transition: all 0.3s ease; color: var(--dark); }
         .theme-toggle-btn:hover { background: var(--border); transform: scale(1.1); }
 
         /* Hero Content */
-        .hero h2 { font-size: 3.5rem; font-weight: 700; color: var(--dark); margin-bottom: 20px; letter-spacing: -0.03em; line-height: 1.1; }
+        .hero h2 { font-size: 3rem; font-weight: 700; color: var(--dark); margin-bottom: 20px; letter-spacing: -0.03em; line-height: 1.1; }
         .hero .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .hero p { font-size: 1.25rem; color: var(--muted); max-width: 700px; margin: 0 auto 40px; line-height: 1.7; }
+        .hero p { font-size: 1.2rem; color: var(--muted); max-width: 700px; margin: 0 auto 30px; line-height: 1.6; }
         .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .btn-primary { background: var(--gradient); color: white; padding: 16px 40px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); transition: all 0.3s ease; }
+        .btn-primary { background: var(--gradient); color: white; padding: 14px 35px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.05rem; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); transition: all 0.3s ease; }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4); color: white; }
-        .btn-secondary { background: var(--bg-card); color: var(--primary); padding: 16px 40px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; border: 2px solid var(--border); transition: all 0.3s ease; }
+        .btn-secondary { background: var(--bg-card); color: var(--primary); padding: 14px 35px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.05rem; border: 2px solid var(--border); transition: all 0.3s ease; }
         .btn-secondary:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 25px var(--shadow); color: var(--primary); }
 
         /* Features */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .feature-card { background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .feature-card { background: var(--bg-card); padding: 35px; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s ease; position: relative; overflow: hidden; }
         .feature-card::before { content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 4px; background: var(--gradient); transform: translateX(-50%); transition: width 0.3s ease; border-radius: 3px; }
-        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
         .feature-card:hover::before { width: 98%; }
-        .feature-icon { font-size: 3rem; margin-bottom: 20px; display: inline-block; transition: transform 0.3s ease; }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 20px; display: inline-block; transition: transform 0.3s ease; }
         .feature-card:hover .feature-icon { transform: scale(1.15); animation: float-smooth 2s ease-in-out infinite; }
         @keyframes float-smooth { 0%, 100% { transform: scale(1.15) translateY(0px); } 50% { transform: scale(1.15) translateY(-8px); } }
-        .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 600; }
-        .feature-card p { color: var(--muted); line-height: 1.7; }
+        .feature-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: var(--dark); font-weight: 600; }
+        .feature-card p { color: var(--muted); line-height: 1.6; font-size: 0.95rem; }
 
         /* Commands */
-        .commands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .command-card { background: var(--bg-card); padding: 25px; border-radius: 12px; border: 1px solid var(--border); border-left: 4px solid var(--primary); transition: all 0.2s ease; }
+        .commands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .command-card { background: var(--bg-card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); border-left: 4px solid var(--primary); transition: all 0.2s ease; }
         .command-card:hover { transform: translateX(5px); box-shadow: 0 8px 20px var(--shadow); }
-        .command-card h4 { font-family: 'SF Mono', 'Monaco', monospace; font-size: 1.05rem; color: var(--primary); margin-bottom: 10px; font-weight: 600; }
-        .command-card p { color: var(--muted); font-size: 0.95rem; }
+        .command-card h4 { font-family: 'SF Mono', 'Monaco', monospace; font-size: 1rem; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
+        .command-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 0; }
 
         /* Feedback */
-        .feedback-section { padding: 80px 30px; margin: 20px auto; max-width: 1200px; position: relative; overflow: hidden; border-radius: 20px; }
+        .feedback-section { padding: 60px 30px; margin: 20px auto; max-width: 1200px; position: relative; overflow: hidden; border-radius: 20px; }
         .feedback-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--gradient); border-radius: 20px; opacity: 0.95; z-index: 0; }
         .feedback-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%); z-index: 1; }
         .feedback-content { position: relative; z-index: 2; text-align: center; color: white; }
-        .feedback-icon { font-size: 4rem; margin-bottom: 20px; display: inline-block; animation: pulse 2s ease-in-out infinite; }
+        .feedback-icon { font-size: 3.5rem; margin-bottom: 15px; display: inline-block; animation: pulse 2s ease-in-out infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        .feedback-section h2 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; color: white; }
-        .feedback-section p { font-size: 1.2rem; margin-bottom: 40px; opacity: 0.95; max-width: 600px; margin-left: auto; margin-right: auto; color: rgba(255, 255, 255, 0.9); }
-        .feedback-features { display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; flex-wrap: wrap; }
-        .feedback-feature { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; opacity: 0.95; color: white; }
-        .feedback-feature span:first-child { font-size: 1.5rem; }
-        .btn-feedback { background: var(--bg-card); color: var(--primary); padding: 18px 45px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.15rem; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 12px; }
+        .feedback-section h2 { font-size: 2.2rem; margin-bottom: 15px; font-weight: 700; color: white; }
+        .feedback-section p { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.95; max-width: 600px; margin-left: auto; margin-right: auto; color: rgba(255, 255, 255, 0.9); }
+        .feedback-features { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; flex-wrap: wrap; }
+        .feedback-feature { display: flex; align-items: center; gap: 8px; font-size: 1rem; opacity: 0.95; color: white; }
+        .feedback-feature span:first-child { font-size: 1.3rem; }
+        .btn-feedback { background: var(--bg-card); color: var(--primary); padding: 15px 40px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 12px; }
         .btn-feedback:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3); }
 
         /* Partners */
-        .partners-section { background: transparent; } /* Hérite du padding général */
-        .partners-intro { text-align: center; max-width: 700px; margin: 0 auto 60px; }
-        .partners-intro p { font-size: 1.15rem; color: var(--muted); line-height: 1.8; margin-bottom: 30px; }
-        .partners-carousel { position: relative; max-width: 1000px; margin: 0 auto; padding: 40px 0; }
+        .partners-section { background: transparent; }
+        .partners-intro { text-align: center; max-width: 700px; margin: 0 auto 40px; }
+        .partners-intro p { font-size: 1.1rem; color: var(--muted); line-height: 1.7; margin-bottom: 30px; }
+        .partners-carousel { position: relative; max-width: 1000px; margin: 0 auto; padding: 20px 0; }
         .partners-wrapper { overflow: hidden; padding: 20px 0; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%); }
         .partners-track { display: inline-flex; animation: scroll 60s linear infinite; }
         .partners-track:hover { animation-play-state: paused; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .partner-card { flex-shrink: 0; width: 280px; background: var(--bg-card); border: 2px solid var(--border); border-radius: 16px; padding: 40px 30px; text-align: center; transition: all 0.3s ease; cursor: pointer; margin-right: 30px; }
-        .partner-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px var(--shadow); border-color: var(--primary); }
-        .partner-logo { width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 12px; background: var(--bg-highlight); display: flex; align-items: center; justify-content: center; font-size: 3rem; transition: transform 0.3s ease; }
+        .partner-card { flex-shrink: 0; width: 260px; background: var(--bg-card); border: 2px solid var(--border); border-radius: 16px; padding: 30px 20px; text-align: center; transition: all 0.3s ease; cursor: pointer; margin-right: 25px; }
+        .partner-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px var(--shadow); border-color: var(--primary); }
+        .partner-logo { width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 12px; background: var(--bg-highlight); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; transition: transform 0.3s ease; }
         .partner-card:hover .partner-logo { transform: scale(1.1); }
-        .partner-card h4 { font-size: 1.2rem; color: var(--dark); margin-bottom: 10px; font-weight: 600; }
-        .partner-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+        .partner-card h4 { font-size: 1.1rem; color: var(--dark); margin-bottom: 8px; font-weight: 600; }
+        .partner-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
         .partner-placeholder { background: var(--bg-placeholder-gradient); border: 2px dashed var(--border); }
         .partner-placeholder .partner-logo { background: transparent; border: 2px dashed var(--border); }
         .partner-placeholder:hover { border-color: var(--primary); border-style: solid; }
@@ -242,45 +242,45 @@
         /* Docs */
         .accordion-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 15px; overflow: hidden; transition: all 0.3s ease; }
         .accordion-item:hover { box-shadow: 0 8px 20px var(--shadow); }
-        .accordion-header { padding: 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+        .accordion-header { padding: 20px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
         .accordion-header:hover { background: var(--bg-highlight); }
-        .accordion-header h4 { font-size: 1.15rem; color: var(--dark); font-weight: 600; }
-        .accordion-header .tag { color: var(--muted); font-size: 0.9rem; }
+        .accordion-header h4 { font-size: 1.1rem; color: var(--dark); font-weight: 600; }
+        .accordion-header .tag { color: var(--muted); font-size: 0.85rem; }
         .accordion-body { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
         .accordion-item.open .accordion-body { max-height: 10000px; padding: 25px; overflow-y: auto; }
-        .accordion-body h3 { color: var(--dark); margin: 25px 0 15px; font-size: 1.2rem; }
-        .accordion-body p, .accordion-body li { color: var(--muted); line-height: 1.8; margin-bottom: 15px; }
-        .accordion-body ul { padding-left: 25px; margin: 15px 0; }
+        .accordion-body h3 { color: var(--dark); margin: 20px 0 10px; font-size: 1.15rem; }
+        .accordion-body p, .accordion-body li { color: var(--muted); line-height: 1.7; margin-bottom: 12px; font-size: 0.95rem; }
+        .accordion-body ul { padding-left: 20px; margin: 12px 0; }
         .accordion-body strong { color: var(--dark); }
         .accordion-body a { color: var(--primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
         .accordion-body a:hover { border-bottom-color: var(--primary); }
-        .highlight-box { background: var(--bg-highlight); padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary); margin: 20px 0; }
-        .contact-box { background: var(--bg-highlight); padding: 25px; border-radius: 12px; margin-top: 30px; }
+        .highlight-box { background: var(--bg-highlight); padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); margin: 15px 0; }
+        .contact-box { background: var(--bg-highlight); padding: 20px; border-radius: 12px; margin-top: 25px; }
 
         /* Footer */
-        .footer { background: var(--gradient); color: white; padding: 60px 0; margin-top: 40px; position: relative; overflow: hidden; width: 100%; }
+        .footer { background: var(--gradient); color: white; padding: 50px 0; margin-top: 50px; position: relative; overflow: hidden; width: 100%; }
         .footer-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 15px; }
         .footer::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%); pointer-events: none; }
-        .footer h3 { font-size: 1.8rem; font-weight: 700; color: white; margin: 0; line-height: 1.2; text-align: center; }
-        .footer p { color: rgba(255, 255, 255, 0.9); font-size: 1rem; margin: 0; line-height: 1.5; max-width: 600px; width: 100%; white-space: normal; word-wrap: break-word; }
-        .footer .copyright { margin-top: 15px; opacity: 0.6; font-size: 0.85rem; }
+        .footer h3 { font-size: 1.6rem; font-weight: 700; color: white; margin: 0; line-height: 1.2; text-align: center; }
+        .footer p { color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; margin: 0; line-height: 1.5; max-width: 600px; width: 100%; white-space: normal; word-wrap: break-word; padding: 0 10px; }
+        .footer .copyright { margin-top: 15px; opacity: 0.6; font-size: 0.8rem; padding: 0; }
         .status-badge-wrapper::after { display: none !important; }
 
-        /* --- MEDIA QUERIES (TABLETTE & MOBILE) --- */
+        /* --- MEDIA QUERIES (MOBILE) --- */
         @media (max-width: 1024px) {
-            /* Ajustement Espacements Mobiles UNIFORMISÉS */
+            /* On maintient 50px sur mobile pour que ça respire */
             section {
-                padding: 50px 0; /* Écart standardisé mobile */
+                padding: 50px 0; 
             }
             
             .hero {
-                padding-top: 60px; /* Plus petit sur mobile */
-                padding-bottom: 50px;
+                padding-top: 70px;
+                padding-bottom: 40px;
             }
 
             .section-title {
-                font-size: 2rem;
-                margin-bottom: 40px; /* Espace réduit sous le titre */
+                font-size: 1.8rem;
+                margin-bottom: 30px;
             }
 
             /* Header & Nav */
@@ -297,24 +297,20 @@
             .nav-overlay.active { display: block; }
 
             /* Content Adjustments */
-            .hero h2 { font-size: 2.2rem; }
-            .hero p { font-size: 1.1rem; }
+            .hero h2 { font-size: 2rem; }
+            .hero p { font-size: 1.05rem; }
             .hero-buttons { flex-direction: column; }
             .btn-primary, .btn-secondary { width: 100%; text-align: center; }
             .features-grid, .commands-grid { grid-template-columns: 1fr; }
             .container { padding: 0 20px; }
-            .feedback-section { padding: 60px 20px; }
-            .feedback-section h2 { font-size: 2rem; }
-            .feedback-features { flex-direction: column; gap: 20px; }
+            .feedback-section { padding: 50px 20px; }
+            .feedback-section h2 { font-size: 1.8rem; }
+            .feedback-features { flex-direction: column; gap: 15px; }
             .btn-feedback { width: 100%; justify-content: center; }
-            .partners-carousel { padding: 20px 0; }
+            .partners-carousel { padding: 15px 0; }
             .partner-card { width: 240px; margin-right: 20px; }
             
-            /* Footer Mobile */
-            .footer { padding: 50px 0; margin-top: 40px; }
-            .footer-container { padding: 0 15px; }
-            .footer h3 { font-size: 1.5rem; }
-            .footer p { font-size: 0.95rem; max-width: 100%; }
+            /* Footer adjustments handled by global rule + container padding */
         }
 
         /* Page visibility */
@@ -695,180 +691,10 @@
                         <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits RGPD :</p>
                         <ul>
                             <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
                             <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
                         <p>Nous nous engageons à répondre à vos demandes dans un délai maximum d'un mois conformément au RGPD.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item animated-element">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div>
-                        <h4>🇫🇷 Conditions générales d'utilisation</h4>
-                        <p class="tag">Dernière mise à jour : 12 novembre 2025</p>
-                    </div>
-                    <span style="color: var(--muted);">▼</span>
-                </div>
-                <div class="accordion-body">
-                    <p>En utilisant <strong>Assistante Barbara</strong>, vous acceptez les présentes Conditions Générales d'Utilisation (CGU). Veuillez les lire attentivement.</p>
-
-                    <div class="highlight-box">
-                        <p><strong>Champ d'application :</strong> Ces Conditions Générales d'Utilisation s'appliquent à l'ensemble des interactions avec le bot Assistante Barbara sur Discord, quel que soit le serveur ou l'utilisateur.</p>
-                    </div>
-
-                    <h3>1. Description du service</h3>
-                    <p><strong>Assistante Barbara</strong> est une application Discord (bot) à but non commercial offrant :</p>
-                    <ul>
-                        <li>Une variété de commandes slash</li>
-                        <li>Des fonctionnalités musicales (via Jamendo)</li>
-                        <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
-                    </ul>
-                    <p><strong>Le service est fourni gratuitement, sans obligation contractuelle ni garantie de disponibilité continue.</strong> Il s'agit d'un projet 
-                    personnel géré par l'équipe de développement d'Assistante Barbara.</p>
-
-                    <h3>2. Acceptation des conditions</h3>
-                    <p>L'utilisation d'Assistante Barbara implique votre acceptation complète et sans réserve des présentes CGU ainsi que de notre <strong>Politique de confidentialité</strong>. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le bot.</p>
-                    <p>En ajoutant le bot à votre serveur Discord ou en interagissant avec lui, vous reconnaissez avoir lu, compris et accepté l'intégralité des présentes conditions.</p>
-
-                    <h3>3. Utilisation autorisée</h3>
-                    <div class="highlight-box">
-                        <strong>Vous vous engagez à :</strong>
-                        <ul>
-                            <li>Utiliser le bot conformément aux <a href="https://discord.com/terms" target="_blank">Conditions d'Utilisation de Discord</a></li>
-                            <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
-                            <li>Ne pas tenter de contourner les limitations techniques</li>
-                            <li>Respecter les autres utilisateurs</li>
-                            <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
-                            <li>Utiliser les commandes de manière raisonnable et appropriée</li>
-                        </ul>
-                    </div>
-
-                    <h3>4. Fonctionnalités d'intelligence artificielle</h3>
-                    <p><strong>Important - Limitations et avertissements :</strong></p>
-                    <ul>
-                        <li>Les réponses de l'IA sont générées automatiquement par des services tiers (OpenAI, Mistral AI) et peuvent contenir des inexactitudes, des erreurs ou des informations obsolètes</li>
-                        <li>L'IA peut produire du contenu imprévisible ou inapproprié malgré nos efforts de modération</li>
-                        <li>Ne vous fiez jamais exclusivement aux réponses de l'IA pour des décisions importantes, notamment en matière de santé, juridique, financière ou de sécurité</li>
-                        <li>Les conversations avec l'IA sont traitées par des services tiers conformément à leurs politiques respectives</li>
-                        <li>Nous ne sommes pas responsables du contenu généré par l'IA ni de son utilisation</li>
-                        <li>L'utilisateur est seul responsable de la vérification des informations fournies par l'IA</li>
-                        <li>En utilisant ces fonctionnalités, vous acceptez que vos messages soient transmis et traités par OpenAI et/ou Mistral AI</li>
-                    </ul>
-                    <p><strong>Interdictions :</strong> Il est strictement interdit d'utiliser l'IA pour :</p>
-                    <ul>
-                        <li>Générer du contenu illégal, haineux, discriminatoire ou violent</li>
-                        <li>Tenter de contourner les systèmes de modération</li>
-                        <li>Collecter des données personnelles sur d'autres utilisateurs</li>
-                        <li>Diffuser de la désinformation ou des contenus trompeurs</li>
-                    </ul>
-
-                    <h3>5. Fonctionnalités musicales</h3>
-                    <ul>
-                        <li>La musique est fournie via <strong>Jamendo</strong> (musique libre de droits)</li>
-                        <li>Le catalogue est limité au contenu disponible sur Jamendo</li>
-                        <li>La disponibilité du service musical peut varier</li>
-                        <li>Respectez les droits d'auteur et les <a href="https://www.jamendo.com/legal/terms-of-use" target="_blank">CGU de Jamendo</a></li>
-                    </ul>
-
-                    <h3>6. Disponibilité du service</h3>
-                    <p>Nous nous efforçons de maintenir Assistante Barbara opérationnelle 24/7, mais :</p>
-                    <ul>
-                        <li>Le service peut être interrompu pour maintenance, mises à jour ou améliorations</li>
-                        <li>Des interruptions peuvent survenir en cas de problème technique</li>
-                        <li>Nous ne garantissons pas une disponibilité absolue ou ininterrompue</li>
-                        <li>Aucun remboursement n'est applicable (service gratuit)</li>
-                        <li>Aucun dédommagement ne pourra être réclamé en cas d'indisponibilité</li>
-                    </ul>
-
-                    <h3>6 bis. Force majeure</h3>
-                    <p>Nous ne saurions être tenus responsables en cas d'interruption du service résultant d'un événement de force majeure, notamment :</p>
-                    <ul>
-                        <li>Panne d'infrastructure ou d'hébergement (KataBump, serveurs)</li>
-                        <li>Défaillance des services tiers (Discord, OpenAI, Mistral AI, Jamendo)</li>
-                        <li>Coupure réseau, interruption d'accès à Internet</li>
-                        <li>Cyberattaque, piratage informatique, déni de service (DDoS)</li>
-                        <li>Décision administrative ou judiciaire</li>
-                        <li>Catastrophe naturelle ou tout autre événement échappant à notre contrôle raisonnable</li>
-                    </ul>
-                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant 
-                    à un délai de rétablissement.</p>
-
-                    <h3>7. Limitation de responsabilité</h3>
-                    <div class="highlight-box">
-                        <p><strong>Assistante Barbara is provided "as is" and "as available".</strong> To the fullest extent permitted by applicable law, we disclaim all liability for:</p>
-                        <ul>
-                            <li>Direct, indirect, incidental, special, consequential, or punitive damages resulting from use or inability to use the bot</li>
-                            <li>Accuracy, reliability, or completeness of information provided by AI</li>
-                            <li>Data loss, service interruptions, or any technical malfunction</li>
-                            <li>Content generated by AI or provided by third-party APIs</li>
-                            <li>Decisions made based on information provided by the bot</li>
-                            <li>Harm caused by third-party users or malicious acts</li>
-                            <li>Compatibility with other services or applications</li>
-                        </ul>
-                        <p><strong>No warranty:</strong> We do not 
-                        guarantee that the service will be uninterrupted, error-free, secure, or free from viruses or other harmful components.</p>
-                    </div>
-                    <p><strong>Indemnisation:</strong> You agree to indemnify and hold harmless the Assistante Barbara team against any claim resulting from your use of 
-                    the service in violation of these ToS.</p>
-
-                    <h3>8. Propriété intellectuelle</h3>
-                    <ul>
-                        <li>Assistante Barbara and its source code belong to their creator</li>
-                        <li>AI-generated responses follow OpenAI and Mistral AI's intellectual property policies</li>
-                        <li>Music is subject to Jamendo licenses</li>
-                        <li>Discord and its logo are registered trademarks of Discord Inc.</li>
-                    </ul>
-
-                    <h3>9. Modifications du service</h3>
-                    <p>Nous nous réservons le droit, à notre seule discrétion, de :</p>
-                    <ul>
-                        <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
-                        <li>Modifier les fonctionnalités disponibles</li>
-                        <li>Bloquer l'accès à des utilisateurs ou serveurs en cas d'abus, de violation des présentes CGU ou des conditions d'utilisation de Discord</li>
-                        <li>Modifier les présentes CGU. Les modifications substantielles seront communiquées via le site web. La poursuite de l'utilisation après modification vaut acceptation</li>
-                    </ul>
-                    <p>Nous ne serons pas responsables envers vous ou envers des tiers de toute modification, suspension ou interruption du service.</p>
-
-                    <h3>10. Conformité légale</h3>
-                    <p>Ce service est conforme à :</p>
-                    <ul>
-                        <li>RGPD (Règlement Général sur la Protection des Données)</li>
-                        <li>Conditions d'Utilisation de Discord</li>
-                        <li>Lois françaises et européennes applicables</li>
-                    </ul>
-
-                    <h3>11. Résiliation</h3>
-                    <p><strong>Par l'utilisateur :</strong> Vous pouvez cesser d'utiliser Assistante Barbara à tout moment en :</p>
-                    <ul>
-                        <li>Retirant le bot de votre serveur Discord</li>
-                        <li>Cessant d'interagir avec le bot</li>
-                    </ul>
-                    <p><strong>Par Assistante Barbara :</strong> Nous pouvons suspendre ou bloquer votre accès au service, immédiatement et sans préavis, en cas de :</p>
-                    <ul>
-                        <li>Violation des présentes CGU</li>
-                        <li>Violation des Conditions d'Utilisation de Discord</li>
-                        <li>Utilisation abusive ou frauduleuse du service</li>
-                        <li>Comportement nuisible envers d'autres utilisateurs</li>
-                        <li>Activité illégale</li>
-                    </ul>
-                    <p><strong>Effets de la résiliation :</strong> En cas de résiliation, vous perdez immédiatement tout droit d'utiliser le service. Les dispositions des présentes CGU qui, par leur nature, doivent survivre à la résiliation (notamment les limitations de responsabilité) resteront en vigueur.</p>
-
-                    <h3>12. Droit applicable et juridiction</h3>
-                    <p>Les présentes CGU sont régies et interprétées conformément au droit français, sans égard aux principes de conflits de lois.</p>
-                    <p><strong>Résolution des litiges :</strong> En cas de litige relatif à l'interprétation ou à l'exécution des présentes CGU, les parties s'efforceront de le résoudre à l'amiable. À défaut, les tribunaux français seront seuls compétents.</p>
-                    <p><strong>Médiation :</strong> Conformément aux articles L.611-1 et suivants du Code de la consommation, si vous êtes un consommateur, vous avez le droit de recourir gratuitement à un médiateur de la consommation en cas de litige.</p>
-                    <p><strong>Divisibilité :</strong> Si une disposition des présentes CGU est jugée invalide ou inapplicable, les autres dispositions resteront en vigueur.</p>
-
-                    <div class="contact-box">
-                        <h4>13. Contact</h4>
-                        <p>For any questions regarding these ToS:</p>
-                        <ul>
-                            <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
-                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
