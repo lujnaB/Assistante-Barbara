@@ -11,11 +11,10 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            box-sizing: border-box; /* Essentiel pour gérer les largeurs sans débordement */
         }
 
         :root {
-            /* --- COULEURS --- */
             /* Mode Clair */
             --primary: #667eea;
             --secondary: #764ba2;
@@ -33,12 +32,6 @@
             --bg-header-mobile-nav: white;
             --bg-highlight: #f8f9fa;
             --bg-placeholder-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-
-            /* --- ESPACEMENTS UNIFORMISÉS --- */
-            --header-height: 80px;
-            --spacing-section: 80px;     /* Espacement vertical standard Desktop */
-            --spacing-container: 30px;   /* Marge latérale du conteneur */
-            --spacing-gap: 30px;         /* Espace entre les grilles */
         }
 
         html[data-theme='dark'] {
@@ -65,10 +58,85 @@
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* --- 2. ESPACEMENTS (PADDING) DES SECTIONS --- */
         
-        /* Transitions */
-        .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
-            transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        /* Conteneur global */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px; /* Marge latérale interne de sécurité */
+        }
+
+        /* Espacement STANDARD DESKTOP (80px) */
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        /* Titres de section */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-top: 0;
+            margin-bottom: 60px; /* Espace net entre le titre et le contenu */
+            line-height: 1.2;
+        }
+
+        /* Cas particulier : Hero (Besoin de plus d'espace en haut pour le menu) */
+        .hero {
+            padding-top: 120px; /* Compense le header sticky */
+            padding-bottom: 80px;
+            text-align: center;
+        }
+
+        /* --- 3. RESPONSIVE MOBILE (< 1024px) --- */
+        @media (max-width: 1024px) {
+            /* Espacement MOBILE (60px) */
+            section {
+                padding: 60px 0;
+            }
+
+            .hero {
+                padding-top: 100px; /* Un peu moins haut sur mobile */
+                padding-bottom: 60px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 40px; /* On réduit l'écart titre/contenu sur mobile */
+            }
+            
+            /* Ajustement des marges latérales sur mobile */
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        /* --- 4. COMPOSANTS UI --- */
+
+        /* Header */
+        .header {
+            background: var(--bg-header);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
         }
 
         /* Background Animé */
@@ -88,7 +156,7 @@
             66% { transform: translate(-20px, 20px) rotate(-1deg); }
         }
 
-        /* Animations */
+        /* Animations apparition */
         .animated-element {
             opacity: 0; transform: translateY(10px);
             transition: opacity 0.45s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -100,100 +168,7 @@
         .animated-element.is-visible:nth-child(2) { transition-delay: 0.08s; }
         .animated-element.is-visible:nth-child(3) { transition-delay: 0.12s; }
 
-        /* --- 2. GESTION DES ESPACEMENTS & LAYOUT --- */
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-container);
-        }
-
-        /* Section Standard : Utilise la variable d'espacement */
-        section {
-            padding: var(--spacing-section) 0;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-top: 0;
-            margin-bottom: 50px; /* Un peu moins que 60px pour resserrer */
-            line-height: 1.2;
-        }
-
-        /* Hero ajusté : Top padding compense le header + un peu d'air */
-        .hero {
-            padding-top: calc(var(--header-height) + 60px); 
-            padding-bottom: var(--spacing-section);
-            text-align: center;
-            /* Pour s'assurer que le contenu est centré verticalement si l'écran est grand */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-height: 60vh; 
-        }
-
-        /* --- 3. RESPONSIVE MOBILE & TABLETTE --- */
-        
-        /* Tablette et petits laptops */
-        @media (max-width: 1024px) {
-            :root {
-                --spacing-section: 60px; /* Réduction intermédiaire */
-                --spacing-gap: 25px;
-            }
-        }
-
-        /* Mobile (< 768px) */
-        @media (max-width: 768px) {
-            :root {
-                --spacing-section: 50px; /* Espacement mobile réduit */
-                --spacing-container: 20px;
-                --spacing-gap: 20px;
-            }
-
-            .hero {
-                padding-top: calc(var(--header-height) + 40px);
-                min-height: auto;
-            }
-
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 35px;
-            }
-        }
-
-        /* --- 4. COMPOSANTS UI --- */
-
-        /* Header */
-        .header {
-            background: var(--bg-header);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            position: fixed; /* Changé de sticky à fixed pour garantir qu'il reste en haut */
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-            height: var(--header-height);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-container);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%; /* Prend toute la hauteur du header */
-        }
-
-        /* Menu / Nav */
+        /* Nav & Elements */
         .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: transparent; border: none; z-index: 1002; }
         .menu-toggle span { width: 25px; height: 3px; background: var(--text); border-radius: 3px; transition: all 0.3s ease; }
         .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
@@ -216,7 +191,7 @@
         .theme-toggle-btn { background: var(--bg-highlight); border: 1px solid var(--border); cursor: pointer; padding: 8px 10px; border-radius: 10px; font-size: 1.2rem; line-height: 1; transition: all 0.3s ease; color: var(--dark); }
         .theme-toggle-btn:hover { background: var(--border); transform: scale(1.1); }
 
-        /* Hero Elements */
+        /* Hero */
         .hero h2 { font-size: 3rem; font-weight: 700; color: var(--dark); margin-bottom: 20px; letter-spacing: -0.03em; line-height: 1.1; }
         .hero .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .hero p { font-size: 1.2rem; color: var(--muted); max-width: 700px; margin: 0 auto 30px; line-height: 1.6; }
@@ -227,8 +202,8 @@
         .btn-secondary:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 25px var(--shadow); color: var(--primary); }
 
         /* Features */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-gap); }
-        .feature-card { background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s ease; position: relative; overflow: hidden; height: 100%; display: flex; flex-direction: column; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .feature-card { background: var(--bg-card); padding: 35px; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s ease; position: relative; overflow: hidden; }
         .feature-card::before { content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 4px; background: var(--gradient); transform: translateX(-50%); transition: width 0.3s ease; border-radius: 3px; }
         .feature-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
         .feature-card:hover::before { width: 98%; }
@@ -236,26 +211,17 @@
         .feature-card:hover .feature-icon { transform: scale(1.15); animation: float-smooth 2s ease-in-out infinite; }
         @keyframes float-smooth { 0%, 100% { transform: scale(1.15) translateY(0px); } 50% { transform: scale(1.15) translateY(-8px); } }
         .feature-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: var(--dark); font-weight: 600; }
-        .feature-card p { color: var(--muted); line-height: 1.6; font-size: 0.95rem; margin-top: auto; /* Pousse le texte pour uniformiser la hauteur */ }
+        .feature-card p { color: var(--muted); line-height: 1.6; font-size: 0.95rem; }
 
         /* Commands */
         .commands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-        .command-card { background: var(--bg-card); padding: 25px; border-radius: 12px; border: 1px solid var(--border); border-left: 4px solid var(--primary); transition: all 0.2s ease; height: 100%; }
+        .command-card { background: var(--bg-card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); border-left: 4px solid var(--primary); transition: all 0.2s ease; }
         .command-card:hover { transform: translateX(5px); box-shadow: 0 8px 20px var(--shadow); }
         .command-card h4 { font-family: 'SF Mono', 'Monaco', monospace; font-size: 1rem; color: var(--primary); margin-bottom: 8px; font-weight: 600; }
         .command-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 0; }
 
-        /* Feedback - Uniformisé */
-        .feedback-section { 
-            padding: 60px 40px; 
-            margin: var(--spacing-section) auto; /* Utilise la variable standard */
-            max-width: 1200px; 
-            position: relative; 
-            overflow: hidden; 
-            border-radius: 20px; 
-            /* S'assurer qu'il rentre dans le container visuellement */
-            width: calc(100% - (var(--spacing-container) * 2)); 
-        }
+        /* Feedback */
+        .feedback-section { padding: 60px 30px; margin: 40px auto; max-width: 1200px; position: relative; overflow: hidden; border-radius: 20px; }
         .feedback-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--gradient); border-radius: 20px; opacity: 0.95; z-index: 0; }
         .feedback-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%); z-index: 1; }
         .feedback-content { position: relative; z-index: 2; text-align: center; color: white; }
@@ -270,7 +236,7 @@
         .btn-feedback:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3); }
 
         /* Partners */
-        .partners-section { background: transparent; padding-bottom: 0; /* Ajustement car le footer suit */ }
+        .partners-section { background: transparent; }
         .partners-intro { text-align: center; max-width: 700px; margin: 0 auto 40px; }
         .partners-intro p { font-size: 1.1rem; color: var(--muted); line-height: 1.7; margin-bottom: 30px; }
         .partners-carousel { position: relative; max-width: 1000px; margin: 0 auto; padding: 20px 0; }
@@ -289,7 +255,6 @@
         .partner-placeholder:hover { border-color: var(--primary); border-style: solid; }
 
         /* Docs */
-        .docs { padding-top: calc(var(--header-height) + 40px); } /* Espace pour le header sur la page doc */
         .accordion-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 15px; overflow: hidden; transition: all 0.3s ease; }
         .accordion-item:hover { box-shadow: 0 8px 20px var(--shadow); }
         .accordion-header { padding: 20px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
@@ -307,27 +272,69 @@
         .highlight-box { background: var(--bg-highlight); padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); margin: 15px 0; }
         .contact-box { background: var(--bg-highlight); padding: 20px; border-radius: 12px; margin-top: 25px; }
 
-        /* Footer - Uniformisé */
-        .footer { 
-            background: var(--gradient); 
-            color: white; 
-            padding: var(--spacing-section) 0; /* Utilise la même variable que les sections */
-            margin-top: 0; /* Suppression de la marge qui créait un double espace */
-            position: relative; 
-            overflow: hidden; 
-            width: 100%; 
+        /* --- FOOTER CORRECTIF MOBILE --- */
+        .footer {
+            background: var(--gradient);
+            color: white;
+            padding: 60px 0;
+            margin-top: 60px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
         }
-        .footer-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--spacing-container); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 15px; }
-        .footer::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%); pointer-events: none; }
-        .footer h3 { font-size: 1.8rem; font-weight: 700; color: white; margin: 0; line-height: 1.2; text-align: center; }
-        .footer p { color: rgba(255, 255, 255, 0.9); font-size: 1rem; margin: 0; line-height: 1.5; max-width: 600px; width: 100%; white-space: normal; word-wrap: break-word; }
-        .footer .copyright { margin-top: 15px; opacity: 0.6; font-size: 0.85rem; }
+
+        .footer-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .footer::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .footer h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            margin: 0;
+            line-height: 1.5;
+            max-width: 600px;
+            width: 100%;
+            /* Force le passage à la ligne proprement sur mobile */
+            white-space: normal;
+            word-wrap: break-word;
+        }
+        
+        .footer .copyright {
+            margin-top: 15px;
+            opacity: 0.6;
+            font-size: 0.85rem;
+        }
+
         .status-badge-wrapper::after { display: none !important; }
 
-        /* --- MEDIA QUERIES MOBILE (OVERRIDE) --- */
+        /* --- MEDIA QUERIES MOBILE --- */
         @media (max-width: 1024px) {
-            /* Nav & Header */
-            .header-content { padding: 0 20px; }
+            /* Header & Nav */
+            .header-content { padding: 15px 20px; }
             .menu-toggle { display: flex; }
             .nav { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: var(--bg-header-mobile-nav); flex-direction: column; padding: 80px 30px 30px; gap: 25px; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); transition: right 0.3s ease; overflow-y: auto; z-index: 1001; }
             .nav.active { right: 0; }
@@ -339,21 +346,20 @@
             .nav-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 1000; }
             .nav-overlay.active { display: block; }
 
-            /* Mobile Content */
+            /* Mobile Adjustments */
             .hero h2 { font-size: 2.2rem; }
             .hero p { font-size: 1.1rem; }
             .hero-buttons { flex-direction: column; }
             .btn-primary, .btn-secondary { width: 100%; text-align: center; }
             .features-grid, .commands-grid { grid-template-columns: 1fr; }
-            
-            /* Feedback ajusté sur mobile */
-            .feedback-section { width: calc(100% - 40px); margin: var(--spacing-section) auto; padding: 40px 20px; }
+            .feedback-section { padding: 50px 20px; }
             .feedback-section h2 { font-size: 1.8rem; }
             .feedback-features { flex-direction: column; gap: 15px; }
             .btn-feedback { width: 100%; justify-content: center; }
-            
             .partners-carousel { padding: 15px 0; }
             .partner-card { width: 240px; margin-right: 20px; }
+            
+            /* Footer Mobile */
             .footer h3 { font-size: 1.5rem; }
             .footer p { font-size: 0.95rem; }
         }
@@ -396,6 +402,7 @@
             </nav>
         </div>
         
+        
         <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
     </header>
 
@@ -421,6 +428,7 @@
         <section class="features container">
             <h2 class="section-title">Principales fonctionnalités</h2>
             <div class="features-grid">
+              
                 <div class="feature-card">
                     <span class="feature-icon">🤖</span>
                     <h3>Intelligence artificielle</h3>
@@ -505,6 +513,7 @@
                 <p>
                     Aidez-nous à améliorer Assistante Barbara en partageant votre expérience. Vos retours sont essentiels pour nous permettre d'évoluer.
                 </p>
+                
                 <div class="feedback-features">
                     <div class="feedback-feature">
                         <span>⚡</span>
@@ -519,6 +528,7 @@
                         <span>Toutes suggestions bienvenues</span>
                     </div>
                 </div>
+                
                 <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback" target="_blank">
                     <span>📝</span> Donner mon avis
                 </a>
@@ -527,12 +537,14 @@
 
         <section class="partners-section container">
             <h2 class="section-title">Nos partenaires</h2>
+            
             <div class="partners-intro">
                 <p>
                     Assistante Barbara est fière de collaborer avec des partenaires qui partagent notre vision 
                     d'améliorer l'expérience Discord. Ensemble, nous créons des solutions innovantes pour la communauté.
                 </p>
             </div>
+
             <div class="partners-carousel">
                 <div class="partners-wrapper">
                     <div class="partners-track">
@@ -541,46 +553,55 @@
                             <h4>Votre entreprise</h4>
                             <p>Devenez partenaire et soutenez notre projet</p>
                         </div>
+
                         <div class="partner-card">
                             <div class="partner-logo">🎮</div>
                             <h4>Gaming Corp</h4>
                             <p>Partenaire gaming depuis 2024</p>
                         </div>
+
                         <div class="partner-card">
                             <div class="partner-logo">🎨</div>
                             <h4>Design Studio</h4>
                             <p>Support créatif et design</p>
                         </div>
+
                         <div class="partner-card">
                             <div class="partner-logo">💻</div>
                             <h4>Dev Community</h4>
                             <p>Partenaire technique</p>
                         </div>
+
                         <div class="partner-card partner-placeholder">
                             <div class="partner-logo">✨</div>
                             <h4>Rejoignez-nous</h4>
                             <p>Nous cherchons de nouveaux partenaires</p>
                         </div>
+
                         <div class="partner-card partner-placeholder">
                             <div class="partner-logo">🤝</div>
                             <h4>Votre entreprise</h4>
                             <p>Devenez partenaire et soutenez notre projet</p>
                         </div>
+
                         <div class="partner-card">
                             <div class="partner-logo">🎮</div>
                             <h4>Gaming Corp</h4>
                             <p>Partenaire gaming depuis 2024</p>
                         </div>
+
                         <div class="partner-card">
                             <div class="partner-logo">🎨</div>
                             <h4>Design Studio</h4>
                             <p>Support créatif et design</p>
                         </div>
+
                         <div class="partner-card">
                             <div class="partner-logo">💻</div>
                             <h4>Dev Community</h4>
                             <p>Partenaire technique</p>
                         </div>
+
                         <div class="partner-card partner-placeholder">
                             <div class="partner-logo">✨</div>
                             <h4>Rejoignez-nous</h4>
@@ -589,11 +610,13 @@
                     </div>
                 </div>
             </div>
-        </section>
+
+            </section>
     </div>
 
     <div id="docs" class="page">
-        <section class="docs container">
+        
+<section class="docs container">
             <h2 class="section-title animated-element">Documentation & mentions légales</h2>
 
             <div class="accordion-item animated-element">
@@ -631,15 +654,18 @@
                     <h3>3. Base légale du traitement</h3>
                     <p>Les traitements effectués par Assistante Barbara reposent sur :</p>
                     <ul>
-                        <li><strong>L'exécution d'un contrat (Article 6.1.b du RGPD) :</strong> Nécessaire pour fournir les fonctionnalités du bot demandées par les utilisateurs (commandes variées, informations serveur).</li>
+                        <li><strong>L'exécution d'un contrat (Article 6.1.b du RGPD) :</strong> Nécessaire pour fournir les fonctionnalités du bot demandées par les utilisateurs (commandes variées, informations 
+                        serveur).</li>
                         <li><strong>L'intérêt légitime (Article 6.1.f du RGPD) :</strong> Assurer la sécurité, la maintenance et le bon fonctionnement technique du service.</li>
-                        <li><strong>Le consentement (Article 6.1.a du RGPD) :</strong> Uniquement lorsque l'utilisateur interagit avec les fonctionnalités d'intelligence artificielle ou musicales nécessitant l'appel d'APIs tierces (OpenAI, Mistral AI, Jamendo). En utilisant ces fonctionnalités spécifiques, vous consentez au traitement par ces services tiers.</li>
+                        <li><strong>Le consentement (Article 6.1.a du RGPD) :</strong> Uniquement lorsque l'utilisateur 
+                        interagit avec les fonctionnalités d'intelligence artificielle ou musicales nécessitant l'appel d'APIs tierces (OpenAI, Mistral AI, Jamendo). En utilisant ces fonctionnalités spécifiques, vous consentez au traitement par ces services tiers.</li>
                     </ul>
 
                     <h3>4. Utilisation des APIs tierces et coresponsabilité</h3>
                     <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
                     <ul>
-                        <li><strong>Discord API :</strong> Discord agit comme responsable conjoint pour les données traitées via sa plateforme conformément à sa propre <a href="https://discord.com/privacy" target="_blank">politique de confidentialité</a>.</li>
+                        <li><strong>Discord API :</strong> Discord agit comme responsable conjoint pour les données traitées via sa plateforme conformément à 
+                        sa propre <a href="https://discord.com/privacy" target="_blank">politique de confidentialité</a>.</li>
                         <li><strong>OpenAI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Les messages envoyés aux salons configurés sont traités par OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
                         <li><strong>Mistral AI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Consultez la <a href="https://mistral.ai/privacy" target="_blank">politique de confidentialité de Mistral AI</a>.</li>
                         <li><strong>Jamendo API :</strong> Pour les fonctionnalités musicales. Consultez la <a href="https://www.jamendo.com/legal/privacy" target="_blank">politique de confidentialité de Jamendo</a>.</li>
@@ -669,12 +695,16 @@
                         <li><strong>Droit d'accès (Article 15) :</strong> Obtenir confirmation du traitement de vos données et accéder à celles-ci</li>
                         <li><strong>Droit de rectification (Article 16) :</strong> Corriger des données inexactes ou incomplètes</li>
                         <li><strong>Droit à l'effacement (Article 17) :</strong> Demander la suppression de vos données ("droit à l'oubli")</li>
-                        <li><strong>Droit d'opposition (Article 21) :</strong> Vous opposer au traitement de vos données</li>
+                        <li><strong>Droit d'opposition (Article 21) :</strong> Vous 
+                        opposer au traitement de vos données</li>
                         <li><strong>Droit à la limitation (Article 18) :</strong> Demander la limitation du traitement</li>
-                        <li><strong>Droit à la portabilité (Article 20) :</strong> Recevoir vos données dans un format structuré</li>
+                        <li><strong>Droit à la portabilité (Article 20) :</strong> Recevoir vos données dans un 
+                        format structuré</li>
                         <li><strong>Droit de retrait du consentement :</strong> Retirer votre consentement à tout moment</li>
                     </ul>
-                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatiquement satisfait par notre politique de suppression automatique. Néanmoins, vous pouvez nous contacter pour toute question ou demande spécifique.</p>
+                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatiquement satisfait 
+                    par notre politique de suppression automatique.
+                    Néanmoins, vous pouvez nous contacter pour toute question ou demande spécifique.</p>
                     <p><strong>Droit de réclamation :</strong> Vous avez le droit d'introduire une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés) si vous estimez que vos droits ne sont pas respectés : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
 
                     <h3>8. Sécurité des données</h3>
@@ -684,7 +714,8 @@
                         <li>Accès restreint aux logs système (authentification requise)</li>
                         <li>Chiffrement des communications (HTTPS/TLS)</li>
                         <li>Suppression automatique et régulière des données temporaires</li>
-                        <li>Surveillance des incidents de sécurité</li>
+                        <li>Surveillance des incidents 
+                        de sécurité</li>
                         <li>Mises à jour régulières des systèmes</li>
                     </ul>
 
@@ -711,7 +742,7 @@
                         <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits RGPD :</p>
                         <ul>
                             <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
                             <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
                         <p>Nous nous engageons à répondre à vos demandes dans un délai maximum d'un mois conformément au RGPD.</p>
@@ -722,50 +753,175 @@
             <div class="accordion-item animated-element">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
-                        <h4>🇫🇷 Conditions générales d'utilisation</h4>
-                        <p class="tag">Dernière mise à jour : 12 novembre 2025</p>
-                    </div>
-                    <span style="color: var(--muted);">▼</span>
-                </div>
-                <div class="accordion-body">
-                    <p>En utilisant <strong>Assistante Barbara</strong>, vous acceptez les présentes Conditions Générales d'Utilisation (CGU). Veuillez les lire attentivement.</p>
-                    <div class="highlight-box">
-                        <p><strong>Champ d'application :</strong> Ces Conditions Générales d'Utilisation s'appliquent à l'ensemble des interactions avec le bot Assistante Barbara sur Discord, quel que soit le serveur ou l'utilisateur.</p>
-                    </div>
-                     <h3>1. Description du service</h3>
-                    <p><strong>Assistante Barbara</strong> est une application Discord (bot) à but non commercial offrant :</p>
-                    <ul>
-                        <li>Une variété de commandes slash</li>
-                        <li>Des fonctionnalités musicales (via Jamendo)</li>
-                        <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
-                    </ul>
-                    <div class="contact-box">
-                        <h4>13. Contact</h4>
-                        <p>Pour toute question concernant ces CGU :</p>
-                        <ul>
-                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
-                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-             <div class="accordion-item animated-element">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div>
-                        <h4>🇺🇸 Privacy Policy & Terms of Service</h4>
+                        <h4>🇺🇸 Terms of Service</h4>
                         <p class="tag">Last updated: November 12, 2025</p>
                     </div>
                     <span style="color: var(--muted);">▼</span>
                 </div>
                 <div class="accordion-body">
-                    <p><em>(English versions are collapsed here for brevity but your original content is preserved in structure)</em></p>
-                    <p>Welcome to <strong>Assistante Barbara</strong>. By using this bot, you agree to our Terms and Privacy Policy.</p>
-                     <div class="contact-box">
-                        <h4>Contact</h4>
-                        <p>For any questions:</p>
+                    <p>By using <strong>Assistante Barbara</strong>, you agree to these Terms of Service (ToS). Please read them carefully.</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Scope:</strong> These Terms of Service apply to all interactions with the Assistante Barbara bot on Discord, regardless of server or user.</p>
+                    </div>
+
+                    <h3>1. Service description</h3>
+                    <p><strong>Assistante Barbara</strong> is a non-commercial Discord bot application offering:</p>
+                    <ul>
+                        <li>A variety of slash commands</li>
+                        <li>Music features (via Jamendo)</li>
+                        <li>An AI-powered assistance chatbot (OpenAI and Mistral AI)</li>
+                    </ul>
+                    <p><strong>The service is provided free of charge, without contractual obligation or guarantee of continuous availability.</strong> It 
+                    is a personal project managed by the Assistante Barbara development team.</p>
+
+                    <h3>2. Acceptance of terms</h3>
+                    <p>Using Assistante Barbara implies your complete and unreserved acceptance of these ToS as well as our <strong>Privacy Policy</strong>. If you do not accept these terms, please do not use the bot.</p>
+                    <p>By adding the bot to your Discord server or interacting with it, you acknowledge that you have read, understood, and agreed to all of these terms.</p>
+
+                    <h3>3. Authorized use</h3>
+                    <div class="highlight-box">
+                        <strong>You agree to:</strong>
+                        <ul>
+                            <li>Utiliser le bot conformément aux <a href="https://discord.com/terms" target="_blank">Conditions d'Utilisation de Discord</a></li>
+                            <li>Ne pas abuser des fonctionnalités (spam, flooding, etc.)</li>
+                            <li>Ne pas tenter de contourner les limitations techniques</li>
+                            <li>Respecter les autres utilisateurs</li>
+                            <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
+                            <li>Utiliser les commandes de manière raisonnable et appropriée</li>
+                        </ul>
+                    </div>
+
+                    <h3>4. Artificial intelligence features</h3>
+                    <p><strong>Important - Limitations and warnings:</strong></p>
+                    <ul>
+                        <li>AI responses are automatically generated by third-party services (OpenAI, Mistral AI) and may contain inaccuracies, errors, or outdated information</li>
+                        <li>AI may produce unpredictable or inappropriate content despite our moderation efforts</li>
+                        <li>Never rely exclusively on AI responses for important decisions, particularly regarding health, legal, financial, or safety matters</li>
+                        <li>Conversations with AI are processed by third-party services in accordance with their respective policies</li>
+                        <li>We are not responsible for content generated by AI or its use</li>
+                        <li>Users are solely responsible for verifying information provided by AI</li>
+                        <li>By using these features, you agree that your messages 
+                        will be transmitted and processed by OpenAI and/or Mistral AI</li>
+                    </ul>
+                    <p><strong>Prohibitions:</strong> It is strictly forbidden to use AI to:</p>
+                    <ul>
+                        <li>Generate illegal, hateful, discriminatory, or violent content</li>
+                        <li>Attempt to circumvent moderation systems</li>
+                        <li>Collect personal data about other users</li>
+                        <li>Spread disinformation or misleading content</li>
+                    </ul>
+
+                    <h3>5. Music features</h3>
+                    <ul>
+                        <li>Music is provided via <strong>Jamendo</strong> (royalty-free music)</li>
+                        <li>The catalog is limited to content available on Jamendo</li>
+                        <li>Music service availability may vary</li>
+                        <li>Respect copyrights and <a href="https://www.jamendo.com/legal/terms-of-use" target="_blank">Jamendo's ToS</a></li>
+                    </ul>
+
+                    <h3>6. Service availability</h3>
+                    <p>We strive to keep Assistante Barbara operational 24/7, but:</p>
+                    <ul>
+                        <li>The service may be interrupted for maintenance, updates, or improvements</li>
+                        <li>Interruptions may occur due to technical issues</li>
+                        <li>We do not guarantee absolute or uninterrupted availability</li>
+                        <li>No refunds are applicable (free service)</li>
+                        <li>No compensation can be 
+                        claimed in case of unavailability</li>
+                    </ul>
+
+                    <h3>6. bis. Force majeure</h3>
+                    <p>We shall not be held liable for service interruptions resulting from force majeure events, including:</p>
+                    <ul>
+                        <li>Infrastructure or hosting failures (KataBump, servers)</li>
+                        <li>Third-party service failures (Discord, OpenAI, Mistral AI, Jamendo)</li>
+                        <li>Network outages, Internet access interruptions</li>
+                        <li>Cyberattacks, hacking, denial of service (DDoS)</li>
+                        <li>Administrative or judicial 
+                        decisions</li>
+                        <li>Natural disasters or any other event beyond our reasonable control</li>
+                    </ul>
+                    <p>En cas de 
+                    force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant 
+                    à un délai de rétablissement.</p>
+
+                    <h3>7. Limitation de responsabilité</h3>
+                    <div class="highlight-box">
+                        <p><strong>Assistante Barbara is provided "as is" and "as available".</strong> To the fullest extent permitted by applicable law, we disclaim all liability for:</p>
+                        <ul>
+                            <li>Direct, indirect, incidental, special, consequential, or punitive damages resulting from use or inability to use the bot</li>
+                            <li>Accuracy, reliability, or completeness of information provided by AI</li>
+                            <li>Data loss, service interruptions, or any technical malfunction</li>
+                            <li>Content generated by AI or provided by third-party APIs</li>
+                            <li>Decisions made based on information provided by the bot</li>
+                            <li>Harm caused by third-party users or malicious acts</li>
+                            <li>Compatibility with other services or applications</li>
+                        </ul>
+                        <p><strong>No warranty:</strong> We do not 
+                        guarantee that the service will be uninterrupted, error-free, secure, or free from viruses or other harmful components.</p>
+                    </div>
+                    <p><strong>Indemnisation:</strong> You agree to indemnify and hold harmless the Assistante Barbara team against any claim resulting from your use of 
+                    the service in violation of these ToS.</p>
+
+                    <h3>8. Intellectual property</h3>
+                    <ul>
+                        <li>Assistante Barbara and its source code belong to their creator</li>
+                        <li>AI-generated responses follow OpenAI and Mistral AI's intellectual property policies</li>
+                        <li>Music is subject to Jamendo licenses</li>
+                        <li>Discord and its logo are registered trademarks of Discord Inc.</li>
+                    </ul>
+
+                    <h3>9. Service modifications</h3>
+                    <p>We reserve the right, at our sole discretion, to:</p>
+                    <ul>
+                        <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
+                        <li>Modifier les fonctionnalités disponibles</li>
+                        <li>Block access to users or servers in case of abuse, violation of these ToS, or Discord's Terms of Service</li>
+                        <li>Modifier les présentes CGU. Substantial changes will be communicated via the website. Continued use after changes constitutes acceptance</li>
+                    </ul>
+                    <p>We shall not be liable to you or any third party for any modification, suspension, or discontinuation of the service.</p>
+
+                    <h3>10. Legal compliance</h3>
+                    <p>This service complies with:</p>
+                    <ul>
+                        <li>GDPR (General Data Protection Regulation)</li>
+                        <li>Discord's Terms of Service</li>
+                        <li>Applicable French and European laws</li>
+                    </ul>
+
+                    <h3>11. Termination</h3>
+                    <p><strong>Par l'utilisateur :</strong> You may stop using Assistante Barbara at any time by:</p>
+                    <ul>
+                        <li>Removing the bot from your Discord server</li>
+                        <li>Ceasing to interact with the bot</li>
+                    </ul>
+                    <p><strong>By Assistante Barbara:</strong> We may suspend or block your access to the service, immediately and without notice, in case of:</p>
+                    <ul>
+                        <li>Violation of these ToS</li>
+                        <li>Violation of Discord's Terms of Service</li>
+                        <li>Abusive or fraudulent use of the service</li>
+                        <li>Harmful 
+                        behavior toward other users</li>
+                        <li>Illegal activity</li>
+                    </ul>
+                    <p><strong>Effects of termination:</strong> Upon termination, you immediately 
+                    lose all rights to use the service.
+                    Provisions of these ToS that by their nature should survive termination (including liability limitations) will remain in effect.</p>
+
+                    <h3>12. Applicable law and jurisdiction</h3>
+                    <p>These ToS are governed by and construed in accordance with French law, without regard to conflict of law principles.</p>
+                    <p><strong>Dispute resolution:</strong> In the event of a dispute relating to the interpretation or execution of these ToS, the parties will endeavor to resolve it amicably. Failing that, French courts shall have exclusive jurisdiction.</p>
+                    <p><strong>Mediation:</strong> In accordance with Articles L.611-1 et seq. of the French Consumer Code, if you are a consumer, you have the right to use a consumer mediator free of charge in the event of a dispute.</p>
+                    <p><strong>Severability:</strong> If any provision of these ToS is deemed invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
+
+                    <div class="contact-box">
+                        <h4>13. Contact</h4>
+                        <p>For any questions regarding these ToS:</p>
                         <ul>
                             <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
+                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
                     </div>
                 </div>
