@@ -232,6 +232,7 @@
             position: relative;
         }
 
+        /* MODIFICATION : Ajout de border-radius pour arrondir la barre au survol */
         .nav-link::after {
             content: '';
             position: absolute;
@@ -241,6 +242,7 @@
             height: 2px;
             background: var(--gradient);
             transition: width 0.3s ease;
+            border-radius: 2px; /* Bords arrondis */
         }
 
         .nav-link:hover {
@@ -856,18 +858,17 @@
             margin-top: 30px;
         }
 
-        /* --- Footer (MODIFIÉ) --- */
+        /* --- Footer (Dégradé et centré) --- */
         .footer {
-            /* Background dégradé bleu/violet */
             background: var(--gradient);
             color: white;
-            padding: 60px 20px; /* Padding équilibré */
+            padding: 60px 20px;
             text-align: center;
             margin-top: 80px;
             position: relative;
             overflow: hidden;
             
-            /* Centrage vertical et horizontal strict */
+            /* Centrage vertical et horizontal */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -906,7 +907,6 @@
             margin-bottom: 8px;
             font-size: 1rem;
         }
-        /* Fin Footer */
 
         /* Status badge */
         .status-badge-wrapper::after {
