@@ -14,7 +14,7 @@
         }
 
         :root {
-            /* --- Couleurs de marque & Mode Clair --- */
+            /* --- Mode Clair (inchangé) --- */
             --primary: #667eea;
             --secondary: #764ba2;
             --dark: #2c3e50;
@@ -34,29 +34,37 @@
         }
 
         html[data-theme='dark'] {
-            /* --- PALETTE DARK MODE (Modern Deep Slate) --- */
+            /* --- NOUVELLE PALETTE DARK MODE (Modern Deep Slate) --- */
             
-            /* Textes */
-            --dark: #f1f5f9;      /* Titres (blanc cassé) */
-            --light: #1e293b;     
+            /* Textes & Titres */
+            --dark: #f1f5f9;      /* Titres (blanc cassé très clair) */
+            --light: #1e293b;     /* Inverse (utilisé rarement) */
             --text: #cbd5e1;      /* Texte courant (gris clair doux) */
             --muted: #94a3b8;     /* Texte secondaire (gris ardoise) */
             
             /* Fonds */
-            --bg-body: #0f172a;   /* Fond principal (Bleu nuit très profond) */
+            --bg-body: #0f172a;   /* Fond principal (Bleu nuit très profond/Noir) */
             --bg-card: #1e293b;   /* Fond des cartes (Gris ardoise foncé) */
             
             /* Navigation */
-            --bg-header: rgba(15, 23, 42, 0.95); 
+            --bg-header: rgba(15, 23, 42, 0.95); /* Semi-transparent sombre */
             --bg-header-mobile-nav: #1e293b;
             
             /* Éléments UI */
-            --bg-highlight: #334155; 
-            --border: #334155;       
-            --shadow: rgba(0, 0, 0, 0.5); 
+            --bg-highlight: #334155; /* Boites de mise en avant */
+            --border: #334155;       /* Bordures subtiles */
+            --shadow: rgba(0, 0, 0, 0.5); /* Ombres plus marquées pour la profondeur */
             
             --bg-placeholder-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
         }
+
+        /* --- MODIFICATION : Dégradé Footer mode sombre --- */
+        html[data-theme='dark'] .footer {
+            /* Ajustement pour fondre le footer avec le nouveau background sombre */
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-top: 1px solid var(--border);
+        }
+        /* --- FIN DE LA MODIFICATION --- */
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -67,7 +75,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        /* Transition douce pour les éléments */
+        /* Transition douce pour les éléments changeant de couleur */
         .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .partner-cta, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
             transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
@@ -162,7 +170,7 @@
         .menu-toggle span {
             width: 25px;
             height: 3px;
-            background: var(--text);
+            background: var(--text); /* Changé à var(--text) pour être visible en dark mode */
             border-radius: 3px;
             transition: all 0.3s ease;
         }
@@ -202,7 +210,7 @@
         .logo-text h1 {
             font-size: 1.4rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--dark); /* S'adapte au thème */
             letter-spacing: -0.02em;
         }
 
@@ -268,7 +276,7 @@
         
         /* Bouton Mode Sombre */
         .theme-toggle-btn {
-            background: var(--bg-highlight);
+            background: var(--bg-highlight); /* Plus subtil */
             border: 1px solid var(--border);
             cursor: pointer;
             padding: 8px 10px;
@@ -441,7 +449,7 @@
         .feature-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px var(--shadow);
-            border-color: var(--border);
+            border-color: var(--border); /* Garder la bordure subtile */
         }
 
         .feature-card:hover::before {
@@ -850,25 +858,16 @@
             margin-top: 30px;
         }
 
-        /* --- FOOTER FINALISÉ (ALIGNEMENT PARFAIT) --- */
+        /* Footer */
         .footer {
-            background: var(--gradient);
+            /* Le background est défini pour le thème clair et surchargé pour le thème sombre */
+            background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%);
             color: white;
-            padding: 60px 0; /* Padding haut et bas identiques = centrage vertical */
+            padding: 50px 0 35px;
+            text-align: center;
             margin-top: 80px;
             position: relative;
             overflow: hidden;
-            border: none;
-        }
-
-        /* Conteneur Flexbox pour un alignement mathématique */
-        .footer .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centre horizontalement */
-            justify-content: center; /* Centre verticalement */
-            gap: 15px; /* Espace ÉGAL entre chaque élément (titre, sous-titre, copyright) */
-            height: 100%;
         }
 
         .footer::before {
@@ -886,32 +885,27 @@
         .footer-content {
             position: relative;
             z-index: 1;
-            width: 100%; /* S'assure que le contenu prend toute la largeur */
         }
 
         .footer h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
-            margin: 0; /* Suppression des marges pour laisser le flex-gap gérer l'espace */
-            line-height: 1.2;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: white; /* Force white in footer */
         }
 
         .footer p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
-            margin: 0; /* Suppression des marges */
-            /* AJOUT POUR MOBILE : Force le retour à la ligne et une largeur max */
-            max-width: 95%; 
-            padding: 0 10px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
         }
-        
-        /* Classe spécifique pour le copyright pour l'éloigner un peu plus si besoin */
-        .footer .copyright {
-            margin-top: 20px; /* Petit espacement supplémentaire juste pour le copyright */
-            opacity: 0.6;
-            font-size: 0.85rem;
-            padding: 0; /* Pas besoin de padding latéral sur le copyright */
+
+        .footer-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--gradient);
+            margin: 20px auto;
+            border-radius: 3px;
         }
 
         /* Status badge */
@@ -1046,14 +1040,6 @@
             .partner-card {
                 width: 240px;
                 margin-right: 20px;
-            }
-            
-            /* AJOUT : Ajustements spécifiques au footer sur mobile */
-            .footer h3 {
-                font-size: 1.5rem;
-            }
-            .footer p {
-                 font-size: 0.95rem;
             }
         }
 
@@ -1552,18 +1538,17 @@
                             <li>Les préjudices causés par des utilisateurs tiers ou des actes malveillants</li>
                             <li>La compatibilité avec d'autres services ou applications</li>
                         </ul>
-                        <p><strong>No warranty:</strong> We do not 
-                        guarantee that the service will be uninterrupted, error-free, secure, or free from viruses or other harmful components.</p>
+                        <p><strong>Absence de garantie :</strong> Nous ne garantissons pas que le service sera ininterrompu, sans erreur, sécurisé ou exempt de virus ou autres composants nuisibles.</p>
                     </div>
-                    <p><strong>Indemnisation:</strong> You agree to indemnify and hold harmless the Assistante Barbara team against any claim resulting from your use of 
-                    the service in violation of these ToS.</p>
+                    <p><strong>Indemnisation :</strong> Vous acceptez d'indemniser et de dégager de toute responsabilité l'équipe d'Assistante Barbara contre toute réclamation résultant de votre utilisation du service en violation 
+                    des présentes CGU.</p>
 
-                    <h3>8. Intellectual property</h3>
+                    <h3>8. Propriété intellectuelle</h3>
                     <ul>
-                        <li>Assistante Barbara and its source code belong to their creator</li>
-                        <li>AI-generated responses follow OpenAI and Mistral AI's intellectual property policies</li>
-                        <li>Music is subject to Jamendo licenses</li>
-                        <li>Discord and its logo are registered trademarks of Discord Inc.</li>
+                        <li>Assistante Barbara et son code source appartiennent à leur créateur</li>
+                        <li>Les réponses générées par l'IA suivent les politiques de propriété intellectuelle d'OpenAI et Mistral AI</li>
+                        <li>La musique est soumise aux licences de Jamendo</li>
+                        <li>Discord et son logo sont des marques déposées de Discord Inc.</li>
                     </ul>
 
                     <h3>9. Modifications du service</h3>
@@ -1571,51 +1556,48 @@
                     <ul>
                         <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
                         <li>Modifier les fonctionnalités disponibles</li>
-                        <li>Block access to users or servers in case of abuse, violation of these ToS, or Discord's Terms of Service</li>
-                        <li>Modifier les présentes CGU. Substantial changes will be communicated via the website. Continued use after changes constitutes acceptance</li>
+                        <li>Bloquer l'accès à des utilisateurs ou serveurs en cas d'abus, de violation des présentes CGU ou des conditions d'utilisation de Discord</li>
+                        <li>Modifier les présentes CGU. Les modifications substantielles seront communiquées via le site web. La poursuite de l'utilisation après modification vaut acceptation</li>
                     </ul>
-                    <p>We shall not be liable to you or any third party for any modification, suspension, or discontinuation of the service.</p>
+                    <p>Nous ne serons pas responsables envers vous ou envers des tiers de toute modification, suspension ou interruption du service.</p>
 
-                    <h3>10. Legal compliance</h3>
-                    <p>This service complies with:</p>
+                    <h3>10. Conformité légale</h3>
+                    <p>Ce service est conforme à :</p>
                     <ul>
-                        <li>GDPR (General Data Protection Regulation)</li>
-                        <li>Discord's Terms of Service</li>
-                        <li>Applicable French and European laws</li>
+                        <li>RGPD (Règlement Général sur la Protection des Données)</li>
+                        <li>Conditions d'Utilisation de Discord</li>
+                        <li>Lois françaises et européennes applicables</li>
                     </ul>
 
-                    <h3>11. Termination</h3>
-                    <p><strong>Par l'utilisateur :</strong> You may stop using Assistante Barbara at any time by:</p>
+                    <h3>11. Résiliation</h3>
+                    <p><strong>Par l'utilisateur :</strong> Vous pouvez cesser d'utiliser Assistante Barbara à tout moment en :</p>
                     <ul>
-                        <li>Removing the bot from your Discord server</li>
-                        <li>Ceasing to interact with the bot</li>
+                        <li>Retirant le bot de votre serveur Discord</li>
+                        <li>Cessant d'interagir avec le bot</li>
                     </ul>
-                    <p><strong>By Assistante Barbara:</strong> We may suspend or block your access to the service, immediately and without notice, in case of:</p>
+                    <p><strong>Par Assistante Barbara :</strong> Nous pouvons suspendre ou bloquer votre accès au service, immédiatement et sans préavis, en cas de :</p>
                     <ul>
-                        <li>Violation of these ToS</li>
-                        <li>Violation of Discord's Terms of Service</li>
-                        <li>Abusive or fraudulent use of the service</li>
-                        <li>Harmful 
-                        behavior toward other users</li>
-                        <li>Illegal activity</li>
+                        <li>Violation des présentes CGU</li>
+                        <li>Violation des Conditions d'Utilisation de Discord</li>
+                        <li>Utilisation abusive ou frauduleuse du service</li>
+                        <li>Comportement nuisible envers d'autres utilisateurs</li>
+                        <li>Activité illégale</li>
                     </ul>
-                    <p><strong>Effects of termination:</strong> Upon termination, you immediately 
-                    lose all rights to use the service.
-                    Provisions of these ToS that by their nature should survive termination (including liability limitations) will remain in effect.</p>
+                    <p><strong>Effets de la résiliation :</strong> En cas de résiliation, vous perdez immédiatement tout droit d'utiliser le service. Les dispositions des présentes CGU qui, par leur nature, doivent survivre à la résiliation (notamment les limitations de responsabilité) resteront en vigueur.</p>
 
-                    <h3>12. Applicable law and jurisdiction</h3>
-                    <p>These ToS are governed by and construed in accordance with French law, without regard to conflict of law principles.</p>
-                    <p><strong>Dispute resolution:</strong> In the event of a dispute relating to the interpretation or execution of these ToS, the parties will endeavor to resolve it amicably. Failing that, French courts shall have exclusive jurisdiction.</p>
-                    <p><strong>Mediation:</strong> In accordance with Articles L.611-1 et seq. of the French Consumer Code, if you are a consumer, you have the right to use a consumer mediator free of charge in the event of a dispute.</p>
-                    <p><strong>Severability:</strong> If any provision of these ToS is deemed invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
+                    <h3>12. Droit applicable et juridiction</h3>
+                    <p>Les présentes CGU sont régies et interprétées conformément au droit français, sans égard aux principes de conflits de lois.</p>
+                    <p><strong>Résolution des litiges :</strong> En cas de litige relatif à l'interprétation ou à l'exécution des présentes CGU, les parties s'efforceront de le résoudre à l'amiable. À défaut, les tribunaux français seront seuls compétents.</p>
+                    <p><strong>Médiation :</strong> Conformément aux articles L.611-1 et suivants du Code de la consommation, si vous êtes un consommateur, vous avez le droit de recourir gratuitement à un médiateur de la consommation en cas de litige.</p>
+                    <p><strong>Divisibilité :</strong> Si une disposition des présentes CGU est jugée invalide ou inapplicable, les autres dispositions resteront en vigueur.</p>
 
                     <div class="contact-box">
                         <h4>13. Contact</h4>
-                        <p>For any questions regarding these ToS:</p>
+                        <p>Pour toute question concernant ces CGU :</p>
                         <ul>
-                            <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
-                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
                     </div>
                 </div>
@@ -1931,8 +1913,9 @@
         <div class="footer-content">
             <div class="container">
                 <h3>Assistante Barbara</h3>
-                <p>Application Discord polyvalente propulsée par l'IA</p>
-                <p class="copyright">© 2025 - Tous droits réservés</p>
+                <div class="footer-divider"></div>
+                <p>Bot Discord polyvalent propulsé par l'IA</p>
+                <p style="margin-top: 20px; margin-bottom: 0; opacity: 0.6; font-size: 0.9rem;">© 2025 - Tous droits réservés</p>
             </div>
         </div>
     </footer>
