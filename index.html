@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="logo-ab.png">
     <link rel="apple-touch-icon" href="logo-ab.png">
     <style>
-        /* --- RESET GLOBAL --- */
+        /* --- RESET & VARIABLES --- */
         * {
             margin: 0;
             padding: 0;
@@ -15,7 +15,7 @@
         }
 
         :root {
-            /* --- Couleurs de marque & Mode Clair --- */
+            /* Mode Clair */
             --primary: #667eea;
             --secondary: #764ba2;
             --dark: #2c3e50;
@@ -35,7 +35,7 @@
         }
 
         html[data-theme='dark'] {
-            /* --- PALETTE DARK MODE --- */
+            /* Mode Sombre "Modern Deep Slate" */
             --dark: #f1f5f9;
             --light: #1e293b;     
             --text: #cbd5e1;
@@ -59,7 +59,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        /* Transitions */
+        /* Transitions douces */
         .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
             transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
@@ -68,10 +68,7 @@
         body::before {
             content: '';
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            top: -50%; left: -50%; width: 200%; height: 200%;
             background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
                         radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
             animation: float 20s ease-in-out infinite;
@@ -85,29 +82,52 @@
             66% { transform: translate(-20px, 20px) rotate(-1deg); }
         }
 
-        /* --- ANIMATIONS --- */
+        /* Animations d'apparition */
         .animated-element {
             opacity: 0;
             transform: translateY(10px);
             transition: opacity 0.45s cubic-bezier(0.215, 0.61, 0.355, 1), 
                         transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
         }
-
-        .animated-element.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
+        .animated-element.is-visible { opacity: 1; transform: translateY(0); }
         .animated-element.is-visible:nth-child(1) { transition-delay: 0.04s; }
         .animated-element.is-visible:nth-child(2) { transition-delay: 0.08s; }
         .animated-element.is-visible:nth-child(3) { transition-delay: 0.12s; }
-        .animated-element.is-visible:nth-child(4) { transition-delay: 0.16s; }
-        .animated-element.is-visible:nth-child(5) { transition-delay: 0.20s; }
-        .animated-partners-container {
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
+        .animated-partners-container { opacity: 0; transition: opacity 0.8s ease-in-out; }
         .animated-partners-container.is-visible { opacity: 1; }
+
+        /* --- STRUCTURE & ESPACEMENTS UNIFIÉS --- */
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* 1. Règle universelle pour toutes les sections principales */
+        section {
+            padding: 80px 0; /* Standard Desktop: 80px haut/bas */
+            position: relative;
+        }
+
+        /* 2. Règle universelle pour les titres de section */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-top: 0; /* Suppression impérative de la marge haute */
+            margin-bottom: 60px; /* Espace standard entre titre et contenu */
+            padding-top: 0;
+            line-height: 1.2;
+        }
+
+        /* Hero spécifique (plus d'espace en haut pour le header sticky) */
+        .hero {
+            padding-top: 100px; 
+            padding-bottom: 80px;
+            text-align: center;
+        }
 
         /* Header */
         .header {
@@ -124,403 +144,94 @@
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px 30px;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 80px; /* Hauteur fixe pour éviter les sauts */
         }
 
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 8px;
-            background: transparent;
-            border: none;
-            z-index: 1002;
-            position: relative;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--text);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
+        /* Navigation */
+        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: transparent; border: none; z-index: 1002; }
+        .menu-toggle span { width: 25px; height: 3px; background: var(--text); border-radius: 3px; transition: all 0.3s ease; }
         .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
         .menu-toggle.active span:nth-child(2) { opacity: 0; }
         .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
-            transition: transform 0.3s ease;
-            object-fit: cover;
-        }
-
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-img { width: 50px; height: 50px; border-radius: 12px; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15); transition: transform 0.3s ease; object-fit: cover; }
         .logo:hover .logo-img { transform: scale(1.05); }
+        .logo-text h1 { font-size: 1.4rem; font-weight: 600; color: var(--dark); letter-spacing: -0.02em; }
+        .logo-text p { font-size: 0.85rem; color: var(--muted); }
 
-        .logo-text h1 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--dark);
-            letter-spacing: -0.02em;
-        }
-
-        .logo-text p {
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
-
-        .nav {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient);
-            transition: width 0.3s ease;
-        }
-
+        .nav { display: flex; gap: 30px; align-items: center; }
+        .nav-link { color: var(--text); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--gradient); transition: width 0.3s ease; }
         .nav-link:hover { color: var(--primary); }
         .nav-link:hover::after { width: 100%; }
 
-        .btn-add {
-            background: var(--gradient);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-add:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-            color: white;
-        }
+        .btn-add { background: var(--gradient); color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-add:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4); color: white; }
         
-        .theme-toggle-btn {
-            background: var(--bg-highlight);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            padding: 8px 10px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            line-height: 1;
-            transition: all 0.3s ease;
-            color: var(--dark);
-        }
+        .theme-toggle-btn { background: var(--bg-highlight); border: 1px solid var(--border); cursor: pointer; padding: 8px 10px; border-radius: 10px; font-size: 1.2rem; line-height: 1; transition: all 0.3s ease; color: var(--dark); }
+        .theme-toggle-btn:hover { background: var(--border); transform: scale(1.1); }
 
-        .theme-toggle-btn:hover {
-            background: var(--border);
-            transform: scale(1.1);
-        }
-
-        /* Container Général */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 100px 0 80px; /* Plus d'espace en haut */
-            text-align: center;
-        }
-
-        /* -- CORRECTION ESPACEMENT TITRES -- */
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 60px;
-            margin-top: 60px; /* Ajout d'une marge haute explicite */
-            padding-top: 20px; /* Petit padding supplémentaire */
-        }
-
-        .hero h2 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-
-        .hero .gradient-text {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--muted);
-            max-width: 700px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-            padding: 16px 40px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--primary);
-            padding: 16px 40px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: 2px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--shadow);
-            color: var(--primary);
-        }
+        /* Hero Content */
+        .hero h2 { font-size: 3.5rem; font-weight: 700; color: var(--dark); margin-bottom: 20px; letter-spacing: -0.03em; line-height: 1.1; }
+        .hero .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.25rem; color: var(--muted); max-width: 700px; margin: 0 auto 40px; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: var(--gradient); color: white; padding: 16px 40px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4); color: white; }
+        .btn-secondary { background: var(--bg-card); color: var(--primary); padding: 16px 40px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; border: 2px solid var(--border); transition: all 0.3s ease; }
+        .btn-secondary:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 25px var(--shadow); color: var(--primary); }
 
         /* Features */
-        .features { padding: 60px 0; }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            background: var(--bg-card);
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 50%;
-            width: 0; height: 4px;
-            background: var(--gradient);
-            transform: translateX(-50%);
-            transition: width 0.3s ease;
-            border-radius: 3px;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px var(--shadow);
-            border-color: var(--border);
-        }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .feature-card { background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 4px; background: var(--gradient); transform: translateX(-50%); transition: width 0.3s ease; border-radius: 3px; }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
         .feature-card:hover::before { width: 98%; }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-        .feature-card:hover .feature-icon {
-            transform: scale(1.15);
-            animation: float-smooth 2s ease-in-out infinite;
-        }
-
-        @keyframes float-smooth {
-            0%, 100% { transform: scale(1.15) translateY(0px); }
-            50% { transform: scale(1.15) translateY(-8px); }
-        }
-
-        .feature-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-            font-weight: 600;
-        }
+        .feature-icon { font-size: 3rem; margin-bottom: 20px; display: inline-block; transition: transform 0.3s ease; }
+        .feature-card:hover .feature-icon { transform: scale(1.15); animation: float-smooth 2s ease-in-out infinite; }
+        @keyframes float-smooth { 0%, 100% { transform: scale(1.15) translateY(0px); } 50% { transform: scale(1.15) translateY(-8px); } }
+        .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 600; }
         .feature-card p { color: var(--muted); line-height: 1.7; }
 
         /* Commands */
-        .commands-section { padding: 60px 0; }
-        .commands-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .command-card {
-            background: var(--bg-card);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--primary);
-            transition: all 0.2s ease;
-        }
-        .command-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 8px 20px var(--shadow);
-        }
-        .command-card h4 {
-            font-family: 'SF Mono', 'Monaco', monospace;
-            font-size: 1.05rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
+        .commands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .command-card { background: var(--bg-card); padding: 25px; border-radius: 12px; border: 1px solid var(--border); border-left: 4px solid var(--primary); transition: all 0.2s ease; }
+        .command-card:hover { transform: translateX(5px); box-shadow: 0 8px 20px var(--shadow); }
+        .command-card h4 { font-family: 'SF Mono', 'Monaco', monospace; font-size: 1.05rem; color: var(--primary); margin-bottom: 10px; font-weight: 600; }
         .command-card p { color: var(--muted); font-size: 0.95rem; }
 
         /* Feedback */
-        .feedback-section {
-            padding: 80px 30px;
-            margin: 80px auto; /* Marge augmentée pour l'espace */
-            max-width: 1200px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-        }
-        .feedback-background {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--gradient);
-            border-radius: 20px;
-            opacity: 0.95;
-            z-index: 0;
-        }
-        .feedback-pattern {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
-            z-index: 1;
-        }
-        .feedback-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            color: white;
-        }
-        .feedback-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: pulse 2s ease-in-out infinite;
-        }
+        .feedback-section { padding: 80px 30px; margin: 20px auto; max-width: 1200px; position: relative; overflow: hidden; border-radius: 20px; }
+        .feedback-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--gradient); border-radius: 20px; opacity: 0.95; z-index: 0; }
+        .feedback-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%); z-index: 1; }
+        .feedback-content { position: relative; z-index: 2; text-align: center; color: white; }
+        .feedback-icon { font-size: 4rem; margin-bottom: 20px; display: inline-block; animation: pulse 2s ease-in-out infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         .feedback-section h2 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; color: white; }
         .feedback-section p { font-size: 1.2rem; margin-bottom: 40px; opacity: 0.95; max-width: 600px; margin-left: auto; margin-right: auto; color: rgba(255, 255, 255, 0.9); }
         .feedback-features { display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; flex-wrap: wrap; }
         .feedback-feature { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; opacity: 0.95; color: white; }
         .feedback-feature span:first-child { font-size: 1.5rem; }
-        .btn-feedback {
-            background: var(--bg-card);
-            color: var(--primary);
-            padding: 18px 45px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.15rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .btn-feedback { background: var(--bg-card); color: var(--primary); padding: 18px 45px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.15rem; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 12px; }
         .btn-feedback:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3); }
 
         /* Partners */
-        .partners-section { padding: 80px 0; background: transparent; }
+        .partners-section { background: transparent; } /* Hérite du padding général */
         .partners-intro { text-align: center; max-width: 700px; margin: 0 auto 60px; }
         .partners-intro p { font-size: 1.15rem; color: var(--muted); line-height: 1.8; margin-bottom: 30px; }
         .partners-carousel { position: relative; max-width: 1000px; margin: 0 auto; padding: 40px 0; }
-        .partners-wrapper {
-            overflow: hidden;
-            padding: 20px 0;
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
-        }
+        .partners-wrapper { overflow: hidden; padding: 20px 0; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%); }
         .partners-track { display: inline-flex; animation: scroll 60s linear infinite; }
         .partners-track:hover { animation-play-state: paused; }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .partner-card {
-            flex-shrink: 0; width: 280px;
-            background: var(--bg-card); border: 2px solid var(--border);
-            border-radius: 16px; padding: 40px 30px;
-            text-align: center; transition: all 0.3s ease; cursor: pointer;
-            margin-right: 30px;
-        }
+        .partner-card { flex-shrink: 0; width: 280px; background: var(--bg-card); border: 2px solid var(--border); border-radius: 16px; padding: 40px 30px; text-align: center; transition: all 0.3s ease; cursor: pointer; margin-right: 30px; }
         .partner-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px var(--shadow); border-color: var(--primary); }
-        .partner-logo {
-            width: 100px; height: 100px; margin: 0 auto 20px;
-            border-radius: 12px; background: var(--bg-highlight);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 3rem; transition: transform 0.3s ease;
-        }
+        .partner-logo { width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 12px; background: var(--bg-highlight); display: flex; align-items: center; justify-content: center; font-size: 3rem; transition: transform 0.3s ease; }
         .partner-card:hover .partner-logo { transform: scale(1.1); }
         .partner-card h4 { font-size: 1.2rem; color: var(--dark); margin-bottom: 10px; font-weight: 600; }
         .partner-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
@@ -529,25 +240,13 @@
         .partner-placeholder:hover { border-color: var(--primary); border-style: solid; }
 
         /* Docs */
-        .docs { padding: 60px 0; }
-        .accordion-item {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 12px; margin-bottom: 15px; overflow: hidden;
-            transition: all 0.3s ease;
-        }
+        .accordion-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 15px; overflow: hidden; transition: all 0.3s ease; }
         .accordion-item:hover { box-shadow: 0 8px 20px var(--shadow); }
-        .accordion-header {
-            padding: 25px; cursor: pointer; display: flex;
-            justify-content: space-between; align-items: center;
-            transition: background 0.2s;
-        }
+        .accordion-header { padding: 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
         .accordion-header:hover { background: var(--bg-highlight); }
         .accordion-header h4 { font-size: 1.15rem; color: var(--dark); font-weight: 600; }
         .accordion-header .tag { color: var(--muted); font-size: 0.9rem; }
-        .accordion-body {
-            padding: 0 25px; max-height: 0; overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
+        .accordion-body { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
         .accordion-item.open .accordion-body { max-height: 10000px; padding: 25px; overflow-y: auto; }
         .accordion-body h3 { color: var(--dark); margin: 25px 0 15px; font-size: 1.2rem; }
         .accordion-body p, .accordion-body li { color: var(--muted); line-height: 1.8; margin-bottom: 15px; }
@@ -555,111 +254,54 @@
         .accordion-body strong { color: var(--dark); }
         .accordion-body a { color: var(--primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
         .accordion-body a:hover { border-bottom-color: var(--primary); }
-        .highlight-box {
-            background: var(--bg-highlight); padding: 20px;
-            border-radius: 8px; border-left: 4px solid var(--primary);
-            margin: 20px 0;
-        }
+        .highlight-box { background: var(--bg-highlight); padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary); margin: 20px 0; }
         .contact-box { background: var(--bg-highlight); padding: 25px; border-radius: 12px; margin-top: 30px; }
 
-        /* --- FOOTER FINAL (CORRECTION ALIGNEMENT TOTAL) --- */
-        .footer {
-            background: var(--gradient);
-            color: white;
-            margin-top: 80px;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            /* Utilisation de Flexbox pour le centrage horizontal et vertical absolu */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 60px 20px; /* Espace interne haut/bas et sécurité latérale */
-            text-align: center; /* Assure que le texte à l'intérieur est centré */
-        }
-
-        .footer-content {
-            position: relative;
-            z-index: 1;
-            /* Flex column pour empiler les éléments */
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centre les éléments enfants (h3, p) horizontalement */
-            width: 100%;
-            max-width: 800px; /* Limite la largeur pour la lecture */
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .footer h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
-            margin: 0 0 15px 0; /* Marge uniquement en bas */
-            line-height: 1.2;
-        }
-
-        .footer p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
-            margin: 0;
-            line-height: 1.5;
-            /* Permet au texte de passer à la ligne proprement */
-            word-wrap: break-word;
-        }
-        
-        .footer .copyright {
-            margin-top: 15px;
-            opacity: 0.6;
-            font-size: 0.85rem;
-        }
-
-        /* Status badge */
+        /* Footer */
+        .footer { background: var(--gradient); color: white; padding: 60px 0; margin-top: 40px; position: relative; overflow: hidden; width: 100%; }
+        .footer-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 15px; }
+        .footer::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%); pointer-events: none; }
+        .footer h3 { font-size: 1.8rem; font-weight: 700; color: white; margin: 0; line-height: 1.2; text-align: center; }
+        .footer p { color: rgba(255, 255, 255, 0.9); font-size: 1rem; margin: 0; line-height: 1.5; max-width: 600px; width: 100%; white-space: normal; word-wrap: break-word; }
+        .footer .copyright { margin-top: 15px; opacity: 0.6; font-size: 0.85rem; }
         .status-badge-wrapper::after { display: none !important; }
 
-        /* --- RESPONSIVE MOBILE --- */
+        /* --- MEDIA QUERIES (TABLETTE & MOBILE) --- */
         @media (max-width: 1024px) {
+            /* Ajustement Espacements Mobiles UNIFORMISÉS */
+            section {
+                padding: 50px 0; /* Écart standardisé mobile */
+            }
+            
+            .hero {
+                padding-top: 60px; /* Plus petit sur mobile */
+                padding-bottom: 50px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 40px; /* Espace réduit sous le titre */
+            }
+
+            /* Header & Nav */
             .header-content { padding: 15px 20px; }
             .menu-toggle { display: flex; }
-            .nav {
-                position: fixed; top: 0; right: -100%;
-                width: 280px; height: 100vh;
-                background: var(--bg-header-mobile-nav);
-                flex-direction: column; padding: 80px 30px 30px;
-                gap: 25px; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-                transition: right 0.3s ease; overflow-y: auto; z-index: 1001;
-            }
+            .nav { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: var(--bg-header-mobile-nav); flex-direction: column; padding: 80px 30px 30px; gap: 25px; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); transition: right 0.3s ease; overflow-y: auto; z-index: 1001; }
             .nav.active { right: 0; }
             .nav-link { font-size: 1.1rem; padding: 10px 0; border-bottom: 1px solid var(--border); }
-            
-            .status-badge-wrapper {
-                border-bottom: none !important; display: flex;
-                justify-content: center; padding: 10px 0 !important;
-            }
+            .status-badge-wrapper { border-bottom: none !important; display: flex; justify-content: center; padding: 10px 0 !important; }
             .status-badge-wrapper iframe { width: 200px !important; }
             .btn-add { width: 100%; justify-content: center; margin-top: 20px; }
             .theme-toggle-btn { width: 100%; padding: 12px; font-size: 1.1rem; }
-
-            .nav-overlay {
-                display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-                background: rgba(0, 0, 0, 0.5); z-index: 1000;
-            }
+            .nav-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 1000; }
             .nav-overlay.active { display: block; }
 
-            .hero { padding-top: 100px; }
+            /* Content Adjustments */
             .hero h2 { font-size: 2.2rem; }
             .hero p { font-size: 1.1rem; }
             .hero-buttons { flex-direction: column; }
             .btn-primary, .btn-secondary { width: 100%; text-align: center; }
             .features-grid, .commands-grid { grid-template-columns: 1fr; }
-            .section-title { font-size: 2rem; margin-top: 60px; } /* Marge maintenue sur mobile */
             .container { padding: 0 20px; }
             .feedback-section { padding: 60px 20px; }
             .feedback-section h2 { font-size: 2rem; }
@@ -668,10 +310,11 @@
             .partners-carousel { padding: 20px 0; }
             .partner-card { width: 240px; margin-right: 20px; }
             
-            /* Ajustements Footer Mobile */
-            .footer { padding: 50px 20px; }
+            /* Footer Mobile */
+            .footer { padding: 50px 0; margin-top: 40px; }
+            .footer-container { padding: 0 15px; }
             .footer h3 { font-size: 1.5rem; }
-            .footer p { font-size: 0.95rem; }
+            .footer p { font-size: 0.95rem; max-width: 100%; }
         }
 
         /* Page visibility */
@@ -1052,7 +695,7 @@
                         <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits RGPD :</p>
                         <ul>
                             <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
                             <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
                         <p>Nous nous engageons à répondre à vos demandes dans un délai maximum d'un mois conformément au RGPD.</p>
@@ -1154,15 +797,15 @@
 
                     <h3>7. Limitation de responsabilité</h3>
                     <div class="highlight-box">
-                        <p><strong>Assistante Barbara est fournie "en l'état" et "selon disponibilité".</strong> Dans toute la mesure permise par la loi applicable, nous déclinons toute responsabilité concernant :</p>
+                        <p><strong>Assistante Barbara is provided "as is" and "as available".</strong> To the fullest extent permitted by applicable law, we disclaim all liability for:</p>
                         <ul>
-                            <li>Les dommages directs, indirects, accessoires, spéciaux, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le bot</li>
-                            <li>La précision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
-                            <li>Les pertes de données, interruptions de service ou tout dysfonctionnement technique</li>
-                            <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
-                            <li>Les décisions prises sur la base des informations fournies par le bot</li>
-                            <li>Les préjudices causés par des utilisateurs tiers ou des actes malveillants</li>
-                            <li>La compatibilité avec d'autres services ou applications</li>
+                            <li>Direct, indirect, incidental, special, consequential, or punitive damages resulting from use or inability to use the bot</li>
+                            <li>Accuracy, reliability, or completeness of information provided by AI</li>
+                            <li>Data loss, service interruptions, or any technical malfunction</li>
+                            <li>Content generated by AI or provided by third-party APIs</li>
+                            <li>Decisions made based on information provided by the bot</li>
+                            <li>Harm caused by third-party users or malicious acts</li>
+                            <li>Compatibility with other services or applications</li>
                         </ul>
                         <p><strong>No warranty:</strong> We do not 
                         guarantee that the service will be uninterrupted, error-free, secure, or free from viruses or other harmful components.</p>
@@ -1172,10 +815,10 @@
 
                     <h3>8. Propriété intellectuelle</h3>
                     <ul>
-                        <li>Assistante Barbara et son code source appartiennent à leur créateur</li>
-                        <li>Les réponses générées par l'IA suivent les politiques de propriété intellectuelle d'OpenAI et Mistral AI</li>
-                        <li>La musique est soumise aux licences de Jamendo</li>
-                        <li>Discord et son logo sont des marques déposées de Discord Inc.</li>
+                        <li>Assistante Barbara and its source code belong to their creator</li>
+                        <li>AI-generated responses follow OpenAI and Mistral AI's intellectual property policies</li>
+                        <li>Music is subject to Jamendo licenses</li>
+                        <li>Discord and its logo are registered trademarks of Discord Inc.</li>
                     </ul>
 
                     <h3>9. Modifications du service</h3>
@@ -1186,7 +829,7 @@
                         <li>Bloquer l'accès à des utilisateurs ou serveurs en cas d'abus, de violation des présentes CGU ou des conditions d'utilisation de Discord</li>
                         <li>Modifier les présentes CGU. Les modifications substantielles seront communiquées via le site web. La poursuite de l'utilisation après modification vaut acceptation</li>
                     </ul>
-                    <p>We shall not be liable to you or any third party for any modification, suspension, or discontinuation of the service.</p>
+                    <p>Nous ne serons pas responsables envers vous ou envers des tiers de toute modification, suspension ou interruption du service.</p>
 
                     <h3>10. Conformité légale</h3>
                     <p>Ce service est conforme à :</p>
@@ -1220,139 +863,12 @@
 
                     <div class="contact-box">
                         <h4>13. Contact</h4>
-                        <p>Pour toute question concernant ces CGU :</p>
-                        <ul>
-                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
-                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item animated-element">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div>
-                        <h4>🇺🇸 Privacy Policy</h4>
-                        <p class="tag">Last updated: November 12, 2025</p>
-                    </div>
-                    <span style="color: var(--muted);">▼</span>
-                </div>
-                <div class="accordion-body">
-                    <p>Welcome to <strong>Assistante Barbara</strong>. This privacy policy explains how we collect, use, and protect your data when using our Discord bot.</p>
-
-                    <h3>1. Data Controller</h3>
-                    <p><strong>Controller:</strong> The Assistante Barbara development team (non-commercial project)<br>
-                    <strong>Service name:</strong> Assistante Barbara<br>
-                    <strong>Nature:</strong> Discord Application (bot)<br>
-                    <strong>Hosting:</strong> KataBump and local servers (maintenance)<br>
-                    <strong>Contact:</strong> assistante.barbara.contact@gmail.com</p>
-
-                    <p>As data controller, the Assistante Barbara team determines the purposes and means of processing your personal data in accordance with the GDPR. This is a non-commercial project.</p>
-
-                    <h3>2. Data Collected and Source</h3>
-                    <div class="highlight-box">
-                        <strong>Assistante Barbara collecte un minimum absolu de données :</strong>
-                        <ul>
-                            <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande, identifiant du serveur) sont temporairement stockées dans les logs système pour assurer le bon fonctionnement du service.</li>
-                            <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
-                            <li><strong>No 
-                            persistent personal data:</strong> No messages, personal user identifiers, conversation history, music preferences, or other identifiable personal data is permanently stored in our systems.</li>
-                            <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par 
-                            Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
-                        </ul>
-                        <p><strong>Data source:</strong> All processed data originates exclusively from interactions between users and the bot on the Discord platform, and is never obtained from third parties.</p>
-                    </div>
-
-                    <h3>3. Legal Basis for Processing</h3>
-                    <p>Processing operations carried out by Assistante Barbara are based on:</p>
-                    <ul>
-                        <li><strong>Contract performance (Article 6.1.b GDPR):</strong> Necessary to provide bot functionalities requested by users (diverse commands, server information).</li>
-                        <li><strong>Legitimate interest (Article 6.1.f GDPR):</strong> Ensuring security, maintenance, and proper technical operation of the service.</li>
-                        <li><strong>Consent (Article 6.1.a GDPR):</strong> Only when users interact with artificial intelligence or music features requiring third-party API calls (OpenAI, Mistral AI, Jamendo). By using these specific features, you consent to processing by these third-party services.</li>
-                    </ul>
-
-                    <h3>4. Third-Party APIs Usage and Joint Controllership</h3>
-                    <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
-                    <ul>
-                        <li><strong>Discord API:</strong> Discord acts as joint controller for data processed through its platform in accordance with its 
-                        own <a 
-                        href="https://discord.com/privacy" target="_blank">privacy policy</a>.</li>
-                        <li><strong>OpenAI API:</strong> For artificial intelligence features. Messages sent to configured channels are processed by OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
-                        <li><strong>Mistral AI API:</strong> Pour les fonctionnalités d'intelligence artificielle. See <a href="https://mistral.ai/privacy" target="_blank">Mistral AI's privacy policy</a>.</li>
-                        <li><strong>Jamendo API:</strong> For music features. See <a href="https://www.jamendo.com/legal/privacy" target="_blank">Jamendo's privacy policy</a>.</li>
-                    </ul>
-                    <p><strong>Important:</strong> AI conversations and music searches are transmitted to these APIs for processing in accordance with their respective policies. Assistante Barbara has no control over processing performed by these third-party services. Your consent is required for using these specific features.</p>
-
-                    <h3>5. Purpose of Processing</h3>
-                    <p>Temporary data collected (command logs) are used exclusively to:</p>
-                    <ul>
-                        <li>Ensure proper technical functioning of the bot</li>
-                        <li>Debug and fix technical issues</li>
-                        <li>Improve performance and service stability</li>
-                        <li>Ensure service security</li>
-                    </ul>
-                    <p><strong>This data is never used for commercial, advertising, or profiling purposes.</strong></p>
-
-                    <h3>6. Data Retention</h3>
-                    <p><strong>Retention period:</strong></p>
-                    <ul>
-                        <li>System logs: Kept until the next application restart (typically 2 to 7 days maximum)</li>
-                        <li>No personal data is archived or retained beyond this period</li>
-                    </ul>
-
-                    <h3>7. User Rights (GDPR)</h3>
-                    <p>In accordance with the General Data Protection Regulation (GDPR), you have the following rights:</p>
-                    <ul>
-                        <li><strong>Droit d'accès (Article 15):</strong> Obtain confirmation of data processing and access to it</li>
-                        <li><strong>Droit de rectification (Article 16):</strong> Correct inaccurate or incomplete data</li>
-                        <li><strong>Droit à l'effacement (Article 17):</strong> Request deletion of your data ("right to be forgotten")</li>
-                        <li><strong>Droit d'opposition (Article 21):</strong> Object to data processing</li>
-                        <li><strong>Droit à la limitation (Article 18):</strong> Request processing limitation</li>
-                        <li><strong>Droit à la portabilité (Article 20):</strong> Receive your data in a structured format</li>
-                        <li><strong>Droit de retrait du consentement:</strong> Withdraw your consent at any time</li>
-                    </ul>
-                    <p><strong>Note:</strong> Since we do not permanently store any personal data, the exercise of most of these rights is automatically satisfied by our automatic deletion policy. However, you may contact us for any specific question or request.</p>
-                    <p><strong>Right to lodge a complaint:</strong> You have the right to lodge a complaint with the CNIL (French Data Protection Authority) if you believe your rights are not being respected: <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
-
-                    <h3>8. Data Security</h3>
-                    <p>We implement appropriate technical and organizational measures to protect processed data:</p>
-                    <ul>
-                        <li>Secure hosting on professional infrastructure (KataBump)</li>
-                        <li>Restricted access to system logs (authentication required)</li>
-                        <li>Encrypted communications (HTTPS/TLS)</li>
-                        <li>Automatic and regular deletion of temporary data</li>
-                        <li>Security incident monitoring</li>
-                        <li>Regular system updates</li>
-                    </ul>
-
-                    <h3>9. Data Transfers</h3>
-                    <p>Data may be transferred to the following countries:</p>
-                    <ul>
-                        <li><strong>United States:</strong> OpenAI, Discord. These transfers are governed by the EU-US Data Privacy Framework or, when not applicable, by European Union standard contractual clauses.</li>
-                        <li><strong>France/Europe:</strong> Mistral AI, KataBump (GDPR compliant)</li>
-                        <li><strong>Luxembourg :</strong> Jamendo (European Union, GDPR compliant)</li>
-                    </ul>
-                    <p>These transfers are made in accordance with Chapter V of the GDPR and are governed by appropriate safeguards.</p>
-
-                    <h3>10. Automated Decision-Making and Profiling</h3>
-                    <p>Assistante Barbara does <strong>not perform any automated decision-making</strong> or <strong>profiling</strong> within the meaning of Article 22 of the GDPR. Responses generated by artificial intelligence are informative suggestions and do not produce legal effects concerning you.</p>
-
-                    <h3>11. Cookies and Similar Technologies</h3>
-                    <p>This website does not use any tracking, advertising, or analytics cookies. Only strictly necessary cookies for site functionality may be used.</p>
-
-                    <h3>12. Policy Changes</h3>
-                    <p>This policy may be modified occasionnellement to reflect service developments or legislative changes. The last update date will always be indicated at the top of the document. In case of substantial changes, we will endeavor to inform users.</p>
-
-                    <div class="contact-box">
-                        <h4>13. Contact and Exercise of Your Rights</h4>
-                        <p>For any questions regarding this privacy policy or to exercise your GDPR rights:</p>
+                        <p>For any questions regarding these ToS:</p>
                         <ul>
                             <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
                             <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
                             <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
-                        <p>We are committed to responding to your requests within a maximum of one month in accordance with the GDPR.</p>
                     </div>
                 </div>
             </div>
@@ -1537,7 +1053,7 @@
     </div>
 
     <footer class="footer">
-        <div class="footer-content">
+        <div class="footer-container">
             <h3>Assistante Barbara</h3>
             <p>Application Discord polyvalente propulsée par l'IA</p>
             <p class="copyright">© 2025 - Tous droits réservés</p>
