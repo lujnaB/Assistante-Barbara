@@ -850,25 +850,25 @@
             margin-top: 30px;
         }
 
-        /* --- FOOTER FINALISÉ (CORRECTION MOBILE) --- */
+        /* --- FOOTER FINALISÉ (ALIGNEMENT PARFAIT) --- */
         .footer {
             background: var(--gradient);
             color: white;
-            padding: 60px 0;
+            padding: 60px 0; /* Padding haut et bas identiques = centrage vertical */
             margin-top: 80px;
             position: relative;
             overflow: hidden;
             border: none;
         }
 
+        /* Conteneur Flexbox pour un alignement mathématique */
         .footer .container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
+            align-items: center; /* Centre horizontalement */
+            justify-content: center; /* Centre verticalement */
+            gap: 15px; /* Espace ÉGAL entre chaque élément (titre, sous-titre, copyright) */
             height: 100%;
-            width: 100%; /* S'assure de prendre toute la largeur */
         }
 
         .footer::before {
@@ -886,40 +886,32 @@
         .footer-content {
             position: relative;
             z-index: 1;
-            width: 100%;
+            width: 100%; /* S'assure que le contenu prend toute la largeur */
         }
 
         .footer h3 {
             font-size: 1.8rem;
             font-weight: 700;
             color: white;
-            margin: 0;
+            margin: 0; /* Suppression des marges pour laisser le flex-gap gérer l'espace */
             line-height: 1.2;
-            text-align: center;
         }
 
         .footer p {
             color: rgba(255, 255, 255, 0.9);
             font-size: 1rem;
-            margin: 0;
-            
-            /* --- CORRECTION MOBILE MAJEURE --- */
-            width: 100%;
-            max-width: 600px; /* Limite sur PC */
-            padding: 0 10px; /* Marge interne pour ne pas toucher les bords */
-            text-align: center;
-            line-height: 1.5;
-            
-            /* Ces propriétés forcent le texte à passer à la ligne */
-            white-space: normal; 
-            word-wrap: break-word;
+            margin: 0; /* Suppression des marges */
+            /* AJOUT POUR MOBILE : Force le retour à la ligne et une largeur max */
+            max-width: 95%; 
+            padding: 0 10px;
         }
         
+        /* Classe spécifique pour le copyright pour l'éloigner un peu plus si besoin */
         .footer .copyright {
-            margin-top: 20px;
+            margin-top: 20px; /* Petit espacement supplémentaire juste pour le copyright */
             opacity: 0.6;
             font-size: 0.85rem;
-            padding: 0;
+            padding: 0; /* Pas besoin de padding latéral sur le copyright */
         }
 
         /* Status badge */
@@ -1056,13 +1048,11 @@
                 margin-right: 20px;
             }
             
-            /* Ajustements Footer Mobile */
+            /* AJOUT : Ajustements spécifiques au footer sur mobile */
             .footer h3 {
                 font-size: 1.5rem;
             }
             .footer p {
-                 /* Force l'utilisation de toute la largeur disponible sur mobile */
-                 max-width: 100%; 
                  font-size: 0.95rem;
             }
         }
@@ -1450,7 +1440,7 @@
                         <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits RGPD :</p>
                         <ul>
                             <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
                             <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
                         <p>Nous nous engageons à répondre à vos demandes dans un délai maximum d'un mois conformément au RGPD.</p>
@@ -1516,7 +1506,7 @@
                         <li>Générer du contenu illégal, haineux, discriminatoire ou violent</li>
                         <li>Tenter de contourner les systèmes de modération</li>
                         <li>Collecter des données personnelles sur d'autres utilisateurs</li>
-                        <li>Spread disinformation or misleading content</li>
+                        <li>Diffuser de la désinformation ou des contenus trompeurs</li>
                     </ul>
 
                     <h3>5. Fonctionnalités musicales</h3>
@@ -1538,31 +1528,29 @@
                     </ul>
 
                     <h3>6 bis. Force majeure</h3>
-                    <p>We shall not be held liable for service interruptions resulting from force majeure events, including:</p>
+                    <p>Nous ne saurions être tenus responsables en cas d'interruption du service résultant d'un événement de force majeure, notamment :</p>
                     <ul>
-                        <li>Infrastructure or hosting failures (KataBump, servers)</li>
-                        <li>Third-party service failures (Discord, OpenAI, Mistral AI, Jamendo)</li>
-                        <li>Network outages, Internet access interruptions</li>
-                        <li>Cyberattacks, hacking, denial of service (DDoS)</li>
-                        <li>Administrative or judicial 
-                        decisions</li>
-                        <li>Natural disasters or any other event beyond our reasonable control</li>
+                        <li>Panne d'infrastructure ou d'hébergement (KataBump, serveurs)</li>
+                        <li>Défaillance des services tiers (Discord, OpenAI, Mistral AI, Jamendo)</li>
+                        <li>Coupure réseau, interruption d'accès à Internet</li>
+                        <li>Cyberattaque, piratage informatique, déni de service (DDoS)</li>
+                        <li>Décision administrative ou judiciaire</li>
+                        <li>Catastrophe naturelle ou tout autre événement échappant à notre contrôle raisonnable</li>
                     </ul>
-                    <p>En cas de 
-                    force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant 
-                    à un délai de rétablissement.</p>
+                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant 
+                    à un délai de rététablissement.</p>
 
                     <h3>7. Limitation de responsabilité</h3>
                     <div class="highlight-box">
-                        <p><strong>Assistante Barbara is provided "as is" and "as available".</strong> To the fullest extent permitted by applicable law, we disclaim all liability for:</p>
+                        <p><strong>Assistante Barbara est fournie "en l'état" et "selon disponibilité".</strong> Dans toute la mesure permise par la loi applicable, nous déclinons toute responsabilité concernant :</p>
                         <ul>
-                            <li>Direct, indirect, incidental, special, consequential, or punitive damages resulting from use or inability to use the bot</li>
-                            <li>Accuracy, reliability, or completeness of information provided by AI</li>
-                            <li>Data loss, service interruptions, or any technical malfunction</li>
-                            <li>Content generated by AI or provided by third-party APIs</li>
-                            <li>Decisions made based on information provided by the bot</li>
-                            <li>Harm caused by third-party users or malicious acts</li>
-                            <li>Compatibility with other services or applications</li>
+                            <li>Les dommages directs, indirects, accessoires, spéciaux, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le bot</li>
+                            <li>La précision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
+                            <li>Les pertes de données, interruptions de service ou tout dysfonctionnement technique</li>
+                            <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
+                            <li>Les décisions prises sur la base des informations fournies par le bot</li>
+                            <li>Les préjudices causés par des utilisateurs tiers ou des actes malveillants</li>
+                            <li>La compatibilité avec d'autres services ou applications</li>
                         </ul>
                         <p><strong>No warranty:</strong> We do not 
                         guarantee that the service will be uninterrupted, error-free, secure, or free from viruses or other harmful components.</p>
@@ -1578,8 +1566,8 @@
                         <li>Discord and its logo are registered trademarks of Discord Inc.</li>
                     </ul>
 
-                    <h3>9. Service modifications</h3>
-                    <p>We reserve the right, at our sole discretion, to:</p>
+                    <h3>9. Modifications du service</h3>
+                    <p>Nous nous réservons le droit, à notre seule discrétion, de :</p>
                     <ul>
                         <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
                         <li>Modifier les fonctionnalités disponibles</li>
@@ -1629,6 +1617,133 @@
                             <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
                             <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item animated-element">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <h4>🇺🇸 Privacy Policy</h4>
+                        <p class="tag">Last updated: November 12, 2025</p>
+                    </div>
+                    <span style="color: var(--muted);">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>Welcome to <strong>Assistante Barbara</strong>. This privacy policy explains how we collect, use, and protect your data when using our Discord bot.</p>
+
+                    <h3>1. Data Controller</h3>
+                    <p><strong>Controller:</strong> The Assistante Barbara development team (non-commercial project)<br>
+                    <strong>Service name:</strong> Assistante Barbara<br>
+                    <strong>Nature:</strong> Discord Application (bot)<br>
+                    <strong>Hosting:</strong> KataBump and local servers (maintenance)<br>
+                    <strong>Contact:</strong> assistante.barbara.contact@gmail.com</p>
+
+                    <p>As data controller, the Assistante Barbara team determines the purposes and means of processing your personal data in accordance with the GDPR. This is a non-commercial project.</p>
+
+                    <h3>2. Data Collected and Source</h3>
+                    <div class="highlight-box">
+                        <strong>Assistante Barbara collecte un minimum absolu de données :</strong>
+                        <ul>
+                            <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande, identifiant du serveur) sont temporairement stockées dans les logs système pour assurer le bon fonctionnement du service.</li>
+                            <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
+                            <li><strong>No 
+                            persistent personal data:</strong> No messages, personal user identifiers, conversation history, music preferences, or other identifiable personal data is permanently stored in our systems.</li>
+                            <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par 
+                            Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
+                        </ul>
+                        <p><strong>Data source:</strong> All processed data originates exclusively from interactions between users and the bot on the Discord platform, and is never obtained from third parties.</p>
+                    </div>
+
+                    <h3>3. Legal Basis for Processing</h3>
+                    <p>Processing operations carried out by Assistante Barbara are based on:</p>
+                    <ul>
+                        <li><strong>Contract performance (Article 6.1.b GDPR):</strong> Necessary to provide bot functionalities requested by users (diverse commands, server information).</li>
+                        <li><strong>Legitimate interest (Article 6.1.f GDPR):</strong> Ensuring security, maintenance, and proper technical operation of the service.</li>
+                        <li><strong>Consent (Article 6.1.a GDPR):</strong> Only when users interact with artificial intelligence or music features requiring third-party API calls (OpenAI, Mistral AI, Jamendo). By using these specific features, you consent to processing by these third-party services.</li>
+                    </ul>
+
+                    <h3>4. Third-Party APIs Usage and Joint Controllership</h3>
+                    <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
+                    <ul>
+                        <li><strong>Discord API:</strong> Discord acts as joint controller for data processed through its platform in accordance with its 
+                        own <a 
+                        href="https://discord.com/privacy" target="_blank">privacy policy</a>.</li>
+                        <li><strong>OpenAI API:</strong> For artificial intelligence features. Messages sent to configured channels are processed by OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
+                        <li><strong>Mistral AI API:</strong> Pour les fonctionnalités d'intelligence artificielle. See <a href="https://mistral.ai/privacy" target="_blank">Mistral AI's privacy policy</a>.</li>
+                        <li><strong>Jamendo API:</strong> For music features. See <a href="https://www.jamendo.com/legal/privacy" target="_blank">Jamendo's privacy policy</a>.</li>
+                    </ul>
+                    <p><strong>Important:</strong> AI conversations and music searches are transmitted to these APIs for processing in accordance with their respective policies. Assistante Barbara has no control over processing performed by these third-party services. Your consent is required for using these specific features.</p>
+
+                    <h3>5. Purpose of Processing</h3>
+                    <p>Temporary data collected (command logs) are used exclusively to:</p>
+                    <ul>
+                        <li>Ensure proper technical functioning of the bot</li>
+                        <li>Debug and fix technical issues</li>
+                        <li>Improve performance and service stability</li>
+                        <li>Ensure service security</li>
+                    </ul>
+                    <p><strong>This data is never used for commercial, advertising, or profiling purposes.</strong></p>
+
+                    <h3>6. Data Retention</h3>
+                    <p><strong>Retention period:</strong></p>
+                    <ul>
+                        <li>System logs: Kept until the next application restart (typically 2 to 7 days maximum)</li>
+                        <li>No personal data is archived or retained beyond this period</li>
+                    </ul>
+
+                    <h3>7. User Rights (GDPR)</h3>
+                    <p>In accordance with the General Data Protection Regulation (GDPR), you have the following rights:</p>
+                    <ul>
+                        <li><strong>Droit d'accès (Article 15):</strong> Obtain confirmation of data processing and access to it</li>
+                        <li><strong>Droit de rectification (Article 16):</strong> Correct inaccurate or incomplete data</li>
+                        <li><strong>Droit à l'effacement (Article 17):</strong> Request deletion of your data ("right to be forgotten")</li>
+                        <li><strong>Droit d'opposition (Article 21):</strong> Object to data processing</li>
+                        <li><strong>Droit à la limitation (Article 18):</strong> Request processing limitation</li>
+                        <li><strong>Droit à la portabilité (Article 20):</strong> Receive your data in a structured format</li>
+                        <li><strong>Droit de retrait du consentement:</strong> Withdraw your consent at any time</li>
+                    </ul>
+                    <p><strong>Note:</strong> Since we do not permanently store any personal data, the exercise of most of these rights is automatically satisfied by our automatic deletion policy. However, you may contact us for any specific question or request.</p>
+                    <p><strong>Right to lodge a complaint:</strong> You have the right to lodge a complaint with the CNIL (French Data Protection Authority) if you believe your rights are not being respected: <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
+
+                    <h3>8. Data Security</h3>
+                    <p>We implement appropriate technical and organizational measures to protect processed data:</p>
+                    <ul>
+                        <li>Secure hosting on professional infrastructure (KataBump)</li>
+                        <li>Restricted access to system logs (authentication required)</li>
+                        <li>Encrypted communications (HTTPS/TLS)</li>
+                        <li>Automatic and regular deletion of temporary data</li>
+                        <li>Security incident monitoring</li>
+                        <li>Regular system updates</li>
+                    </ul>
+
+                    <h3>9. Data Transfers</h3>
+                    <p>Data may be transferred to the following countries:</p>
+                    <ul>
+                        <li><strong>United States:</strong> OpenAI, Discord. These transfers are governed by the EU-US Data Privacy Framework or, when not applicable, by European Union standard contractual clauses.</li>
+                        <li><strong>France/Europe:</strong> Mistral AI, KataBump (GDPR compliant)</li>
+                        <li><strong>Luxembourg :</strong> Jamendo (European Union, GDPR compliant)</li>
+                    </ul>
+                    <p>These transfers are made in accordance with Chapter V of the GDPR and are governed by appropriate safeguards.</p>
+
+                    <h3>10. Automated Decision-Making and Profiling</h3>
+                    <p>Assistante Barbara does <strong>not perform any automated decision-making</strong> or <strong>profiling</strong> within the meaning of Article 22 of the GDPR. Responses generated by artificial intelligence are informative suggestions and do not produce legal effects concerning you.</p>
+
+                    <h3>11. Cookies and Similar Technologies</h3>
+                    <p>This website does not use any tracking, advertising, or analytics cookies. Only strictly necessary cookies for site functionality may be used.</p>
+
+                    <h3>12. Policy Changes</h3>
+                    <p>This policy may be modified occasionnellement to reflect service developments or legislative changes. The last update date will always be indicated at the top of the document. In case of substantial changes, we will endeavor to inform users.</p>
+
+                    <div class="contact-box">
+                        <h4>13. Contact and Exercise of Your Rights</h4>
+                        <p>For any questions regarding this privacy policy or to exercise your GDPR rights:</p>
+                        <ul>
+                            <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
+                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                        </ul>
+                        <p>We are committed to responding to your requests within a maximum of one month in accordance with the GDPR.</p>
                     </div>
                 </div>
             </div>
