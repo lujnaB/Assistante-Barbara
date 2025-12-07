@@ -58,13 +58,11 @@
             --bg-placeholder-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
         }
 
-        /* --- MODIFICATION : Dégradé Footer mode sombre --- */
+        /* --- Ajustement Dark Mode Footer --- */
         html[data-theme='dark'] .footer {
-            /* Ajustement pour fondre le footer avec le nouveau background sombre */
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            /* On garde le dégradé coloré, on ajoute juste une bordure pour séparer du fond sombre */
             border-top: 1px solid var(--border);
         }
-        /* --- FIN DE LA MODIFICATION --- */
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -170,7 +168,7 @@
         .menu-toggle span {
             width: 25px;
             height: 3px;
-            background: var(--text); /* Changé à var(--text) pour être visible en dark mode */
+            background: var(--text);
             border-radius: 3px;
             transition: all 0.3s ease;
         }
@@ -210,7 +208,7 @@
         .logo-text h1 {
             font-size: 1.4rem;
             font-weight: 600;
-            color: var(--dark); /* S'adapte au thème */
+            color: var(--dark);
             letter-spacing: -0.02em;
         }
 
@@ -276,7 +274,7 @@
         
         /* Bouton Mode Sombre */
         .theme-toggle-btn {
-            background: var(--bg-highlight); /* Plus subtil */
+            background: var(--bg-highlight);
             border: 1px solid var(--border);
             cursor: pointer;
             padding: 8px 10px;
@@ -449,7 +447,7 @@
         .feature-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px var(--shadow);
-            border-color: var(--border); /* Garder la bordure subtile */
+            border-color: var(--border);
         }
 
         .feature-card:hover::before {
@@ -858,16 +856,22 @@
             margin-top: 30px;
         }
 
-        /* Footer */
+        /* --- Footer (MODIFIÉ) --- */
         .footer {
-            /* Le background est défini pour le thème clair et surchargé pour le thème sombre */
-            background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%);
+            /* Background dégradé bleu/violet */
+            background: var(--gradient);
             color: white;
-            padding: 50px 0 35px;
+            padding: 60px 20px; /* Padding équilibré */
             text-align: center;
             margin-top: 80px;
             position: relative;
             overflow: hidden;
+            
+            /* Centrage vertical et horizontal strict */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .footer::before {
@@ -877,36 +881,32 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
             pointer-events: none;
         }
 
         .footer-content {
             position: relative;
             z-index: 1;
+            width: 100%;
+            max-width: 1200px;
         }
 
         .footer h3 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-            font-weight: 600;
-            color: white; /* Force white in footer */
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.02em;
         }
 
         .footer p {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 8px;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
-
-        .footer-divider {
-            width: 60px;
-            height: 3px;
-            background: var(--gradient);
-            margin: 20px auto;
-            border-radius: 3px;
-        }
+        /* Fin Footer */
 
         /* Status badge */
         .status-badge-wrapper::after {
@@ -1913,7 +1913,6 @@
         <div class="footer-content">
             <div class="container">
                 <h3>Assistante Barbara</h3>
-                <div class="footer-divider"></div>
                 <p>Bot Discord polyvalent propulsé par l'IA</p>
                 <p style="margin-top: 20px; margin-bottom: 0; opacity: 0.6; font-size: 0.9rem;">© 2025 - Tous droits réservés</p>
             </div>
