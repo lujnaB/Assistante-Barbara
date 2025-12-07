@@ -7,14 +7,15 @@
     <link rel="icon" type="image/png" href="logo-ab.png">
     <link rel="apple-touch-icon" href="logo-ab.png">
     <style>
+        /* --- RESET GLOBAL --- */
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            box-sizing: border-box; /* Crucial pour le mobile */
         }
 
         :root {
-            /* --- Mode Clair (inchangé) --- */
+            /* --- Couleurs de marque & Mode Clair --- */
             --primary: #667eea;
             --secondary: #764ba2;
             --dark: #2c3e50;
@@ -34,53 +35,36 @@
         }
 
         html[data-theme='dark'] {
-            /* --- NOUVELLE PALETTE DARK MODE (Modern Deep Slate) --- */
-            
-            /* Textes & Titres */
-            --dark: #f1f5f9;      /* Titres (blanc cassé très clair) */
-            --light: #1e293b;     /* Inverse (utilisé rarement) */
-            --text: #cbd5e1;      /* Texte courant (gris clair doux) */
-            --muted: #94a3b8;     /* Texte secondaire (gris ardoise) */
-            
-            /* Fonds */
-            --bg-body: #0f172a;   /* Fond principal (Bleu nuit très profond/Noir) */
-            --bg-card: #1e293b;   /* Fond des cartes (Gris ardoise foncé) */
-            
-            /* Navigation */
-            --bg-header: rgba(15, 23, 42, 0.95); /* Semi-transparent sombre */
+            /* --- PALETTE DARK MODE --- */
+            --dark: #f1f5f9;
+            --light: #1e293b;     
+            --text: #cbd5e1;
+            --muted: #94a3b8;
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-header: rgba(15, 23, 42, 0.95); 
             --bg-header-mobile-nav: #1e293b;
-            
-            /* Éléments UI */
-            --bg-highlight: #334155; /* Boites de mise en avant */
-            --border: #334155;       /* Bordures subtiles */
-            --shadow: rgba(0, 0, 0, 0.5); /* Ombres plus marquées pour la profondeur */
-            
+            --bg-highlight: #334155; 
+            --border: #334155;       
+            --shadow: rgba(0, 0, 0, 0.5); 
             --bg-placeholder-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
         }
-
-        /* --- MODIFICATION : Dégradé Footer mode sombre --- */
-        html[data-theme='dark'] .footer {
-            /* Ajustement pour fondre le footer avec le nouveau background sombre */
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-top: 1px solid var(--border);
-        }
-        /* --- FIN DE LA MODIFICATION --- */
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background: var(--bg-body);
             color: var(--text);
             line-height: 1.6;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Empêche le scroll horizontal accidentel */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        /* Transition douce pour les éléments changeant de couleur */
-        .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .partner-cta, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
+        /* Transitions */
+        .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
             transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Subtle animated background */
+        /* Background animé */
         body::before {
             content: '';
             position: fixed;
@@ -101,7 +85,7 @@
             66% { transform: translate(-20px, 20px) rotate(-1deg); }
         }
 
-        /* --- SYSTÈME D'ANIMATION --- */
+        /* --- ANIMATIONS --- */
         .animated-element {
             opacity: 0;
             transform: translateY(10px);
@@ -119,19 +103,11 @@
         .animated-element.is-visible:nth-child(3) { transition-delay: 0.12s; }
         .animated-element.is-visible:nth-child(4) { transition-delay: 0.16s; }
         .animated-element.is-visible:nth-child(5) { transition-delay: 0.20s; }
-        .animated-element.is-visible:nth-child(6) { transition-delay: 0.24s; }
-        .animated-element.is-visible:nth-child(7) { transition-delay: 0.28s; }
-        .animated-element.is-visible:nth-child(8) { transition-delay: 0.32s; }
-        .animated-element.is-visible:nth-child(9) { transition-delay: 0.36s; }
-
         .animated-partners-container {
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
         }
-        
-        .animated-partners-container.is-visible {
-            opacity: 1;
-        }
+        .animated-partners-container.is-visible { opacity: 1; }
 
         /* Header */
         .header {
@@ -154,7 +130,6 @@
             align-items: center;
         }
 
-        /* Menu hamburger */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -170,22 +145,14 @@
         .menu-toggle span {
             width: 25px;
             height: 3px;
-            background: var(--text); /* Changé à var(--text) pour être visible en dark mode */
+            background: var(--text);
             border-radius: 3px;
             transition: all 0.3s ease;
         }
 
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translateY(8px);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translateY(-8px);
-        }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
 
         .logo {
             display: flex;
@@ -203,14 +170,12 @@
             object-fit: cover;
         }
 
-        .logo:hover .logo-img {
-            transform: scale(1.05);
-        }
+        .logo:hover .logo-img { transform: scale(1.05); }
 
         .logo-text h1 {
             font-size: 1.4rem;
             font-weight: 600;
-            color: var(--dark); /* S'adapte au thème */
+            color: var(--dark);
             letter-spacing: -0.02em;
         }
 
@@ -245,13 +210,8 @@
             transition: width 0.3s ease;
         }
 
-        .nav-link:hover {
-            color: var(--primary);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link:hover::after { width: 100%; }
 
         .btn-add {
             background: var(--gradient);
@@ -274,9 +234,8 @@
             color: white;
         }
         
-        /* Bouton Mode Sombre */
         .theme-toggle-btn {
-            background: var(--bg-highlight); /* Plus subtil */
+            background: var(--bg-highlight);
             border: 1px solid var(--border);
             cursor: pointer;
             padding: 8px 10px;
@@ -292,7 +251,7 @@
             transform: scale(1.1);
         }
 
-        /* Container */
+        /* Container Général (Pour le corps de page) */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -311,37 +270,6 @@
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 60px;
-        }
-
-        @media (max-width: 1024px) {
-            .hero {
-                padding-top: 60px;
-            }
-
-            .hero h2 {
-                margin-top: 30px;
-            }
-
-            .section-title {
-                margin-top: 40px;
-                padding-top: 20px;
-            }
-
-            .features {
-                padding: 80px 0 60px;
-            }
-
-            .commands-section {
-                padding: 80px 0 60px;
-            }
-
-            .partners-section {
-                padding: 100px 0 80px;
-            }
-
-            .docs {
-                padding: 80px 0 60px;
-            }
         }
 
         .hero h2 {
@@ -412,11 +340,8 @@
             color: var(--primary);
         }
 
-        /* Features Grid */
-        .features {
-            padding: 60px 0;
-        }
-
+        /* Features */
+        .features { padding: 60px 0; }
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -436,10 +361,8 @@
         .feature-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 50%;
-            width: 0;
-            height: 4px;
+            top: 0; left: 50%;
+            width: 0; height: 4px;
             background: var(--gradient);
             transform: translateX(-50%);
             transition: width 0.3s ease;
@@ -449,12 +372,9 @@
         .feature-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px var(--shadow);
-            border-color: var(--border); /* Garder la bordure subtile */
+            border-color: var(--border);
         }
-
-        .feature-card:hover::before {
-            width: 98%;
-        }
+        .feature-card:hover::before { width: 98%; }
 
         .feature-icon {
             font-size: 3rem;
@@ -462,7 +382,6 @@
             display: inline-block;
             transition: transform 0.3s ease;
         }
-
         .feature-card:hover .feature-icon {
             transform: scale(1.15);
             animation: float-smooth 2s ease-in-out infinite;
@@ -479,17 +398,10 @@
             color: var(--dark);
             font-weight: 600;
         }
+        .feature-card p { color: var(--muted); line-height: 1.7; }
 
-        .feature-card p {
-            color: var(--muted);
-            line-height: 1.7;
-        }
-
-        /* Commands Section */
-        .commands-section {
-            padding: 60px 0;
-        }
-
+        /* Commands */
+        .commands-section { padding: 60px 0; }
         .commands-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -505,26 +417,20 @@
             border-left: 4px solid var(--primary);
             transition: all 0.2s ease;
         }
-
         .command-card:hover {
             transform: translateX(5px);
             box-shadow: 0 8px 20px var(--shadow);
         }
-
         .command-card h4 {
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
+            font-family: 'SF Mono', 'Monaco', monospace;
             font-size: 1.05rem;
             color: var(--primary);
             margin-bottom: 10px;
             font-weight: 600;
         }
+        .command-card p { color: var(--muted); font-size: 0.95rem; }
 
-        .command-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        /* Feedback Section */
+        /* Feedback */
         .feedback-section {
             padding: 80px 30px;
             margin: 60px auto;
@@ -533,88 +439,41 @@
             overflow: hidden;
             border-radius: 20px;
         }
-
         .feedback-background {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: var(--gradient);
             border-radius: 20px;
             opacity: 0.95;
             z-index: 0;
         }
-
         .feedback-pattern {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
             z-index: 1;
         }
-
         .feedback-content {
             position: relative;
             z-index: 2;
             text-align: center;
             color: white;
         }
-
         .feedback-icon {
             font-size: 4rem;
             margin-bottom: 20px;
             display: inline-block;
             animation: pulse 2s ease-in-out infinite;
         }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .feedback-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .feedback-section p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            opacity: 0.95;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .feedback-features {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .feedback-feature {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.05rem;
-            opacity: 0.95;
-            color: white;
-        }
-
-        .feedback-feature span:first-child {
-            font-size: 1.5rem;
-        }
-
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .feedback-section h2 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; color: white; }
+        .feedback-section p { font-size: 1.2rem; margin-bottom: 40px; opacity: 0.95; max-width: 600px; margin-left: auto; margin-right: auto; color: rgba(255, 255, 255, 0.9); }
+        .feedback-features { display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; flex-wrap: wrap; }
+        .feedback-feature { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; opacity: 0.95; color: white; }
+        .feedback-feature span:first-child { font-size: 1.5rem; }
         .btn-feedback {
             background: var(--bg-card);
             color: var(--primary);
@@ -629,428 +488,194 @@
             align-items: center;
             gap: 12px;
         }
+        .btn-feedback:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3); }
 
-        .btn-feedback:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Partners Section */
-        .partners-section {
-            padding: 80px 0;
-            background: transparent;
-        }
-
-        .partners-intro {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 60px;
-        }
-
-        .partners-intro p {
-            font-size: 1.15rem;
-            color: var(--muted);
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        .partners-carousel {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 0;
-        }
-
+        /* Partners */
+        .partners-section { padding: 80px 0; background: transparent; }
+        .partners-intro { text-align: center; max-width: 700px; margin: 0 auto 60px; }
+        .partners-intro p { font-size: 1.15rem; color: var(--muted); line-height: 1.8; margin-bottom: 30px; }
+        .partners-carousel { position: relative; max-width: 1000px; margin: 0 auto; padding: 40px 0; }
         .partners-wrapper {
             overflow: hidden;
             padding: 20px 0;
-            -webkit-mask-image: linear-gradient(to right, 
-                transparent 0%, 
-                black 20%, 
-                black 80%, 
-                transparent 100%
-            );
-            mask-image: linear-gradient(to right, 
-                transparent 0%, 
-                black 20%, 
-                black 80%, 
-                transparent 100%
-            );
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
         }
-
-        .partners-track {
-            display: inline-flex;
-            animation: scroll 60s linear infinite;
-        }
-
-        .partners-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
+        .partners-track { display: inline-flex; animation: scroll 60s linear infinite; }
+        .partners-track:hover { animation-play-state: paused; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .partner-card {
-            flex-shrink: 0;
-            width: 280px;
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 40px 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            flex-shrink: 0; width: 280px;
+            background: var(--bg-card); border: 2px solid var(--border);
+            border-radius: 16px; padding: 40px 30px;
+            text-align: center; transition: all 0.3s ease; cursor: pointer;
             margin-right: 30px;
         }
-
-        .partner-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px var(--shadow);
-            border-color: var(--primary);
-        }
-
+        .partner-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px var(--shadow); border-color: var(--primary); }
         .partner-logo {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            border-radius: 12px;
-            background: var(--bg-highlight);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            transition: transform 0.3s ease;
+            width: 100px; height: 100px; margin: 0 auto 20px;
+            border-radius: 12px; background: var(--bg-highlight);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; transition: transform 0.3s ease;
         }
+        .partner-card:hover .partner-logo { transform: scale(1.1); }
+        .partner-card h4 { font-size: 1.2rem; color: var(--dark); margin-bottom: 10px; font-weight: 600; }
+        .partner-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+        .partner-placeholder { background: var(--bg-placeholder-gradient); border: 2px dashed var(--border); }
+        .partner-placeholder .partner-logo { background: transparent; border: 2px dashed var(--border); }
+        .partner-placeholder:hover { border-color: var(--primary); border-style: solid; }
 
-        .partner-card:hover .partner-logo {
-            transform: scale(1.1);
-        }
-
-        .partner-card h4 {
-            font-size: 1.2rem;
-            color: var(--dark);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .partner-card p {
-            font-size: 0.95rem;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
-        .partner-placeholder {
-            background: var(--bg-placeholder-gradient);
-            border: 2px dashed var(--border);
-        }
-
-        .partner-placeholder .partner-logo {
-            background: transparent;
-            border: 2px dashed var(--border);
-        }
-
-        .partner-placeholder:hover {
-            border-color: var(--primary);
-            border-style: solid;
-        }
-
-        /* Documentation */
-        .docs {
-            padding: 60px 0;
-        }
-
+        /* Docs */
+        .docs { padding: 60px 0; }
         .accordion-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            margin-bottom: 15px;
-            overflow: hidden;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; margin-bottom: 15px; overflow: hidden;
             transition: all 0.3s ease;
         }
-
-        .accordion-item:hover {
-            box-shadow: 0 8px 20px var(--shadow);
-        }
-
+        .accordion-item:hover { box-shadow: 0 8px 20px var(--shadow); }
         .accordion-header {
-            padding: 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 25px; cursor: pointer; display: flex;
+            justify-content: space-between; align-items: center;
             transition: background 0.2s;
         }
-
-        .accordion-header:hover {
-            background: var(--bg-highlight);
-        }
-
-        .accordion-header h4 {
-            font-size: 1.15rem;
-            color: var(--dark);
-            font-weight: 600;
-        }
-
-        .accordion-header .tag {
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-
+        .accordion-header:hover { background: var(--bg-highlight); }
+        .accordion-header h4 { font-size: 1.15rem; color: var(--dark); font-weight: 600; }
+        .accordion-header .tag { color: var(--muted); font-size: 0.9rem; }
         .accordion-body {
-            padding: 0 25px;
-            max-height: 0;
-            overflow: hidden;
+            padding: 0 25px; max-height: 0; overflow: hidden;
             transition: max-height 0.3s ease, padding 0.3s ease;
         }
-
-        .accordion-item.open .accordion-body {
-            max-height: 10000px;
-            padding: 25px;
-            overflow-y: auto;
-        }
-
-        .accordion-body h3 {
-            color: var(--dark);
-            margin: 25px 0 15px;
-            font-size: 1.2rem;
-        }
-
-        .accordion-body p, .accordion-body li {
-            color: var(--muted);
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .accordion-body ul {
-            padding-left: 25px;
-            margin: 15px 0;
-        }
-
-        .accordion-body strong {
-            color: var(--dark);
-        }
-
-        .accordion-body a {
-            color: var(--primary);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
-        }
-
-        .accordion-body a:hover {
-            border-bottom-color: var(--primary);
-        }
-
+        .accordion-item.open .accordion-body { max-height: 10000px; padding: 25px; overflow-y: auto; }
+        .accordion-body h3 { color: var(--dark); margin: 25px 0 15px; font-size: 1.2rem; }
+        .accordion-body p, .accordion-body li { color: var(--muted); line-height: 1.8; margin-bottom: 15px; }
+        .accordion-body ul { padding-left: 25px; margin: 15px 0; }
+        .accordion-body strong { color: var(--dark); }
+        .accordion-body a { color: var(--primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+        .accordion-body a:hover { border-bottom-color: var(--primary); }
         .highlight-box {
-            background: var(--bg-highlight);
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary);
+            background: var(--bg-highlight); padding: 20px;
+            border-radius: 8px; border-left: 4px solid var(--primary);
             margin: 20px 0;
         }
+        .contact-box { background: var(--bg-highlight); padding: 25px; border-radius: 12px; margin-top: 30px; }
 
-        .contact-box {
-            background: var(--bg-highlight);
-            padding: 25px;
-            border-radius: 12px;
-            margin-top: 30px;
-        }
-
-        /* Footer */
+        /* --- FOOTER (CORRECTION ALIGNEMENT & MOBILE) --- */
         .footer {
-            /* Le background est défini pour le thème clair et surchargé pour le thème sombre */
-            background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%);
+            background: var(--gradient);
             color: white;
-            padding: 50px 0 35px;
-            text-align: center;
+            padding: 60px 0;
             margin-top: 80px;
             position: relative;
             overflow: hidden;
+            width: 100%;
+        }
+
+        /* Container spécifique pour le footer pour éviter les conflits */
+        .footer-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px; /* Marges latérales sécurisées */
+            display: flex;
+            flex-direction: column; /* Empile les éléments */
+            align-items: center; /* Centre horizontalement les blocs */
+            justify-content: center; /* Centre verticalement */
+            text-align: center; /* Centre le texte dans les blocs */
+            gap: 15px; /* Espacement uniforme */
         }
 
         .footer::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
                         radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
             pointer-events: none;
         }
 
-        .footer-content {
-            position: relative;
-            z-index: 1;
-        }
-
         .footer h3 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-            font-weight: 600;
-            color: white; /* Force white in footer */
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            line-height: 1.2;
         }
 
         .footer p {
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 8px;
-            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            margin: 0;
+            line-height: 1.5;
+            /* Force le texte à rester dans la boite */
+            max-width: 600px; 
+            width: 100%;
         }
-
-        .footer-divider {
-            width: 60px;
-            height: 3px;
-            background: var(--gradient);
-            margin: 20px auto;
-            border-radius: 3px;
+        
+        .footer .copyright {
+            margin-top: 15px;
+            opacity: 0.6;
+            font-size: 0.85rem;
         }
 
         /* Status badge */
-        .status-badge-wrapper::after {
-            display: none !important;
-        }
+        .status-badge-wrapper::after { display: none !important; }
 
+        /* --- RESPONSIVE MOBILE (Jusqu'à 1024px) --- */
         @media (max-width: 1024px) {
-            .header-content {
-                padding: 15px 20px;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
+            .header-content { padding: 15px 20px; }
+            .menu-toggle { display: flex; }
             .nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 280px;
-                height: 100vh;
+                position: fixed; top: 0; right: -100%;
+                width: 280px; height: 100vh;
                 background: var(--bg-header-mobile-nav);
-                flex-direction: column;
-                padding: 80px 30px 30px;
-                gap: 25px;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-                transition: right 0.3s ease;
-                overflow-y: auto;
-                z-index: 1001;
+                flex-direction: column; padding: 80px 30px 30px;
+                gap: 25px; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s ease; overflow-y: auto; z-index: 1001;
             }
-
-            .nav.active {
-                right: 0;
-            }
-
-            .nav-link {
-                font-size: 1.1rem;
-                padding: 10px 0;
-                border-bottom: 1px solid var(--border);
-            }
+            .nav.active { right: 0; }
+            .nav-link { font-size: 1.1rem; padding: 10px 0; border-bottom: 1px solid var(--border); }
             
             .status-badge-wrapper {
-                border-bottom: none !important;
-                display: flex;
-                justify-content: center;
-                padding: 10px 0 !important;
+                border-bottom: none !important; display: flex;
+                justify-content: center; padding: 10px 0 !important;
             }
-
-            .status-badge-wrapper iframe {
-                width: 200px !important;
-            }
-
-            .btn-add {
-                width: 100%;
-                justify-content: center;
-                margin-top: 20px;
-            }
-            
-            .theme-toggle-btn {
-                width: 100%;
-                padding: 12px;
-                font-size: 1.1rem;
-            }
+            .status-badge-wrapper iframe { width: 200px !important; }
+            .btn-add { width: 100%; justify-content: center; margin-top: 20px; }
+            .theme-toggle-btn { width: 100%; padding: 12px; font-size: 1.1rem; }
 
             .nav-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 1000;
+                display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background: rgba(0, 0, 0, 0.5); z-index: 1000;
             }
+            .nav-overlay.active { display: block; }
 
-            .nav-overlay.active {
-                display: block;
-            }
-
-            .hero h2 {
-                font-size: 2.2rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .btn-primary, .btn-secondary {
-                width: 100%;
-                text-align: center;
-            }
-
-            .features-grid, .commands-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .container {
-                padding: 0 20px;
-            }
-
-            .feedback-section {
-                padding: 60px 20px;
-            }
-
-            .feedback-section h2 {
-                font-size: 2rem;
-            }
-
-            .feedback-features {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .btn-feedback {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .partners-carousel {
-                padding: 20px 0;
-            }
-
-            .partner-card {
-                width: 240px;
-                margin-right: 20px;
+            .hero h2 { font-size: 2.2rem; }
+            .hero p { font-size: 1.1rem; }
+            .hero-buttons { flex-direction: column; }
+            .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+            .features-grid, .commands-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 2rem; }
+            .container { padding: 0 20px; }
+            .feedback-section { padding: 60px 20px; }
+            .feedback-section h2 { font-size: 2rem; }
+            .feedback-features { flex-direction: column; gap: 20px; }
+            .btn-feedback { width: 100%; justify-content: center; }
+            .partners-carousel { padding: 20px 0; }
+            .partner-card { width: 240px; margin-right: 20px; }
+            
+            /* Ajustements Footer Mobile */
+            .footer { padding: 50px 0; } /* Padding vertical réduit sur mobile */
+            .footer-container { padding: 0 15px; } /* Marge latérale de sécurité */
+            .footer h3 { font-size: 1.5rem; }
+            .footer p { 
+                font-size: 0.95rem; 
+                max-width: 100%; /* Utilise toute la largeur dispo */
             }
         }
 
         /* Page visibility */
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
+        .page { display: none; }
+        .page.active { display: block; }
     </style>
 </head>
 <body>
@@ -1437,302 +1062,6 @@
             <div class="accordion-item animated-element">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
-                        <h4>🇫🇷 Conditions générales d'utilisation</h4>
-                        <p class="tag">Dernière mise à jour : 12 novembre 2025</p>
-                    </div>
-                    <span style="color: var(--muted);">▼</span>
-                </div>
-                <div class="accordion-body">
-                    <p>En utilisant <strong>Assistante Barbara</strong>, vous acceptez les présentes Conditions Générales d'Utilisation (CGU). Veuillez les lire attentivement.</p>
-
-                    <div class="highlight-box">
-                        <p><strong>Champ d'application :</strong> Ces Conditions Générales d'Utilisation s'appliquent à l'ensemble des interactions avec le bot Assistante Barbara sur Discord, quel que soit le serveur ou l'utilisateur.</p>
-                    </div>
-
-                    <h3>1. Description du service</h3>
-                    <p><strong>Assistante Barbara</strong> est une application Discord (bot) à but non commercial offrant :</p>
-                    <ul>
-                        <li>Une variété de commandes slash</li>
-                        <li>Des fonctionnalités musicales (via Jamendo)</li>
-                        <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
-                    </ul>
-                    <p><strong>Le service est fourni gratuitement, sans obligation contractuelle ni garantie de disponibilité continue.</strong> Il s'agit d'un projet 
-                    personnel géré par l'équipe de développement d'Assistante Barbara.</p>
-
-                    <h3>2. Acceptation des conditions</h3>
-                    <p>L'utilisation d'Assistante Barbara implique votre acceptation complète et sans réserve des présentes CGU ainsi que de notre <strong>Politique de confidentialité</strong>. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le bot.</p>
-                    <p>En ajoutant le bot à votre serveur Discord ou en interagissant avec lui, vous reconnaissez avoir lu, compris et accepté l'intégralité des présentes conditions.</p>
-
-                    <h3>3. Utilisation autorisée</h3>
-                    <div class="highlight-box">
-                        <strong>Vous vous engagez à :</strong>
-                        <ul>
-                            <li>Utiliser le bot conformément aux <a href="https://discord.com/terms" target="_blank">Conditions d'Utilisation de Discord</a></li>
-                            <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
-                            <li>Ne pas tenter de contourner les limitations techniques</li>
-                            <li>Respecter les autres utilisateurs</li>
-                            <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
-                            <li>Utiliser les commandes de manière raisonnable et appropriée</li>
-                        </ul>
-                    </div>
-
-                    <h3>4. Fonctionnalités d'intelligence artificielle</h3>
-                    <p><strong>Important - Limitations et avertissements :</strong></p>
-                    <ul>
-                        <li>Les réponses de l'IA sont générées automatiquement par des services tiers (OpenAI, Mistral AI) et peuvent contenir des inexactitudes, des erreurs ou des informations obsolètes</li>
-                        <li>L'IA peut produire du contenu imprévisible ou inapproprié malgré nos efforts de modération</li>
-                        <li>Ne vous fiez jamais exclusivement aux réponses de l'IA pour des décisions importantes, notamment en matière de santé, juridique, financière ou de sécurité</li>
-                        <li>Les conversations avec l'IA sont traitées par des services tiers conformément à leurs politiques respectives</li>
-                        <li>Nous ne sommes pas responsables du contenu généré par l'IA ni de son utilisation</li>
-                        <li>L'utilisateur est seul responsable de la vérification des informations fournies par l'IA</li>
-                        <li>En utilisant ces fonctionnalités, vous acceptez que vos messages soient transmis et traités par OpenAI et/ou Mistral AI</li>
-                    </ul>
-                    <p><strong>Interdictions :</strong> Il est strictement interdit d'utiliser l'IA pour :</p>
-                    <ul>
-                        <li>Générer du contenu illégal, haineux, discriminatoire ou violent</li>
-                        <li>Tenter de contourner les systèmes de modération</li>
-                        <li>Collecter des données personnelles sur d'autres utilisateurs</li>
-                        <li>Diffuser de la désinformation ou des contenus trompeurs</li>
-                    </ul>
-
-                    <h3>5. Fonctionnalités musicales</h3>
-                    <ul>
-                        <li>La musique est fournie via <strong>Jamendo</strong> (musique libre de droits)</li>
-                        <li>Le catalogue est limité au contenu disponible sur Jamendo</li>
-                        <li>La disponibilité du service musical peut varier</li>
-                        <li>Respectez les droits d'auteur et les <a href="https://www.jamendo.com/legal/terms-of-use" target="_blank">CGU de Jamendo</a></li>
-                    </ul>
-
-                    <h3>6. Disponibilité du service</h3>
-                    <p>Nous nous efforçons de maintenir Assistante Barbara opérationnelle 24/7, mais :</p>
-                    <ul>
-                        <li>Le service peut être interrompu pour maintenance, mises à jour ou améliorations</li>
-                        <li>Des interruptions peuvent survenir en cas de problème technique</li>
-                        <li>Nous ne garantissons pas une disponibilité absolue ou ininterrompue</li>
-                        <li>Aucun remboursement n'est applicable (service gratuit)</li>
-                        <li>Aucun dédommagement ne pourra être réclamé en cas d'indisponibilité</li>
-                    </ul>
-
-                    <h3>6 bis. Force majeure</h3>
-                    <p>Nous ne saurions être tenus responsables en cas d'interruption du service résultant d'un événement de force majeure, notamment :</p>
-                    <ul>
-                        <li>Panne d'infrastructure ou d'hébergement (KataBump, serveurs)</li>
-                        <li>Défaillance des services tiers (Discord, OpenAI, Mistral AI, Jamendo)</li>
-                        <li>Coupure réseau, interruption d'accès à Internet</li>
-                        <li>Cyberattaque, piratage informatique, déni de service (DDoS)</li>
-                        <li>Décision administrative ou judiciaire</li>
-                        <li>Catastrophe naturelle ou tout autre événement échappant à notre contrôle raisonnable</li>
-                    </ul>
-                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant 
-                    à un délai de rététablissement.</p>
-
-                    <h3>7. Limitation de responsabilité</h3>
-                    <div class="highlight-box">
-                        <p><strong>Assistante Barbara est fournie "en l'état" et "selon disponibilité".</strong> Dans toute la mesure permise par la loi applicable, nous déclinons toute responsabilité concernant :</p>
-                        <ul>
-                            <li>Les dommages directs, indirects, accessoires, spéciaux, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le bot</li>
-                            <li>La précision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
-                            <li>Les pertes de données, interruptions de service ou tout dysfonctionnement technique</li>
-                            <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
-                            <li>Les décisions prises sur la base des informations fournies par le bot</li>
-                            <li>Les préjudices causés par des utilisateurs tiers ou des actes malveillants</li>
-                            <li>La compatibilité avec d'autres services ou applications</li>
-                        </ul>
-                        <p><strong>Absence de garantie :</strong> Nous ne garantissons pas que le service sera ininterrompu, sans erreur, sécurisé ou exempt de virus ou autres composants nuisibles.</p>
-                    </div>
-                    <p><strong>Indemnisation :</strong> Vous acceptez d'indemniser et de dégager de toute responsabilité l'équipe d'Assistante Barbara contre toute réclamation résultant de votre utilisation du service en violation 
-                    des présentes CGU.</p>
-
-                    <h3>8. Propriété intellectuelle</h3>
-                    <ul>
-                        <li>Assistante Barbara et son code source appartiennent à leur créateur</li>
-                        <li>Les réponses générées par l'IA suivent les politiques de propriété intellectuelle d'OpenAI et Mistral AI</li>
-                        <li>La musique est soumise aux licences de Jamendo</li>
-                        <li>Discord et son logo sont des marques déposées de Discord Inc.</li>
-                    </ul>
-
-                    <h3>9. Modifications du service</h3>
-                    <p>Nous nous réservons le droit, à notre seule discrétion, de :</p>
-                    <ul>
-                        <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
-                        <li>Modifier les fonctionnalités disponibles</li>
-                        <li>Bloquer l'accès à des utilisateurs ou serveurs en cas d'abus, de violation des présentes CGU ou des conditions d'utilisation de Discord</li>
-                        <li>Modifier les présentes CGU. Les modifications substantielles seront communiquées via le site web. La poursuite de l'utilisation après modification vaut acceptation</li>
-                    </ul>
-                    <p>Nous ne serons pas responsables envers vous ou envers des tiers de toute modification, suspension ou interruption du service.</p>
-
-                    <h3>10. Conformité légale</h3>
-                    <p>Ce service est conforme à :</p>
-                    <ul>
-                        <li>RGPD (Règlement Général sur la Protection des Données)</li>
-                        <li>Conditions d'Utilisation de Discord</li>
-                        <li>Lois françaises et européennes applicables</li>
-                    </ul>
-
-                    <h3>11. Résiliation</h3>
-                    <p><strong>Par l'utilisateur :</strong> Vous pouvez cesser d'utiliser Assistante Barbara à tout moment en :</p>
-                    <ul>
-                        <li>Retirant le bot de votre serveur Discord</li>
-                        <li>Cessant d'interagir avec le bot</li>
-                    </ul>
-                    <p><strong>Par Assistante Barbara :</strong> Nous pouvons suspendre ou bloquer votre accès au service, immédiatement et sans préavis, en cas de :</p>
-                    <ul>
-                        <li>Violation des présentes CGU</li>
-                        <li>Violation des Conditions d'Utilisation de Discord</li>
-                        <li>Utilisation abusive ou frauduleuse du service</li>
-                        <li>Comportement nuisible envers d'autres utilisateurs</li>
-                        <li>Activité illégale</li>
-                    </ul>
-                    <p><strong>Effets de la résiliation :</strong> En cas de résiliation, vous perdez immédiatement tout droit d'utiliser le service. Les dispositions des présentes CGU qui, par leur nature, doivent survivre à la résiliation (notamment les limitations de responsabilité) resteront en vigueur.</p>
-
-                    <h3>12. Droit applicable et juridiction</h3>
-                    <p>Les présentes CGU sont régies et interprétées conformément au droit français, sans égard aux principes de conflits de lois.</p>
-                    <p><strong>Résolution des litiges :</strong> En cas de litige relatif à l'interprétation ou à l'exécution des présentes CGU, les parties s'efforceront de le résoudre à l'amiable. À défaut, les tribunaux français seront seuls compétents.</p>
-                    <p><strong>Médiation :</strong> Conformément aux articles L.611-1 et suivants du Code de la consommation, si vous êtes un consommateur, vous avez le droit de recourir gratuitement à un médiateur de la consommation en cas de litige.</p>
-                    <p><strong>Divisibilité :</strong> Si une disposition des présentes CGU est jugée invalide ou inapplicable, les autres dispositions resteront en vigueur.</p>
-
-                    <div class="contact-box">
-                        <h4>13. Contact</h4>
-                        <p>Pour toute question concernant ces CGU :</p>
-                        <ul>
-                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
-                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item animated-element">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div>
-                        <h4>🇺🇸 Privacy Policy</h4>
-                        <p class="tag">Last updated: November 12, 2025</p>
-                    </div>
-                    <span style="color: var(--muted);">▼</span>
-                </div>
-                <div class="accordion-body">
-                    <p>Welcome to <strong>Assistante Barbara</strong>. This privacy policy explains how we collect, use, and protect your data when using our Discord bot.</p>
-
-                    <h3>1. Data Controller</h3>
-                    <p><strong>Controller:</strong> The Assistante Barbara development team (non-commercial project)<br>
-                    <strong>Service name:</strong> Assistante Barbara<br>
-                    <strong>Nature:</strong> Discord Application (bot)<br>
-                    <strong>Hosting:</strong> KataBump and local servers (maintenance)<br>
-                    <strong>Contact:</strong> assistante.barbara.contact@gmail.com</p>
-
-                    <p>As data controller, the Assistante Barbara team determines the purposes and means of processing your personal data in accordance with the GDPR. This is a non-commercial project.</p>
-
-                    <h3>2. Data Collected and Source</h3>
-                    <div class="highlight-box">
-                        <strong>Assistante Barbara collecte un minimum absolu de données :</strong>
-                        <ul>
-                            <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande, identifiant du serveur) sont temporairement stockées dans les logs système pour assurer le bon fonctionnement du service.</li>
-                            <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
-                            <li><strong>No 
-                            persistent personal data:</strong> No messages, personal user identifiers, conversation history, music preferences, or other identifiable personal data is permanently stored in our systems.</li>
-                            <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par 
-                            Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
-                        </ul>
-                        <p><strong>Data source:</strong> All processed data originates exclusively from interactions between users and the bot on the Discord platform, and is never obtained from third parties.</p>
-                    </div>
-
-                    <h3>3. Legal Basis for Processing</h3>
-                    <p>Processing operations carried out by Assistante Barbara are based on:</p>
-                    <ul>
-                        <li><strong>Contract performance (Article 6.1.b GDPR):</strong> Necessary to provide bot functionalities requested by users (diverse commands, server information).</li>
-                        <li><strong>Legitimate interest (Article 6.1.f GDPR):</strong> Ensuring security, maintenance, and proper technical operation of the service.</li>
-                        <li><strong>Consent (Article 6.1.a GDPR):</strong> Only when users interact with artificial intelligence or music features requiring third-party API calls (OpenAI, Mistral AI, Jamendo). By using these specific features, you consent to processing by these third-party services.</li>
-                    </ul>
-
-                    <h3>4. Third-Party APIs Usage and Joint Controllership</h3>
-                    <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
-                    <ul>
-                        <li><strong>Discord API:</strong> Discord acts as joint controller for data processed through its platform in accordance with its 
-                        own <a 
-                        href="https://discord.com/privacy" target="_blank">privacy policy</a>.</li>
-                        <li><strong>OpenAI API:</strong> For artificial intelligence features. Messages sent to configured channels are processed by OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
-                        <li><strong>Mistral AI API:</strong> Pour les fonctionnalités d'intelligence artificielle. See <a href="https://mistral.ai/privacy" target="_blank">Mistral AI's privacy policy</a>.</li>
-                        <li><strong>Jamendo API:</strong> For music features. See <a href="https://www.jamendo.com/legal/privacy" target="_blank">Jamendo's privacy policy</a>.</li>
-                    </ul>
-                    <p><strong>Important:</strong> AI conversations and music searches are transmitted to these APIs for processing in accordance with their respective policies. Assistante Barbara has no control over processing performed by these third-party services. Your consent is required for using these specific features.</p>
-
-                    <h3>5. Purpose of Processing</h3>
-                    <p>Temporary data collected (command logs) are used exclusively to:</p>
-                    <ul>
-                        <li>Ensure proper technical functioning of the bot</li>
-                        <li>Debug and fix technical issues</li>
-                        <li>Improve performance and service stability</li>
-                        <li>Ensure service security</li>
-                    </ul>
-                    <p><strong>This data is never used for commercial, advertising, or profiling purposes.</strong></p>
-
-                    <h3>6. Data Retention</h3>
-                    <p><strong>Retention period:</strong></p>
-                    <ul>
-                        <li>System logs: Kept until the next application restart (typically 2 to 7 days maximum)</li>
-                        <li>No personal data is archived or retained beyond this period</li>
-                    </ul>
-
-                    <h3>7. User Rights (GDPR)</h3>
-                    <p>In accordance with the General Data Protection Regulation (GDPR), you have the following rights:</p>
-                    <ul>
-                        <li><strong>Droit d'accès (Article 15):</strong> Obtain confirmation of data processing and access to it</li>
-                        <li><strong>Droit de rectification (Article 16):</strong> Correct inaccurate or incomplete data</li>
-                        <li><strong>Droit à l'effacement (Article 17):</strong> Request deletion of your data ("right to be forgotten")</li>
-                        <li><strong>Droit d'opposition (Article 21):</strong> Object to data processing</li>
-                        <li><strong>Droit à la limitation (Article 18):</strong> Request processing limitation</li>
-                        <li><strong>Droit à la portabilité (Article 20):</strong> Receive your data in a structured format</li>
-                        <li><strong>Droit de retrait du consentement:</strong> Withdraw your consent at any time</li>
-                    </ul>
-                    <p><strong>Note:</strong> Since we do not permanently store any personal data, the exercise of most of these rights is automatically satisfied by our automatic deletion policy. However, you may contact us for any specific question or request.</p>
-                    <p><strong>Right to lodge a complaint:</strong> You have the right to lodge a complaint with the CNIL (French Data Protection Authority) if you believe your rights are not being respected: <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
-
-                    <h3>8. Data Security</h3>
-                    <p>We implement appropriate technical and organizational measures to protect processed data:</p>
-                    <ul>
-                        <li>Secure hosting on professional infrastructure (KataBump)</li>
-                        <li>Restricted access to system logs (authentication required)</li>
-                        <li>Encrypted communications (HTTPS/TLS)</li>
-                        <li>Automatic and regular deletion of temporary data</li>
-                        <li>Security incident monitoring</li>
-                        <li>Regular system updates</li>
-                    </ul>
-
-                    <h3>9. Data Transfers</h3>
-                    <p>Data may be transferred to the following countries:</p>
-                    <ul>
-                        <li><strong>United States:</strong> OpenAI, Discord. These transfers are governed by the EU-US Data Privacy Framework or, when not applicable, by European Union standard contractual clauses.</li>
-                        <li><strong>France/Europe:</strong> Mistral AI, KataBump (GDPR compliant)</li>
-                        <li><strong>Luxembourg :</strong> Jamendo (European Union, GDPR compliant)</li>
-                    </ul>
-                    <p>These transfers are made in accordance with Chapter V of the GDPR and are governed by appropriate safeguards.</p>
-
-                    <h3>10. Automated Decision-Making and Profiling</h3>
-                    <p>Assistante Barbara does <strong>not perform any automated decision-making</strong> or <strong>profiling</strong> within the meaning of Article 22 of the GDPR. Responses generated by artificial intelligence are informative suggestions and do not produce legal effects concerning you.</p>
-
-                    <h3>11. Cookies and Similar Technologies</h3>
-                    <p>This website does not use any tracking, advertising, or analytics cookies. Only strictly necessary cookies for site functionality may be used.</p>
-
-                    <h3>12. Policy Changes</h3>
-                    <p>This policy may be modified occasionnellement to reflect service developments or legislative changes. The last update date will always be indicated at the top of the document. In case of substantial changes, we will endeavor to inform users.</p>
-
-                    <div class="contact-box">
-                        <h4>13. Contact and Exercise of Your Rights</h4>
-                        <p>For any questions regarding this privacy policy or to exercise your GDPR rights:</p>
-                        <ul>
-                            <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
-                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
-                        </ul>
-                        <p>We are committed to responding to your requests within a maximum of one month in accordance with the GDPR.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item animated-element">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div>
                         <h4>🇺🇸 Terms of Service</h4>
                         <p class="tag">Last updated: November 12, 2025</p>
                     </div>
@@ -1910,13 +1239,10 @@
     </div>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="container">
-                <h3>Assistante Barbara</h3>
-                <div class="footer-divider"></div>
-                <p>Bot Discord polyvalent propulsé par l'IA</p>
-                <p style="margin-top: 20px; margin-bottom: 0; opacity: 0.6; font-size: 0.9rem;">© 2025 - Tous droits réservés</p>
-            </div>
+        <div class="footer-container">
+            <h3>Assistante Barbara</h3>
+            <p>Application Discord polyvalente propulsée par l'IA</p>
+            <p class="copyright">© 2025 - Tous droits réservés</p>
         </div>
     </footer>
 
