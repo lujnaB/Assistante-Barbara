@@ -232,7 +232,6 @@
             position: relative;
         }
 
-        /* MODIFICATION : Ajout de border-radius pour arrondir la barre au survol */
         .nav-link::after {
             content: '';
             position: absolute;
@@ -945,7 +944,8 @@
             .nav-link {
                 font-size: 1.1rem;
                 padding: 10px 0;
-                border-bottom: 1px solid var(--border);
+                /* MODIFICATION : Suppression de la bordure grise sur mobile */
+                border-bottom: none; 
             }
             
             .status-badge-wrapper {
