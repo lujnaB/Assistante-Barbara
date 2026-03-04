@@ -1044,6 +1044,47 @@
             }
         }
 
+        /* Toast de bienvenue */
+        .welcome-toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 25px var(--shadow);
+            z-index: 9999;
+            transform: translateX(150%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .welcome-toast.show {
+            transform: translateX(0);
+        }
+
+        .welcome-toast img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+
+        .welcome-toast-text strong {
+            display: block;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .welcome-toast-text span {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        
         /* Page visibility */
         .page {
             display: none;
@@ -2021,10 +2062,13 @@
             const avatar = params.get('avatar');
             const discord_id = params.get('discord_id');
 
+            let isNewLogin = false;
+
             if (username && avatar && discord_id) {
                 const user = { username, avatar, discord_id };
                 localStorage.setItem('discord_user', JSON.stringify(user));
                 window.history.replaceState({}, document.title, window.location.pathname);
+                isNewLogin = true;
             }
 
             const saved = localStorage.getItem('discord_user');
@@ -2035,6 +2079,14 @@
                 document.getElementById('discord-username').textContent = user.username;
                 document.getElementById('discord-user').style.display = 'flex';
                 document.getElementById('discord-login-btn').style.display = 'none';
+
+                if (isNewLogin) {
+                    document.getElementById('toast-avatar').src = avatarUrl;
+                    document.getElementById('toast-username').textContent = `Bonjour, ${user.username} !`;
+                    const toast = document.getElementById('welcomeToast');
+                    setTimeout(() => toast.classList.add('show'), 300);
+                    setTimeout(() => toast.classList.remove('show'), 4000);
+                }
             }
         }
 
@@ -2060,5 +2112,12 @@
             });
         });
     </script>
+<div class="welcome-toast" id="welcomeToast">
+        <img id="toast-avatar" src="" alt="Avatar">
+        <div class="welcome-toast-text">
+            <strong id="toast-username"></strong>
+            <span>Bienvenue sur Assistante Barbara ! 👋</span>
+        </div>
+    </div>
 </body>
 </html>
