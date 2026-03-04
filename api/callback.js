@@ -25,13 +25,30 @@ export default async function handler(req, res) {
     return res.status(400).send("Erreur lors de la récupération du token");
   }
 
+  // Récupère les infos utilisateur
   const userRes = await fetch("https://discord.com/api/users/@me", {
     headers: { Authorization: `Bearer ${tokenData.access_token}` },
   });
-
   const user = await userRes.json();
 
-  const redirectUrl = `https://lujnab.github.io/Assistante-Barbara/?discord_id=${user.id}&username=${encodeURIComponent(user.username)}&avatar=${user.avatar}`;
+  // Récupère les serveurs de l'utilisateur
+  const guildsRes = await fetch("https://discord.com/api/users/@me/guilds", {
+    headers: { Authorization: `Bearer ${tokenData.access_token}` },
+  });
+  const guilds = await guildsRes.json();
+
+  // Récupère les serveurs où le bot est présent via le token bot
+  const botGuildsRes = await fetch("https://discord.com/api/users/@me/guilds", {
+    headers: { Authorization: `Bot ${process.env.BOT_TOKEN}` },
+  });
+  const botGuilds = await botGuildsRes.json();
+
+  // Vérifie si l'utilisateur partage au moins un serveur avec le bot
+  const botGuildIds = botGuilds.map(g => g.id);
+  const userGuildIds = guilds.map(g => g.id);
+  const hasSharedServer = userGuildIds.some(id => botGuildIds.includes(id));
+
+  const redirectUrl = `https://lujnab.github.io/Assistante-Barbara/?discord_id=${user.id}&username=${encodeURIComponent(user.username)}&avatar=${user.avatar}&member=${hasSharedServer}`;
   
   res.redirect(redirectUrl);
 }
