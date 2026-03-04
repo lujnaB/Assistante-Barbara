@@ -22,7 +22,7 @@ export default async function handler(req, res) {
   const tokenData = await tokenRes.json();
 
   if (!tokenData.access_token) {
-    return res.status(400).send("Erreur lors de la récupération du token");
+    return res.status(400).send("Erreur: " + JSON.stringify(tokenData));
   }
 
   const userRes = await fetch("https://discord.com/api/users/@me", {
