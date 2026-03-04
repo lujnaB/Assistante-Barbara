@@ -2062,13 +2062,25 @@
             const avatar = params.get('avatar');
             const discord_id = params.get('discord_id');
 
-            let isNewLogin = false;
-
             if (username && avatar && discord_id) {
                 const user = { username, avatar, discord_id };
                 localStorage.setItem('discord_user', JSON.stringify(user));
                 window.history.replaceState({}, document.title, window.location.pathname);
-                isNewLogin = true;
+                
+                // Affiche le toast après que le DOM soit prêt
+                const avatarUrl = `https://cdn.discordapp.com/avatars/${discord_id}/${avatar}.png`;
+                function showToast() {
+                    const toast = document.getElementById('welcomeToast');
+                    if (toast) {
+                        document.getElementById('toast-avatar').src = avatarUrl;
+                        document.getElementById('toast-username').textContent = `Bonjour, ${username} !`;
+                        toast.classList.add('show');
+                        setTimeout(() => toast.classList.remove('show'), 4000);
+                    } else {
+                        setTimeout(showToast, 100);
+                    }
+                }
+                setTimeout(showToast, 500);
             }
 
             const saved = localStorage.getItem('discord_user');
@@ -2079,17 +2091,9 @@
                 document.getElementById('discord-username').textContent = user.username;
                 document.getElementById('discord-user').style.display = 'flex';
                 document.getElementById('discord-login-btn').style.display = 'none';
-
-                if (isNewLogin) {
-                    document.getElementById('toast-avatar').src = avatarUrl;
-                    document.getElementById('toast-username').textContent = `Bonjour, ${user.username} !`;
-                    const toast = document.getElementById('welcomeToast');
-                    setTimeout(() => toast.classList.add('show'), 300);
-                    setTimeout(() => toast.classList.remove('show'), 4000);
-                }
             }
         }
-
+        
         document.addEventListener('DOMContentLoaded', () => {
             loadDiscordUser();
         });
