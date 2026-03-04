@@ -31,8 +31,7 @@ export default async function handler(req, res) {
 
   const user = await userRes.json();
 
-  // Redirige vers le site avec les infos en paramètres
-  const redirectUrl = `https://assistante-barbara.github.io?discord_id=${user.id}&username=${encodeURIComponent(user.username)}&avatar=${user.avatar}`;
+  const redirectUrl = `https://lujnab.github.io/Assistante-Barbara/?discord_id=${user.id}&username=${encodeURIComponent(user.username)}&avatar=${user.avatar}`;
   
   res.redirect(redirectUrl);
 }
