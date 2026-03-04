@@ -2039,33 +2039,6 @@
         }
 
         loadDiscordUser();
-
-        // Gestion de la popup Discord
-        document.getElementById('discord-login-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            const url = this.href;
-            const popup = window.open(url, 'discord-login', 'width=500,height=700,scrollbars=yes');
-
-            // Écoute le message de la popup
-            window.addEventListener('message', function(event) {
-                if (event.data === 'discord-login-success') {
-                    clearInterval(checkPopup);
-                    setTimeout(() => {
-                        loadDiscordUser();
-                    }, 300);
-                }
-            });
-
-            // Vérifie aussi si la popup se ferme manuellement
-            const checkPopup = setInterval(() => {
-                if (popup && popup.closed) {
-                    clearInterval(checkPopup);
-                    setTimeout(() => {
-                        loadDiscordUser();
-                    }, 300);
-                }
-            }, 300);
-        });
         // ---- Fin Connexion Discord ----
 
         document.addEventListener('DOMContentLoaded', () => {
