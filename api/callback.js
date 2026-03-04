@@ -22,7 +22,7 @@ export default async function handler(req, res) {
   const tokenData = await tokenRes.json();
 
   if (!tokenData.access_token) {
-    return res.status(400).send("Erreur: " + JSON.stringify(tokenData));
+    return res.status(400).send("Erreur lors de la récupération du token");
   }
 
   const userRes = await fetch("https://discord.com/api/users/@me", {
@@ -31,29 +31,7 @@ export default async function handler(req, res) {
 
   const user = await userRes.json();
 
-  // Page HTML qui ferme la popup et envoie les infos au site parent
-  res.setHeader('Content-Type', 'text/html');
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-    <head><title>Connexion en cours...</title></head>
-    <body>
-      <p style="font-family:sans-serif; text-align:center; margin-top:50px;">
-        Connexion réussie, fermeture...
-      </p>
-      <script>
-        // Envoie les infos au site parent
-        if (window.opener) {
-          localStorage.setItem('discord_user', JSON.stringify({
-            username: "${user.username}",
-            avatar: "${user.avatar}",
-            discord_id: "${user.id}"
-          }));
-          window.opener.postMessage('discord-login-success', '*');
-          window.close();
-        }
-      </script>
-    </body>
-    </html>
-  `);
+  const redirectUrl = `https://lujnab.github.io/Assistante-Barbara/?discord_id=${user.id}&username=${encodeURIComponent(user.username)}&avatar=${user.avatar}`;
+  
+  res.redirect(redirectUrl);
 }
