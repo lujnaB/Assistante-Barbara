@@ -2045,23 +2045,26 @@
             e.preventDefault();
             const url = this.href;
             const popup = window.open(url, 'discord-login', 'width=500,height=700,scrollbars=yes');
-            
-            // Vérifie toutes les secondes si la popup s'est fermée
-            const checkPopup = setInterval(() => {
-                if (popup.closed) {
-                    clearInterval(checkPopup);
-                    loadDiscordUser();
-                }
-            }, 500);
 
-            // Écoute le message de la popup quand elle a fini
+            // Écoute le message de la popup
             window.addEventListener('message', function(event) {
                 if (event.data === 'discord-login-success') {
-                    popup.close();
                     clearInterval(checkPopup);
-                    loadDiscordUser();
+                    setTimeout(() => {
+                        loadDiscordUser();
+                    }, 300);
                 }
             });
+
+            // Vérifie aussi si la popup se ferme manuellement
+            const checkPopup = setInterval(() => {
+                if (popup && popup.closed) {
+                    clearInterval(checkPopup);
+                    setTimeout(() => {
+                        loadDiscordUser();
+                    }, 300);
+                }
+            }, 300);
         });
         // ---- Fin Connexion Discord ----
 
