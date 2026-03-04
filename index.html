@@ -1115,6 +1115,7 @@
             <nav class="nav" id="mainNav">
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('home'); closeMenu()">Accueil</a>
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('docs'); closeMenu()">Documentation</a>
+                <a href="javascript:void(0)" class="nav-link" onclick="showPage('members'); closeMenu()">Espace membres</a>
                
                 <div class="nav-link status-badge-wrapper" title="Statut des services">
                     <iframe id="status-badge-iframe" src="https://assistante-barbara.betteruptime.com/badge?theme=light" 
@@ -1357,6 +1358,12 @@
             </section>
     </div>
 
+    <div id="members" class="page">
+    <section class="hero container" style="padding: 80px 0; text-align:center;">
+        <div id="members-content"></div>
+    </section>
+</div>
+    
     <div id="docs" class="page">
         
 <section class="docs container">
@@ -2065,6 +2072,8 @@
             if (username && avatar && discord_id) {
                 const user = { username, avatar, discord_id };
                 localStorage.setItem('discord_user', JSON.stringify(user));
+                const member = params.get('member');
+                localStorage.setItem('discord_member', member);
                 window.history.replaceState({}, document.title, window.location.pathname);
                 
                 // Affiche le toast après que le DOM soit prêt
@@ -2096,6 +2105,44 @@
         
         document.addEventListener('DOMContentLoaded', () => {
             loadDiscordUser();
+        function loadMembersPage() {
+            const saved = localStorage.getItem('discord_user');
+            const member = localStorage.getItem('discord_member');
+            const content = document.getElementById('members-content');
+
+            if (!content) return;
+
+            if (!saved) {
+                content.innerHTML = `
+                    <h2 style="color:var(--dark); font-size:2rem; margin-bottom:20px;">🔒 Espace réservé</h2>
+                    <p style="color:var(--muted); font-size:1.1rem; margin-bottom:30px;">
+                        Connecte-toi avec Discord pour accéder à cet espace.
+                    </p>
+                    <a href="javascript:void(0)" onclick="document.getElementById('discord-login-btn').click()" class="btn-primary">
+                        Se connecter avec Discord
+                    </a>`;
+            } else if (member === 'false') {
+                content.innerHTML = `
+                    <h2 style="color:var(--dark); font-size:2rem; margin-bottom:20px;">🤔 On ne se connaît pas !</h2>
+                    <p style="color:var(--muted); font-size:1.1rem; margin-bottom:30px;">
+                        Je ne suis présente sur aucun de tes serveurs...<br>
+                        Ajoute-moi pour accéder à cet espace exclusif !
+                    </p>
+                    <a href="https://discord.com/oauth2/authorize?client_id=992854932107579392" class="btn-primary" target="_blank">
+                        ➕ Ajouter Assistante Barbara
+                    </a>`;
+            } else if (member === 'true') {
+                content.innerHTML = `
+                    <h2 style="color:var(--dark); font-size:2rem; margin-bottom:20px;">
+                        👋 Bienvenue dans l'espace membres !
+                    </h2>
+                    <p style="color:var(--muted); font-size:1.1rem; margin-bottom:30px;">
+                        Contenu exclusif bientôt disponible...
+                    </p>`;
+            }
+        }
+
+        loadMembersPage();
         });
         // ---- Fin Connexion Discord ----
 
