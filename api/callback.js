@@ -31,7 +31,29 @@ export default async function handler(req, res) {
 
   const user = await userRes.json();
 
-  const redirectUrl = `https://lujnab.github.io/Assistante-Barbara/?discord_id=${user.id}&username=${encodeURIComponent(user.username)}&avatar=${user.avatar}`;
-  
-  res.redirect(redirectUrl);
+  // Page HTML qui ferme la popup et envoie les infos au site parent
+  res.setHeader('Content-Type', 'text/html');
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head><title>Connexion en cours...</title></head>
+    <body>
+      <p style="font-family:sans-serif; text-align:center; margin-top:50px;">
+        Connexion réussie, fermeture...
+      </p>
+      <script>
+        // Envoie les infos au site parent
+        if (window.opener) {
+          localStorage.setItem('discord_user', JSON.stringify({
+            username: "${user.username}",
+            avatar: "${user.avatar}",
+            discord_id: "${user.id}"
+          }));
+          window.opener.postMessage('discord-login-success', '*');
+          window.close();
+        }
+      </script>
+    </body>
+    </html>
+  `);
 }
