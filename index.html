@@ -58,12 +58,6 @@
             --bg-placeholder-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
         }
 
-        /* --- Ajustement Dark Mode Footer --- */
-        html[data-theme='dark'] .footer {
-            /* On garde le dégradé coloré, on ajoute juste une bordure pour séparer du fond sombre */
-            border-top: 1px solid var(--border);
-        }
-
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background: var(--bg-body);
@@ -985,54 +979,87 @@
             margin-top: 30px;
         }
 
-        /* --- Footer (Dégradé et centré) --- */
         .footer {
-            background: var(--gradient);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
+            background: var(--bg-header);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            padding: 50px 30px 30px;
             margin-top: 80px;
-            position: relative;
-            overflow: hidden;
-            
-            /* Centrage vertical et horizontal */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .footer-content {
-            position: relative;
-            z-index: 1;
-            width: 100%;
+        .footer-grid {
             max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .footer h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
+        .footer-brand h3 {
+            font-size: 1.3rem;
             font-weight: 700;
-            color: white;
-            letter-spacing: -0.02em;
+            color: var(--dark);
+            margin-bottom: 8px;
         }
 
-        .footer p {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 8px;
-            font-size: 1rem;
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .footer-col h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--dark);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 24px auto 0;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* Aussi supprimer .footer::before et .footer-content si présents */
+        html[data-theme='dark'] .footer {
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Status badge */
@@ -2111,12 +2138,28 @@
     </div>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
                 <h3>Assistante Barbara</h3>
-                <p>Bot Discord polyvalent propulsé par l'IA</p>
-                <p style="margin-top: 20px; margin-bottom: 0; opacity: 0.6; font-size: 0.9rem;">© 2025-2026 - Tous droits réservés</p>
+                <p>Bot Discord polyvalent combinant<br>intelligence artificielle et musique libre.</p>
             </div>
+
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <a href="javascript:void(0)" onclick="showPage('home')">Accueil</a>
+                <a href="javascript:void(0)" onclick="showPage('members')">Espace membres</a>
+                <a href="javascript:void(0)" onclick="showPage('docs')">Documentation</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="mailto:assistante.barbara.contact@gmail.com">✉️ assistante.barbara.contact@gmail.com</a>
+                <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">💬 Serveur Discord</a>
+                <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">🦋 @assistantebarbara.bsky.social</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2022-2026 - Tous droits réservés
         </div>
     </footer>
 
