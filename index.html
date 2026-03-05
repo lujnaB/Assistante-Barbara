@@ -335,6 +335,19 @@
             align-items: center;
         }
 
+        .nav-separator {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+            margin: 0 5px;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-separator {
+                display: none;
+            }
+        }
+
         .nav-link {
             color: var(--text);
             text-decoration: none;
@@ -1232,15 +1245,16 @@
 
             <nav class="nav" id="mainNav">
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('home'); closeMenu()">Accueil</a>
-                <a href="javascript:void(0)" class="nav-link" onclick="showPage('docs'); closeMenu()">Documentation</a>
                 <a href="javascript:void(0)" class="nav-link" onclick="showPage('members'); closeMenu()">Espace membres</a>
-               
+                <a href="javascript:void(0)" class="nav-link" onclick="showPage('docs'); closeMenu()">Documentation</a>
+
+                <div class="nav-separator"></div>
+
                 <div class="nav-link status-badge-wrapper" title="Statut des services">
                     <iframe id="status-badge-iframe" src="https://assistante-barbara.betteruptime.com/badge?theme=light" 
                             width="200" height="30" frameborder="0" scrolling="no" 
                             style="color-scheme: normal; border-radius: 4px; vertical-align: middle;"></iframe>
                 </div>
-                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Changer le thème">☀️</button>
 
                 <div id="discord-user" style="display:none; align-items:center; gap:10px;">
                     <img id="discord-avatar" src="" alt="Avatar" 
@@ -1258,6 +1272,8 @@
                     </svg>
                     Connexion Discord
                 </a>
+
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Changer le thème">☀️</button>
             </nav>
         </div>
         
