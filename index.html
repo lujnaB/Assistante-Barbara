@@ -2268,12 +2268,92 @@
                     </a>`;
             } else if (member === 'true') {
                 content.innerHTML = `
-                    <h2 style="color:var(--dark); font-size:2rem; margin-bottom:20px;">
-                        👋 Bienvenue dans l'espace membres !
-                    </h2>
-                    <p style="color:var(--muted); font-size:1.1rem; margin-bottom:30px;">
-                        Contenu exclusif bientôt disponible...
-                    </p>`;
+                    <div style="max-width:800px; margin:0 auto; text-align:left;">
+
+                        <h2 style="color:var(--dark); font-size:2rem; margin-bottom:10px; text-align:center;">
+                            👋 Bienvenue, ${JSON.parse(localStorage.getItem('discord_user')).username} !
+                        </h2>
+                        <p style="color:var(--muted); text-align:center; margin-bottom:50px;">
+                            Espace réservé aux utilisateurs d'Assistante Barbara.
+                        </p>
+
+                        <!-- ACTUALITÉS -->
+                        <h3 style="color:var(--dark); font-size:1.4rem; font-weight:700; margin-bottom:25px;">
+                            📰 Dernières actualités
+                        </h3>
+
+                        <div style="display:flex; flex-direction:column; gap:15px; margin-bottom:60px;">
+
+                            <div style="background:var(--bg-card); border:1px solid var(--border); border-left:4px solid var(--primary); border-radius:12px; padding:20px 25px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                    <span style="font-weight:700; color:var(--dark);">🚀 Lancement du site web</span>
+                                    <span style="font-size:0.85rem; color:var(--muted);">Mars 2026</span>
+                                </div>
+                                <p style="color:var(--muted); margin:0; font-size:0.95rem;">Le site officiel d'Assistante Barbara est en ligne avec espace membres, documentation et statut des services.</p>
+                            </div>
+
+                            <div style="background:var(--bg-card); border:1px solid var(--border); border-left:4px solid var(--primary); border-radius:12px; padding:20px 25px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                    <span style="font-weight:700; color:var(--dark);">🤖 Intégration Mistral AI</span>
+                                    <span style="font-size:0.85rem; color:var(--muted);">Novembre 2025</span>
+                                </div>
+                                <p style="color:var(--muted); margin:0; font-size:0.95rem;">Mistral AI rejoint OpenAI pour alimenter le chatbot d'Assistante Barbara.</p>
+                            </div>
+
+                            <div style="background:var(--bg-card); border:1px solid var(--border); border-left:4px solid var(--primary); border-radius:12px; padding:20px 25px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                    <span style="font-weight:700; color:var(--dark);">🎵 Musique via Jamendo</span>
+                                    <span style="font-size:0.85rem; color:var(--muted);">2024</span>
+                                </div>
+                                <p style="color:var(--muted); margin:0; font-size:0.95rem;">Ajout de la fonctionnalité musicale avec Jamendo, file d'attente et contrôles de lecture.</p>
+                            </div>
+
+                        </div>
+
+                        <!-- CONTACT -->
+                        <h3 style="color:var(--dark); font-size:1.4rem; font-weight:700; margin-bottom:10px;">
+                            ✉️ Nous contacter
+                        </h3>
+                        <p style="color:var(--muted); margin-bottom:25px;">
+                            Tu souhaites une commande personnalisée ou installer le chatbot IA dans un salon de ton serveur ? Envoie-nous un message !
+                        </p>
+
+                        <form action="https://formspree.io/f/mojkapbp" method="POST"
+                              style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:30px; display:flex; flex-direction:column; gap:18px;">
+
+                            <input type="hidden" name="discord_user" value="${JSON.parse(localStorage.getItem('discord_user')).username}">
+
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                                <label style="font-weight:600; color:var(--dark); font-size:0.9rem;">Sujet</label>
+                                <select name="sujet" required
+                                        style="padding:12px 15px; border-radius:10px; border:1px solid var(--border); background:var(--bg-highlight); color:var(--text); font-size:0.95rem;">
+                                    <option value="">Choisir un sujet...</option>
+                                    <option value="commande_personnalisee">Commande personnalisée</option>
+                                    <option value="chatbot_ia">Installation chatbot IA</option>
+                                    <option value="autre">Autre demande</option>
+                                </select>
+                            </div>
+
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                                <label style="font-weight:600; color:var(--dark); font-size:0.9rem;">Email de contact</label>
+                                <input type="email" name="email" placeholder="ton@email.com" required
+                                       style="padding:12px 15px; border-radius:10px; border:1px solid var(--border); background:var(--bg-highlight); color:var(--text); font-size:0.95rem;">
+                            </div>
+
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                                <label style="font-weight:600; color:var(--dark); font-size:0.9rem;">Message</label>
+                                <textarea name="message" placeholder="Décris ta demande en détail..." required rows="5"
+                                          style="padding:12px 15px; border-radius:10px; border:1px solid var(--border); background:var(--bg-highlight); color:var(--text); font-size:0.95rem; resize:vertical;"></textarea>
+                            </div>
+
+                            <button type="submit"
+                                    style="background:var(--gradient); color:white; padding:14px 30px; border-radius:10px; border:none; font-weight:600; font-size:1rem; cursor:pointer; transition:all 0.3s ease;">
+                                Envoyer ✉️
+                            </button>
+
+                        </form>
+
+                    </div>`;
             }
         }
 
