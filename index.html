@@ -2237,6 +2237,7 @@
         // ---- Connexion Discord OAuth2 ----
         function logoutDiscord() {
             localStorage.removeItem('discord_user');
+            localStorage.removeItem('discord_member');
             document.getElementById('discord-user').style.display = 'none';
             document.getElementById('discord-login-btn').style.display = 'inline-flex';
         }
@@ -2253,8 +2254,7 @@
                 const member = params.get('member');
                 localStorage.setItem('discord_member', member);
                 window.history.replaceState({}, document.title, window.location.pathname);
-                
-                // Affiche le toast après que le DOM soit prêt
+
                 const avatarUrl = `https://cdn.discordapp.com/avatars/${discord_id}/${avatar}.png`;
                 function showToast() {
                     const toast = document.getElementById('welcomeToast');
@@ -2281,9 +2281,7 @@
                 document.getElementById('discord-login-btn').style.display = 'none';
             }
         }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            loadDiscordUser();
+
         function loadMembersPage() {
             const saved = localStorage.getItem('discord_user');
             const member = localStorage.getItem('discord_member');
@@ -2321,7 +2319,6 @@
                             Espace réservé aux utilisateurs d'Assistante Barbara.
                         </p>
 
-                        <!-- ACTUALITÉS -->
                         <h3 style="color:var(--dark); font-size:1.4rem; font-weight:700; margin-bottom:25px;">
                             📰 Dernières actualités
                         </h3>
@@ -2354,7 +2351,6 @@
 
                         </div>
 
-                        <!-- CONTACT -->
                         <h3 style="color:var(--dark); font-size:1.4rem; font-weight:700; margin-bottom:10px;">
                             ✉️ Nous contacter
                         </h3>
@@ -2401,7 +2397,9 @@
             }
         }
 
-        loadMembersPage();
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDiscordUser();
+            loadMembersPage();
         });
         // ---- Fin Connexion Discord ----
 
@@ -2415,7 +2413,7 @@
                         animationObserver.unobserve(entry.target);
                     }
                 });
-            }, { 
+            }, {
                 threshold: 0.1
             });
 
