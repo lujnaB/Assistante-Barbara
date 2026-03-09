@@ -326,7 +326,7 @@
 
         .nav {
             display: flex;
-            gap: 30px;
+            gap: 20px;
             align-items: center;
         }
 
@@ -1280,16 +1280,14 @@
 
                 <div class="nav-separator"></div>
 
-                <div id="discord-auth-container" style="display:flex; align-items:center; width: auto; justify-content:center;">
-                    <div id="discord-user" style="display:none; align-items:center; gap:10px;">
-                        <img id="discord-avatar" src="" alt="Avatar" 
-                             style="width:35px; height:35px; border-radius:50%; border:2px solid var(--primary);">
-                        <span id="discord-username" style="font-weight:600; color:var(--dark); font-size:0.95rem;"></span>
-                        <button onclick="logoutDiscord()" 
-                                style="background:none; border:1px solid var(--border); border-radius:8px; padding:5px 10px; cursor:pointer; color:var(--muted); font-size:0.85rem;">
-                            ✕
-                        </button>
-                    </div>
+                <div id="discord-user" style="display:none; align-items:center; gap:8px;">
+                    <img id="discord-avatar" src="" alt="Avatar" 
+                         style="width:35px; height:35px; border-radius:50%; border:2px solid var(--primary);">
+                    <button onclick="logoutDiscord()" 
+                            style="background:none; border:1px solid var(--border); border-radius:8px; padding:5px 10px; cursor:pointer; color:var(--muted); font-size:0.85rem;">
+                        ✕
+                    </button>
+                </div>
                     <a id="discord-login-btn" href="https://discord.com/oauth2/authorize?client_id=992854932107579392&response_type=code&redirect_uri=https%3A%2F%2Fassistante-barbara.vercel.app%2Fapi%2Fcallback&scope=identify%20guilds" 
                        title="Connexion Discord"
                        style="background:var(--bg-card); color:var(--primary); padding:10px 12px; border-radius:10px; text-decoration:none; border:2px solid var(--border); display:inline-flex; align-items:center; justify-content:center; transition:all 0.3s ease;">
