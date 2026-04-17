@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,47 +14,27 @@
         }
 
         :root {
-            /* --- Mode Clair (inchangé) --- */
+            /* Textes & Titres */
             --primary: #667eea;
             --secondary: #764ba2;
-            --dark: #2c3e50;
-            --light: #ecf0f1;
-            --text: #34495e;
-            --muted: #7f8c8d;
-            --border: #e1e8ed;
-            --shadow: rgba(0, 0, 0, 0.08);
+            --dark: #f1f5f9;
+            --light: #1e293b;
+            --text: #cbd5e1;
+            --muted: #94a3b8;
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.5);
             --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            
-            --bg-body: #fafbfc;
-            --bg-card: white;
-            --bg-header: rgba(255, 255, 255, 0.95);
-            --bg-header-mobile-nav: white;
-            --bg-highlight: #f8f9fa;
-            --bg-placeholder-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        }
 
-        html[data-theme='dark'] {
-            /* --- NOUVELLE PALETTE DARK MODE (Modern Deep Slate) --- */
-            
-            /* Textes & Titres */
-            --dark: #f1f5f9;      /* Titres (blanc cassé très clair) */
-            --light: #1e293b;     /* Inverse (utilisé rarement) */
-            --text: #cbd5e1;      /* Texte courant (gris clair doux) */
-            --muted: #94a3b8;     /* Texte secondaire (gris ardoise) */
-            
             /* Fonds */
-            --bg-body: #0f172a;   /* Fond principal (Bleu nuit très profond/Noir) */
-            --bg-card: #1e293b;   /* Fond des cartes (Gris ardoise foncé) */
-            
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+
             /* Navigation */
-            --bg-header: rgba(15, 23, 42, 0.95); /* Semi-transparent sombre */
+            --bg-header: rgba(15, 23, 42, 0.95);
             --bg-header-mobile-nav: #1e293b;
-            
+
             /* Éléments UI */
-            --bg-highlight: #334155; /* Boites de mise en avant */
-            --border: #334155;       /* Bordures subtiles */
-            --shadow: rgba(0, 0, 0, 0.5); /* Ombres plus marquées pour la profondeur */
-            
+            --bg-highlight: #334155;
             --bg-placeholder-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
         }
 
@@ -64,10 +44,8 @@
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
-        /* Transition douce pour les éléments changeant de couleur */
+
         .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .partner-cta, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
             transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
@@ -88,67 +66,42 @@
 
         .blob {
             position: absolute;
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-        }
-        
-        .blob {
             border-radius: 50%;
             filter: blur(120px);
             z-index: -1;
             pointer-events: none;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
         }
 
-        html[data-theme='light'] .blob-1 {
-            width: 60vw;
-            height: 60vw;
-            background: rgba(102, 126, 234, 0.35);
-            animation: blob1 20s ease-in-out infinite alternate;
-        }
-
-        html[data-theme='light'] .blob-2 {
-            width: 50vw;
-            height: 50vw;
-            background: rgba(118, 75, 162, 0.28);
-            animation: blob2 25s ease-in-out infinite alternate;
-        }
-
-        html[data-theme='light'] .blob-3 {
-            width: 45vw;
-            height: 45vw;
-            background: rgba(102, 126, 234, 0.22);
-            animation: blob3 30s ease-in-out infinite alternate;
-        }
-
-        html[data-theme='dark'] .blob-1 {
+        .blob-1 {
             width: 55vw;
             height: 55vw;
             background: rgba(55, 38, 180, 0.45);
             animation: blob1 22s ease-in-out infinite alternate;
         }
 
-        html[data-theme='dark'] .blob-2 {
+        .blob-2 {
             width: 45vw;
             height: 45vw;
             background: rgba(110, 35, 80, 0.35);
             animation: blob2 28s ease-in-out infinite alternate;
         }
 
-        html[data-theme='dark'] .blob-3 {
+        .blob-3 {
             width: 40vw;
             height: 40vw;
             background: rgba(70, 30, 150, 0.3);
             animation: blob3 35s ease-in-out infinite alternate;
         }
 
-        html[data-theme='dark'] .blob-4 {
+        .blob-4 {
             width: 30vw;
             height: 30vw;
             background: rgba(90, 20, 60, 0.25);
             animation: blob4 18s ease-in-out infinite alternate;
         }
 
-        /* Sur mobile, blobs plus grands pour couvrir l'écran */
         @media (max-width: 1024px) {
             .blob-1 { width: 100vw !important; height: 100vw !important; }
             .blob-2 { width: 90vw !important;  height: 90vw !important;  }
@@ -193,23 +146,11 @@
             display: none;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(1deg); }
-            66% { transform: translate(-20px, 20px) rotate(-1deg); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(1deg); }
-            66% { transform: translate(-20px, 20px) rotate(-1deg); }
-        }
-
         /* --- SYSTÈME D'ANIMATION --- */
         .animated-element {
             opacity: 0;
             transform: translateY(10px);
-            transition: opacity 0.45s cubic-bezier(0.215, 0.61, 0.355, 1), 
+            transition: opacity 0.45s cubic-bezier(0.215, 0.61, 0.355, 1),
                         transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
         }
 
@@ -217,7 +158,7 @@
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         .animated-element.is-visible:nth-child(1) { transition-delay: 0.04s; }
         .animated-element.is-visible:nth-child(2) { transition-delay: 0.08s; }
         .animated-element.is-visible:nth-child(3) { transition-delay: 0.12s; }
@@ -232,7 +173,7 @@
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
         }
-        
+
         .animated-partners-container.is-visible {
             opacity: 1;
         }
@@ -362,7 +303,7 @@
             height: 2px;
             background: var(--gradient);
             transition: width 0.3s ease;
-            border-radius: 2px; /* Bords arrondis */
+            border-radius: 2px;
         }
 
         .nav-link:hover {
@@ -392,24 +333,6 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
             color: white;
-        }
-        
-        /* Bouton Mode Sombre */
-        .theme-toggle-btn {
-            background: var(--bg-highlight);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            padding: 8px 10px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            line-height: 1;
-            transition: all 0.3s ease;
-            color: var(--dark);
-        }
-
-        .theme-toggle-btn:hover {
-            background: var(--border);
-            transform: scale(1.1);
         }
 
         /* Container */
@@ -672,7 +595,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
             z-index: 1;
@@ -784,16 +707,16 @@
         .partners-wrapper {
             overflow: hidden;
             padding: 20px 0;
-            -webkit-mask-image: linear-gradient(to right, 
-                transparent 0%, 
-                black 20%, 
-                black 80%, 
+            -webkit-mask-image: linear-gradient(to right,
+                transparent 0%,
+                black 20%,
+                black 80%,
                 transparent 100%
             );
-            mask-image: linear-gradient(to right, 
-                transparent 0%, 
-                black 20%, 
-                black 80%, 
+            mask-image: linear-gradient(to right,
+                transparent 0%,
+                black 20%,
+                black 80%,
                 transparent 100%
             );
         }
@@ -825,7 +748,6 @@
             margin-right: 30px;
         }
 
-        /* MODIFICATION : Ombre plus discrète au survol */
         .partner-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px var(--shadow);
@@ -986,7 +908,6 @@
             border-top: 1px solid var(--border);
             padding: 50px 30px 30px;
             margin-top: 80px;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .footer-grid {
@@ -1042,26 +963,6 @@
             color: var(--muted);
         }
 
-        /* Aussi supprimer .footer::before et .footer-content si présents */
-        html[data-theme='dark'] .footer {
-            border-top: 1px solid var(--border);
-        }
-
-        @media (max-width: 1024px) {
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .footer-brand {
-                grid-column: 1 / -1;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         /* Status badge */
         .status-badge-wrapper::after {
             display: none !important;
@@ -1099,10 +1000,9 @@
             .nav-link {
                 font-size: 1.1rem;
                 padding: 10px 0;
-                /* MODIFICATION : Suppression de la bordure grise sur mobile */
-                border-bottom: none; 
+                border-bottom: none;
             }
-            
+
             .status-badge-wrapper {
                 border-bottom: none !important;
                 display: flex;
@@ -1118,12 +1018,6 @@
                 width: 100%;
                 justify-content: center;
                 margin-top: 20px;
-            }
-            
-            .theme-toggle-btn {
-                width: 100%;
-                padding: 12px;
-                font-size: 1.1rem;
             }
 
             .nav-overlay {
@@ -1196,6 +1090,20 @@
                 width: 240px;
                 margin-right: 20px;
             }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Toast de bienvenue */
@@ -1238,7 +1146,7 @@
             color: var(--muted);
             font-size: 0.85rem;
         }
-        
+
         /* Page visibility */
         .page {
             display: none;
@@ -1256,6 +1164,7 @@
         <div class="blob blob-3"></div>
         <div class="blob blob-4"></div>
     </div>
+
     <header class="header">
         <div class="header-content">
             <a href="javascript:void(0)" onclick="showPage('home')" class="logo">
@@ -1265,7 +1174,7 @@
                     <p>Discord · IA · Musique</p>
                 </div>
             </a>
-            
+
             <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
@@ -1281,15 +1190,15 @@
 
                 <div id="discord-auth-container" style="display:flex; align-items:center; width: 220px; justify-content:center;">
                     <div id="discord-user" style="display:none; align-items:center; gap:10px;">
-                        <img id="discord-avatar" src="" alt="Avatar" 
+                        <img id="discord-avatar" src="" alt="Avatar"
                              style="width:35px; height:35px; border-radius:50%; border:2px solid var(--primary);">
                         <span id="discord-username" style="font-weight:600; color:var(--dark); font-size:0.95rem;"></span>
-                        <button onclick="logoutDiscord()" 
+                        <button onclick="logoutDiscord()"
                                 style="background:none; border:1px solid var(--border); border-radius:8px; padding:5px 10px; cursor:pointer; color:var(--muted); font-size:0.85rem;">
                             ✕
                         </button>
                     </div>
-                    <a id="discord-login-btn" href="https://discord.com/oauth2/authorize?client_id=992854932107579392&response_type=code&redirect_uri=https%3A%2F%2Fassistante-barbara.vercel.app%2Fapi%2Fcallback&scope=identify%20guilds" 
+                    <a id="discord-login-btn" href="https://discord.com/oauth2/authorize?client_id=992854932107579392&response_type=code&redirect_uri=https%3A%2F%2Fassistante-barbara.vercel.app%2Fapi%2Fcallback&scope=identify%20guilds"
                        style="background:var(--bg-card); color:var(--primary); padding:10px 18px; border-radius:10px; text-decoration:none; font-weight:600; font-size:0.9rem; border:2px solid var(--border); display:inline-flex; align-items:center; gap:8px; transition:all 0.3s ease;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.053a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
@@ -1299,16 +1208,13 @@
                 </div>
 
                 <div class="nav-link status-badge-wrapper" title="Statut des services">
-                    <iframe id="status-badge-iframe" src="https://assistante-barbara.betteruptime.com/badge?theme=light" 
-                            width="200" height="30" frameborder="0" scrolling="no" 
+                    <iframe id="status-badge-iframe" src="https://assistante-barbara.betteruptime.com/badge?theme=dark"
+                            width="200" height="30" frameborder="0" scrolling="no"
                             style="color-scheme: normal; border-radius: 4px; vertical-align: middle;"></iframe>
                 </div>
-
-                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Changer le thème">☀️</button>
             </nav>
         </div>
-        
-        
+
         <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
     </header>
 
@@ -1334,7 +1240,6 @@
         <section class="features container">
             <h2 class="section-title">Principales fonctionnalités</h2>
             <div class="features-grid">
-              
                 <div class="feature-card">
                     <span class="feature-icon">🤖</span>
                     <h3>Intelligence artificielle</h3>
@@ -1419,7 +1324,7 @@
                 <p>
                     Aidez-nous à améliorer Assistante Barbara en partageant votre expérience. Vos retours sont essentiels pour nous permettre d'évoluer.
                 </p>
-                
+
                 <div class="feedback-features">
                     <div class="feedback-feature">
                         <span>⚡</span>
@@ -1434,7 +1339,7 @@
                         <span>Toutes suggestions bienvenues</span>
                     </div>
                 </div>
-                
+
                 <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback" target="_blank">
                     <span>📝</span> Donner mon avis
                 </a>
@@ -1443,10 +1348,10 @@
 
         <section class="partners-section container">
             <h2 class="section-title">Nos partenaires</h2>
-            
+
             <div class="partners-intro">
                 <p>
-                    Assistante Barbara est fière de collaborer avec des partenaires qui partagent notre vision 
+                    Assistante Barbara est fière de collaborer avec des partenaires qui partagent notre vision
                     d'améliorer l'expérience Discord. Ensemble, nous créons des solutions innovantes pour la communauté.
                 </p>
             </div>
@@ -1516,19 +1421,17 @@
                     </div>
                 </div>
             </div>
-
-            </section>
+        </section>
     </div>
 
     <div id="members" class="page">
-    <section class="hero container" style="padding: 80px 0; text-align:center;">
-        <div id="members-content"></div>
-    </section>
-</div>
-    
+        <section class="hero container" style="padding: 80px 0; text-align:center;">
+            <div id="members-content"></div>
+        </section>
+    </div>
+
     <div id="docs" class="page">
-        
-<section class="docs container">
+        <section class="docs container">
             <h2 class="section-title animated-element">Documentation & mentions légales</h2>
 
             <div class="accordion-item animated-element">
@@ -1566,18 +1469,15 @@
                     <h3>3. Base légale du traitement</h3>
                     <p>Les traitements effectués par Assistante Barbara reposent sur :</p>
                     <ul>
-                        <li><strong>L'exécution d'un contrat (Article 6.1.b du RGPD) :</strong> Nécessaire pour fournir les fonctionnalités du bot demandées par les utilisateurs (commandes variées, informations 
-                        serveur).</li>
+                        <li><strong>L'exécution d'un contrat (Article 6.1.b du RGPD) :</strong> Nécessaire pour fournir les fonctionnalités du bot demandées par les utilisateurs (commandes variées, informations serveur).</li>
                         <li><strong>L'intérêt légitime (Article 6.1.f du RGPD) :</strong> Assurer la sécurité, la maintenance et le bon fonctionnement technique du service.</li>
-                        <li><strong>Le consentement (Article 6.1.a du RGPD) :</strong> Uniquement lorsque l'utilisateur 
-                        interagit avec les fonctionnalités d'intelligence artificielle ou musicales nécessitant l'appel d'APIs tierces (OpenAI, Mistral AI, Jamendo). En utilisant ces fonctionnalités spécifiques, vous consentez au traitement par ces services tiers.</li>
+                        <li><strong>Le consentement (Article 6.1.a du RGPD) :</strong> Uniquement lorsque l'utilisateur interagit avec les fonctionnalités d'intelligence artificielle ou musicales nécessitant l'appel d'APIs tierces (OpenAI, Mistral AI, Jamendo). En utilisant ces fonctionnalités spécifiques, vous consentez au traitement par ces services tiers.</li>
                     </ul>
 
                     <h3>4. Utilisation des APIs tierces et coresponsabilité</h3>
                     <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
                     <ul>
-                        <li><strong>Discord API :</strong> Discord agit comme responsable conjoint pour les données traitées via sa plateforme conformément à 
-                        sa propre <a href="https://discord.com/privacy" target="_blank">politique de confidentialité</a>.</li>
+                        <li><strong>Discord API :</strong> Discord agit comme responsable conjoint pour les données traitées via sa plateforme conformément à sa propre <a href="https://discord.com/privacy" target="_blank">politique de confidentialité</a>.</li>
                         <li><strong>OpenAI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Les messages envoyés aux salons configurés sont traités par OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
                         <li><strong>Mistral AI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Consultez la <a href="https://mistral.ai/privacy" target="_blank">politique de confidentialité de Mistral AI</a>.</li>
                         <li><strong>Jamendo API :</strong> Pour les fonctionnalités musicales. Consultez la <a href="https://www.jamendo.com/legal/privacy" target="_blank">politique de confidentialité de Jamendo</a>.</li>
@@ -1607,16 +1507,12 @@
                         <li><strong>Droit d'accès (Article 15) :</strong> Obtenir confirmation du traitement de vos données et accéder à celles-ci</li>
                         <li><strong>Droit de rectification (Article 16) :</strong> Corriger des données inexactes ou incomplètes</li>
                         <li><strong>Droit à l'effacement (Article 17) :</strong> Demander la suppression de vos données ("droit à l'oubli")</li>
-                        <li><strong>Droit d'opposition (Article 21) :</strong> Vous 
-                        opposer au traitement de vos données</li>
+                        <li><strong>Droit d'opposition (Article 21) :</strong> Vous opposer au traitement de vos données</li>
                         <li><strong>Droit à la limitation (Article 18) :</strong> Demander la limitation du traitement</li>
-                        <li><strong>Droit à la portabilité (Article 20) :</strong> Recevoir vos données dans un 
-                        format structuré</li>
+                        <li><strong>Droit à la portabilité (Article 20) :</strong> Recevoir vos données dans un format structuré</li>
                         <li><strong>Droit de retrait du consentement :</strong> Retirer votre consentement à tout moment</li>
                     </ul>
-                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatiquement satisfait 
-                    par notre politique de suppression automatique.
-                    Néanmoins, vous pouvez nous contacter pour toute question ou demande spécifique.</p>
+                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatiquement satisfait par notre politique de suppression automatique. Néanmoins, vous pouvez nous contacter pour toute question ou demande spécifique.</p>
                     <p><strong>Droit de réclamation :</strong> Vous avez le droit d'introduire une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés) si vous estimez que vos droits ne sont pas respectés : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
 
                     <h3>8. Sécurité des données</h3>
@@ -1626,8 +1522,7 @@
                         <li>Accès restreint aux logs système (authentification requise)</li>
                         <li>Chiffrement des communications (HTTPS/TLS)</li>
                         <li>Suppression automatique et régulière des données temporaires</li>
-                        <li>Surveillance des incidents 
-                        de sécurité</li>
+                        <li>Surveillance des incidents de sécurité</li>
                         <li>Mises à jour régulières des systèmes</li>
                     </ul>
 
@@ -1684,8 +1579,7 @@
                         <li>Des fonctionnalités musicales (via Jamendo)</li>
                         <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
                     </ul>
-                    <p><strong>Le service est fourni gratuitement, sans obligation contractuelle ni garantie de disponibilité continue.</strong> Il s'agit d'un projet 
-                    personnel géré par l'équipe de développement d'Assistante Barbara.</p>
+                    <p><strong>Le service est fourni gratuitement, sans obligation contractuelle ni garantie de disponibilité continue.</strong> Il s'agit d'un projet personnel géré par l'équipe de développement d'Assistante Barbara.</p>
 
                     <h3>2. Acceptation des conditions</h3>
                     <p>L'utilisation d'Assistante Barbara implique votre acceptation complète et sans réserve des présentes CGU ainsi que de notre <strong>Politique de confidentialité</strong>. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le bot.</p>
@@ -1751,8 +1645,7 @@
                         <li>Décision administrative ou judiciaire</li>
                         <li>Catastrophe naturelle ou tout autre événement échappant à notre contrôle raisonnable</li>
                     </ul>
-                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant 
-                    à un délai de rététablissement.</p>
+                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant à un délai de rétablissement.</p>
 
                     <h3>7. Limitation de responsabilité</h3>
                     <div class="highlight-box">
@@ -1768,8 +1661,7 @@
                         </ul>
                         <p><strong>Absence de garantie :</strong> Nous ne garantissons pas que le service sera ininterrompu, sans erreur, sécurisé ou exempt de virus ou autres composants nuisibles.</p>
                     </div>
-                    <p><strong>Indemnisation :</strong> Vous acceptez d'indemniser et de dégager de toute responsabilité l'équipe d'Assistante Barbara contre toute réclamation résultant de votre utilisation du service en violation 
-                    des présentes CGU.</p>
+                    <p><strong>Indemnisation :</strong> Vous acceptez d'indemniser et de dégager de toute responsabilité l'équipe d'Assistante Barbara contre toute réclamation résultant de votre utilisation du service en violation des présentes CGU.</p>
 
                     <h3>8. Propriété intellectuelle</h3>
                     <ul>
@@ -1857,10 +1749,8 @@
                         <ul>
                             <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande, identifiant du serveur) sont temporairement stockées dans les logs système pour assurer le bon fonctionnement du service.</li>
                             <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
-                            <li><strong>No 
-                            persistent personal data:</strong> No messages, personal user identifiers, conversation history, music preferences, or other identifiable personal data is permanently stored in our systems.</li>
-                            <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par 
-                            Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
+                            <li><strong>No persistent personal data:</strong> No messages, personal user identifiers, conversation history, music preferences, or other identifiable personal data is permanently stored in our systems.</li>
+                            <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
                         </ul>
                         <p><strong>Data source:</strong> All processed data originates exclusively from interactions between users and the bot on the Discord platform, and is never obtained from third parties.</p>
                     </div>
@@ -1876,9 +1766,7 @@
                     <h3>4. Third-Party APIs Usage and Joint Controllership</h3>
                     <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
                     <ul>
-                        <li><strong>Discord API:</strong> Discord acts as joint controller for data processed through its platform in accordance with its 
-                        own <a 
-                        href="https://discord.com/privacy" target="_blank">privacy policy</a>.</li>
+                        <li><strong>Discord API:</strong> Discord acts as joint controller for data processed through its platform in accordance with its own <a href="https://discord.com/privacy" target="_blank">privacy policy</a>.</li>
                         <li><strong>OpenAI API:</strong> For artificial intelligence features. Messages sent to configured channels are processed by OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
                         <li><strong>Mistral AI API:</strong> Pour les fonctionnalités d'intelligence artificielle. See <a href="https://mistral.ai/privacy" target="_blank">Mistral AI's privacy policy</a>.</li>
                         <li><strong>Jamendo API:</strong> For music features. See <a href="https://www.jamendo.com/legal/privacy" target="_blank">Jamendo's privacy policy</a>.</li>
@@ -1932,7 +1820,7 @@
                     <ul>
                         <li><strong>United States:</strong> OpenAI, Discord. These transfers are governed by the EU-US Data Privacy Framework or, when not applicable, by European Union standard contractual clauses.</li>
                         <li><strong>France/Europe:</strong> Mistral AI, KataBump (GDPR compliant)</li>
-                        <li><strong>Luxembourg :</strong> Jamendo (European Union, GDPR compliant)</li>
+                        <li><strong>Luxembourg:</strong> Jamendo (European Union, GDPR compliant)</li>
                     </ul>
                     <p>These transfers are made in accordance with Chapter V of the GDPR and are governed by appropriate safeguards.</p>
 
@@ -1980,8 +1868,7 @@
                         <li>Music features (via Jamendo)</li>
                         <li>An AI-powered assistance chatbot (OpenAI and Mistral AI)</li>
                     </ul>
-                    <p><strong>The service is provided free of charge, without contractual obligation or guarantee of continuous availability.</strong> It 
-                    is a personal project managed by the Assistante Barbara development team.</p>
+                    <p><strong>The service is provided free of charge, without contractual obligation or guarantee of continuous availability.</strong> It is a personal project managed by the Assistante Barbara development team.</p>
 
                     <h3>2. Acceptance of terms</h3>
                     <p>Using Assistante Barbara implies your complete and unreserved acceptance of these ToS as well as our <strong>Privacy Policy</strong>. If you do not accept these terms, please do not use the bot.</p>
@@ -2009,8 +1896,7 @@
                         <li>Conversations with AI are processed by third-party services in accordance with their respective policies</li>
                         <li>We are not responsible for content generated by AI or its use</li>
                         <li>Users are solely responsible for verifying information provided by AI</li>
-                        <li>By using these features, you agree that your messages 
-                        will be transmitted and processed by OpenAI and/or Mistral AI</li>
+                        <li>By using these features, you agree that your messages will be transmitted and processed by OpenAI and/or Mistral AI</li>
                     </ul>
                     <p><strong>Prohibitions:</strong> It is strictly forbidden to use AI to:</p>
                     <ul>
@@ -2035,8 +1921,7 @@
                         <li>Interruptions may occur due to technical issues</li>
                         <li>We do not guarantee absolute or uninterrupted availability</li>
                         <li>No refunds are applicable (free service)</li>
-                        <li>No compensation can be 
-                        claimed in case of unavailability</li>
+                        <li>No compensation can be claimed in case of unavailability</li>
                     </ul>
 
                     <h3>6. bis. Force majeure</h3>
@@ -2046,13 +1931,10 @@
                         <li>Third-party service failures (Discord, OpenAI, Mistral AI, Jamendo)</li>
                         <li>Network outages, Internet access interruptions</li>
                         <li>Cyberattacks, hacking, denial of service (DDoS)</li>
-                        <li>Administrative or judicial 
-                        decisions</li>
+                        <li>Administrative or judicial decisions</li>
                         <li>Natural disasters or any other event beyond our reasonable control</li>
                     </ul>
-                    <p>En cas de 
-                    force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant 
-                    à un délai de rétablissement.</p>
+                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant à un délai de rétablissement.</p>
 
                     <h3>7. Limitation de responsabilité</h3>
                     <div class="highlight-box">
@@ -2066,11 +1948,9 @@
                             <li>Harm caused by third-party users or malicious acts</li>
                             <li>Compatibility with other services or applications</li>
                         </ul>
-                        <p><strong>No warranty:</strong> We do not 
-                        guarantee that the service will be uninterrupted, error-free, secure, or free from viruses or other harmful components.</p>
+                        <p><strong>No warranty:</strong> We do not guarantee that the service will be uninterrupted, error-free, secure, or free from viruses or other harmful components.</p>
                     </div>
-                    <p><strong>Indemnisation:</strong> You agree to indemnify and hold harmless the Assistante Barbara team against any claim resulting from your use of 
-                    the service in violation of these ToS.</p>
+                    <p><strong>Indemnisation:</strong> You agree to indemnify and hold harmless the Assistante Barbara team against any claim resulting from your use of the service in violation of these ToS.</p>
 
                     <h3>8. Intellectual property</h3>
                     <ul>
@@ -2109,13 +1989,10 @@
                         <li>Violation of these ToS</li>
                         <li>Violation of Discord's Terms of Service</li>
                         <li>Abusive or fraudulent use of the service</li>
-                        <li>Harmful 
-                        behavior toward other users</li>
+                        <li>Harmful behavior toward other users</li>
                         <li>Illegal activity</li>
                     </ul>
-                    <p><strong>Effects of termination:</strong> Upon termination, you immediately 
-                    lose all rights to use the service.
-                    Provisions of these ToS that by their nature should survive termination (including liability limitations) will remain in effect.</p>
+                    <p><strong>Effects of termination:</strong> Upon termination, you immediately lose all rights to use the service. Provisions of these ToS that by their nature should survive termination (including liability limitations) will remain in effect.</p>
 
                     <h3>12. Applicable law and jurisdiction</h3>
                     <p>These ToS are governed by and construed in accordance with French law, without regard to conflict of law principles.</p>
@@ -2163,31 +2040,15 @@
         </div>
     </footer>
 
+    <div class="welcome-toast" id="welcomeToast">
+        <img id="toast-avatar" src="" alt="Avatar">
+        <div class="welcome-toast-text">
+            <strong id="toast-username"></strong>
+            <span>Bienvenue sur Assistante Barbara ! 👋</span>
+        </div>
+    </div>
+
     <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-
-        function applyTheme(theme) {
-            htmlElement.setAttribute('data-theme', theme);
-            themeToggleBtn.innerText = theme === 'light' ? '☀️' : '🌙';
-            localStorage.setItem('theme', theme);
-
-            const badgeIframe = document.getElementById('status-badge-iframe');
-            if (badgeIframe) {
-                const badgeTheme = (theme === 'light') ? 'light' : 'dark';
-                const cacheBuster = new Date().getTime();
-                badgeIframe.src = `https://assistante-barbara.betteruptime.com/badge?theme=${badgeTheme}&v=${cacheBuster}`;
-            }
-        }
-
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        applyTheme(savedTheme);
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            applyTheme(newTheme);
-        });
-
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -2200,7 +2061,7 @@
             const nav = document.getElementById('mainNav');
             const overlay = document.getElementById('navOverlay');
             const toggle = document.querySelector('.menu-toggle');
-            
+
             nav.classList.toggle('active');
             overlay.classList.toggle('active');
             toggle.classList.toggle('active');
@@ -2215,7 +2076,7 @@
             const nav = document.getElementById('mainNav');
             const overlay = document.getElementById('navOverlay');
             const toggle = document.querySelector('.menu-toggle');
-            
+
             nav.classList.remove('active');
             overlay.classList.remove('active');
             toggle.classList.remove('active');
@@ -2225,7 +2086,7 @@
         function toggleAccordion(header) {
             const item = header.parentElement;
             const isOpen = item.classList.contains('open');
-            
+
             document.querySelectorAll('.accordion-item').forEach(i => {
                 i.classList.remove('open');
             });
@@ -2400,10 +2261,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadDiscordUser();
             loadMembersPage();
-        });
-        // ---- Fin Connexion Discord ----
 
-        document.addEventListener('DOMContentLoaded', () => {
             const animatedElements = document.querySelectorAll('.animated-element, .animated-partners-container');
 
             const animationObserver = new IntersectionObserver((entries) => {
@@ -2422,12 +2280,5 @@
             });
         });
     </script>
-<div class="welcome-toast" id="welcomeToast">
-        <img id="toast-avatar" src="" alt="Avatar">
-        <div class="welcome-toast-text">
-            <strong id="toast-username"></strong>
-            <span>Bienvenue sur Assistante Barbara ! 👋</span>
-        </div>
-    </div>
 </body>
 </html>
