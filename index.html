@@ -46,6 +46,11 @@
             overflow-x: hidden;
         }
 
+        /* Classe dynamique ajoutée via JS pour bloquer le scroll pendant l'intro */
+        body.anim-playing {
+            overflow: hidden;
+        }
+
         .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .partner-cta, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
             transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
@@ -96,20 +101,17 @@
         body::before, body::after { display: none; }
 
         /* --- SYSTÈME D'ESPACEMENT UNIVERSEL ET STRUCTUREL --- */
-        /* Conteneur pour centrer et limiter la largeur sur tout le site */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 30px;
         }
 
-        /* L'espacement maître des sections (Espace normal haut et bas) */
         .section {
             padding: 80px 0;
             position: relative;
         }
 
-        /* Espace entre le Titre de section et les éléments en dessous */
         .section-title {
             text-align: center;
             font-size: 2.5rem;
@@ -119,31 +121,33 @@
             margin-top: 0;
         }
 
-        /* Adaptation mobile des espacements */
         @media (max-width: 1024px) {
-            .container {
-                padding: 0 20px;
-            }
-            .section {
-                padding: 60px 0;
-            }
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 40px; 
-            }
+            .container { padding: 0 20px; }
+            .section { padding: 60px 0; }
+            .section-title { font-size: 2rem; margin-bottom: 40px; }
         }
 
-        /* Correction vitale : Donne toujours plus d'espace à la TOUTE PREMIÈRE section 
-           d'une page pour qu'elle ne soit jamais collée sous le menu de navigation (sticky) */
         .page > .section:first-child {
             padding-top: 100px;
         }
         @media (max-width: 1024px) {
-            .page > .section:first-child {
-                padding-top: 80px; 
-            }
+            .page > .section:first-child { padding-top: 80px; }
         }
 
+        /* --- GESTION DU CONTENU PRINCIPAL (Caché au départ) --- */
+        #main-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+        }
+
+        /* Classe ajoutée via JS une fois l'animation terminal terminée */
+        body.content-ready #main-content {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
 
         /* --- SYSTÈME D'ANIMATION AU SCROLL --- */
         .animated-element {
@@ -152,12 +156,7 @@
             transition: opacity 0.45s cubic-bezier(0.215, 0.61, 0.355, 1),
                         transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
         }
-
-        .animated-element.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .animated-element.is-visible { opacity: 1; transform: translateY(0); }
         .animated-element.is-visible:nth-child(1) { transition-delay: 0.04s; }
         .animated-element.is-visible:nth-child(2) { transition-delay: 0.08s; }
         .animated-element.is-visible:nth-child(3) { transition-delay: 0.12s; }
@@ -172,11 +171,7 @@
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
         }
-
-        .animated-partners-container.is-visible {
-            opacity: 1;
-        }
-
+        .animated-partners-container.is-visible { opacity: 1; }
 
         /* --- NAVIGATION --- */
         .header {
@@ -200,98 +195,42 @@
         }
 
         .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 8px;
-            background: transparent;
-            border: none;
-            z-index: 1002;
-            position: relative;
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; padding: 8px; background: transparent;
+            border: none; z-index: 1002; position: relative;
         }
 
         .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--text);
-            border-radius: 3px;
-            transition: all 0.3s ease;
+            width: 25px; height: 3px; background: var(--text);
+            border-radius: 3px; transition: all 0.3s ease;
         }
-
         .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
         .menu-toggle.active span:nth-child(2) { opacity: 0; }
         .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-        }
-
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
         .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 50px; height: 50px; border-radius: 12px;
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
-            transition: transform 0.3s ease;
-            object-fit: cover;
+            transition: transform 0.3s ease; object-fit: cover;
         }
-
         .logo:hover .logo-img { transform: scale(1.05); }
+        .logo-text h1 { font-size: 1.4rem; font-weight: 600; color: var(--dark); letter-spacing: -0.02em; }
+        .logo-text p { font-size: 0.85rem; color: var(--muted); }
 
-        .logo-text h1 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--dark);
-            letter-spacing: -0.02em;
-        }
-
-        .logo-text p {
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
-
-        .nav {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-separator {
-            width: 1px;
-            height: 24px;
-            background: var(--border);
-            margin: 0;
-            flex-shrink: 0;
-        }
-
+        .nav { display: flex; gap: 30px; align-items: center; }
+        .nav-separator { width: 1px; height: 24px; background: var(--border); margin: 0; flex-shrink: 0; }
         .nav-link {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-            position: relative;
-            white-space: nowrap;
+            color: var(--text); text-decoration: none; font-weight: 500;
+            font-size: 0.95rem; transition: color 0.2s; position: relative; white-space: nowrap;
         }
-
         .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient);
-            transition: width 0.3s ease;
-            border-radius: 2px;
+            content: ''; position: absolute; bottom: -5px; left: 0;
+            width: 0; height: 2px; background: var(--gradient);
+            transition: width 0.3s ease; border-radius: 2px;
         }
-
         .nav-link:hover { color: var(--primary); }
         .nav-link:hover::after { width: 100%; }
-
 
         /* --- SECTION HERO (TERMINAL -> TITRE) --- */
         .hero-transition-wrapper {
@@ -300,7 +239,8 @@
             align-items: center;
             justify-items: center;
             width: 100%;
-            min-height: 50vh;
+            /* Fixation stricte de la hauteur pour éviter le saut (85% de l'écran) */
+            min-height: 85vh; 
         }
 
         .code-window {
@@ -317,7 +257,6 @@
             z-index: 2;
         }
 
-        /* Animation au chargement JS terminé */
         body.start-anim .code-window {
             animation: 
                 slideUpCode 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
@@ -325,41 +264,26 @@
         }
 
         .code-header {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            background: rgba(30, 41, 59, 0.9);
-            border-bottom: 1px solid var(--border);
-            gap: 8px;
+            display: flex; align-items: center; padding: 12px 20px;
+            background: rgba(30, 41, 59, 0.9); border-bottom: 1px solid var(--border); gap: 8px;
         }
-
         .code-dot { width: 12px; height: 12px; border-radius: 50%; }
         .code-dot.red { background: #ff5f56; }
         .code-dot.yellow { background: #ffbd2e; }
         .code-dot.green { background: #27c93f; }
 
         .code-title {
-            margin: 0 auto;
-            color: var(--muted);
-            font-size: 0.85rem;
-            font-family: 'SF Mono', monospace;
-            padding-right: 48px;
+            margin: 0 auto; color: var(--muted); font-size: 0.85rem;
+            font-family: 'SF Mono', monospace; padding-right: 48px;
         }
 
         .code-body {
-            padding: 30px;
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: #c9d1d9;
-            overflow-x: auto;
-            text-align: left;
+            padding: 30px; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 1.05rem; line-height: 1.6; color: #c9d1d9; overflow-x: auto; text-align: left;
         }
-
         .code-body pre { margin: 0; }
         .code-body code { font-family: inherit; }
 
-        /* Couleurs de syntaxe */
         .token-keyword { color: #ff7b72; }
         .token-class { color: #f0883e; }
         .token-variable { color: #79c0ff; }
@@ -368,577 +292,219 @@
         .token-punctuation { color: #c9d1d9; }
         .token-comment { color: #8b949e; font-style: italic; }
 
-        .typewriter {
-            display: inline-flex;
-            vertical-align: bottom;
-        }
-
+        .typewriter { display: inline-flex; vertical-align: bottom; }
         .typewriter-text {
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 2px solid var(--primary);
-            margin: 0;
-            width: 0; 
-            color: var(--primary);
-            font-weight: 600;
+            overflow: hidden; white-space: nowrap; border-right: 2px solid var(--primary);
+            margin: 0; width: 0; color: var(--primary); font-weight: 600;
         }
 
-        /* 18 étapes = 18 lettres dans "Assistante Barbara" */
         body.start-anim .typewriter-text {
             animation: typing 2s steps(18, end) 1.2s forwards, blink-caret 0.75s step-end infinite;
         }
+        @keyframes typing { from { width: 0; } to { width: 18.5ch; } }
+        @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: var(--primary); } }
+        @keyframes slideUpCode { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutTerminal { to { opacity: 0; transform: translateY(-30px) scale(0.95); visibility: hidden; pointer-events: none; } }
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 18.5ch; } /* Pousse le ');' fluidement */
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--primary); }
-        }
-
-        @keyframes slideUpCode {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeOutTerminal {
-            to { opacity: 0; transform: translateY(-30px) scale(0.95); visibility: hidden; pointer-events: none; }
-        }
-
-        /* Contenu final (vrai titre) */
         .hero-final-content {
-            grid-area: 1 / 1;
-            width: 100%;
-            max-width: 800px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            z-index: 1;
-            pointer-events: none;
+            grid-area: 1 / 1; width: 100%; max-width: 800px; text-align: center;
+            opacity: 0; transform: translateY(30px) scale(0.95); z-index: 1; pointer-events: none;
         }
 
         body.start-anim .hero-final-content {
             animation: fadeInFinal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 5.0s forwards;
         }
-
-        @keyframes fadeInFinal {
-            to { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
-        }
+        @keyframes fadeInFinal { to { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; } }
 
         .hero-final-content h2, .hero h2 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
+            font-size: 3.5rem; font-weight: 700; color: var(--dark);
+            margin-bottom: 20px; letter-spacing: -0.03em; line-height: 1.1;
         }
-
         .hero-final-content .gradient-text {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            background: var(--gradient); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
         }
-
         .hero-final-content p, .hero p {
-            font-size: 1.25rem;
-            color: var(--muted);
-            max-width: 700px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
+            font-size: 1.25rem; color: var(--muted); max-width: 700px;
+            margin: 0 auto 40px; line-height: 1.7;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
+        .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
         .btn-primary {
-            background: var(--gradient);
-            color: white;
-            padding: 16px 40px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
+            background: var(--gradient); color: white; padding: 16px 40px;
+            border-radius: 12px; text-decoration: none; font-weight: 600;
+            font-size: 1.1rem; box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); transition: all 0.3s ease;
         }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
-            color: white;
-        }
-
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4); color: white; }
+        
         .btn-secondary {
-            background: var(--bg-card);
-            color: var(--primary);
-            padding: 16px 40px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: 2px solid var(--border);
-            transition: all 0.3s ease;
+            background: var(--bg-card); color: var(--primary); padding: 16px 40px;
+            border-radius: 12px; text-decoration: none; font-weight: 600;
+            font-size: 1.1rem; border: 2px solid var(--border); transition: all 0.3s ease;
         }
-
         .btn-secondary:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--shadow);
-            color: var(--primary);
+            border-color: var(--primary); transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow); color: var(--primary);
         }
-
 
         /* --- GRILLE DES FONCTIONNALITÉS --- */
         .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px; /* Petit espace entre les éléments composant la section */
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
         }
 
         .feature-card {
-            background: var(--bg-card);
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            background: var(--bg-card); padding: 40px; border-radius: 16px;
+            border: 1px solid var(--border); transition: all 0.3s ease; position: relative; overflow: hidden;
         }
-
         .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 50%; width: 0; height: 4px;
-            background: var(--gradient);
-            transform: translateX(-50%);
-            transition: width 0.3s ease;
-            border-radius: 3px;
+            content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 4px;
+            background: var(--gradient); transform: translateX(-50%);
+            transition: width 0.3s ease; border-radius: 3px;
         }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px var(--shadow);
-            border-color: var(--border);
-        }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
         .feature-card:hover::before { width: 98%; }
 
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-        .feature-card:hover .feature-icon {
-            transform: scale(1.15);
-            animation: float-smooth 2s ease-in-out infinite;
-        }
+        .feature-icon { font-size: 3rem; margin-bottom: 20px; display: inline-block; transition: transform 0.3s ease; }
+        .feature-card:hover .feature-icon { transform: scale(1.15); animation: float-smooth 2s ease-in-out infinite; }
 
         @keyframes float-smooth {
             0%, 100% { transform: scale(1.15) translateY(0px); }
             50% { transform: scale(1.15) translateY(-8px); }
         }
 
-        .feature-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-            font-weight: 600;
-        }
-
-        .feature-card p {
-            color: var(--muted);
-            line-height: 1.7;
-        }
-
+        .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 600; }
+        .feature-card p { color: var(--muted); line-height: 1.7; }
 
         /* --- COMMANDES --- */
-        .commands-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
+        .commands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .command-card {
-            background: var(--bg-card);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--primary);
-            transition: all 0.2s ease;
+            background: var(--bg-card); padding: 25px; border-radius: 12px;
+            border: 1px solid var(--border); border-left: 4px solid var(--primary); transition: all 0.2s ease;
         }
-
-        .command-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 8px 20px var(--shadow);
-        }
-
+        .command-card:hover { transform: translateX(5px); box-shadow: 0 8px 20px var(--shadow); }
         .command-card h4 {
             font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
-            font-size: 1.05rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-weight: 600;
+            font-size: 1.05rem; color: var(--primary); margin-bottom: 10px; font-weight: 600;
         }
-
-        .command-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
+        .command-card p { color: var(--muted); font-size: 0.95rem; }
 
         /* --- SECTION AVIS (FEEDBACK) --- */
         .feedback-section {
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            padding: 80px 30px;
-            width: 100%;
+            position: relative; overflow: hidden; border-radius: 20px;
+            padding: 80px 30px; width: 100%;
         }
-
-        @media (max-width: 1024px) {
-            .feedback-section {
-                padding: 60px 20px;
-            }
-        }
+        @media (max-width: 1024px) { .feedback-section { padding: 60px 20px; } }
 
         .feedback-background {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--gradient);
-            opacity: 0.95;
-            z-index: 0;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--gradient); opacity: 0.95; z-index: 0;
         }
-
         .feedback-pattern {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image:
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
             z-index: 1;
         }
-
-        .feedback-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            color: white;
-        }
-
-        .feedback-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .feedback-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-            color: white;
-        }
-
+        .feedback-content { position: relative; z-index: 2; text-align: center; color: white; }
+        .feedback-icon { font-size: 4rem; margin-bottom: 20px; display: inline-block; animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .feedback-section h2 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; color: white; }
         .feedback-section p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            opacity: 0.95;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem; margin-bottom: 40px; opacity: 0.95;
+            max-width: 600px; margin-left: auto; margin-right: auto; color: rgba(255, 255, 255, 0.9);
         }
-
-        .feedback-features {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .feedback-feature {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.05rem;
-            opacity: 0.95;
-            color: white;
-        }
+        .feedback-features { display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; flex-wrap: wrap; }
+        .feedback-feature { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; opacity: 0.95; color: white; }
         .feedback-feature span:first-child { font-size: 1.5rem; }
 
         .btn-feedback {
-            background: var(--bg-card);
-            color: var(--primary);
-            padding: 18px 45px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.15rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
+            background: var(--bg-card); color: var(--primary); padding: 18px 45px;
+            border-radius: 12px; text-decoration: none; font-weight: 600;
+            font-size: 1.15rem; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;
+            display: inline-flex; align-items: center; gap: 12px;
         }
-
-        .btn-feedback:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-        }
-
+        .btn-feedback:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3); }
 
         /* --- PARTENAIRES --- */
-        .partners-intro {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 40px; /* Espace ajusté pour ne pas casser la hiérarchie */
-        }
-
-        .partners-intro p {
-            font-size: 1.15rem;
-            color: var(--muted);
-            line-height: 1.8;
-            margin-bottom: 0;
-        }
-
-        .partners-carousel {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
+        .partners-intro { text-align: center; max-width: 700px; margin: 0 auto 40px; }
+        .partners-intro p { font-size: 1.15rem; color: var(--muted); line-height: 1.8; margin-bottom: 0; }
+        .partners-carousel { position: relative; max-width: 1000px; margin: 0 auto; }
         .partners-wrapper {
-            overflow: hidden;
-            padding: 20px 0;
+            overflow: hidden; padding: 20px 0;
             -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
             mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
         }
-
-        .partners-track {
-            display: inline-flex;
-            animation: scroll 60s linear infinite;
-        }
+        .partners-track { display: inline-flex; animation: scroll 60s linear infinite; }
         .partners-track:hover { animation-play-state: paused; }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
         .partner-card {
-            flex-shrink: 0;
-            width: 280px;
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 40px 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            margin-right: 30px;
+            flex-shrink: 0; width: 280px; background: var(--bg-card); border: 2px solid var(--border);
+            border-radius: 16px; padding: 40px 30px; text-align: center; transition: all 0.3s ease;
+            cursor: pointer; margin-right: 30px;
         }
-
-        .partner-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px var(--shadow);
-            border-color: var(--primary);
-        }
-
+        .partner-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px var(--shadow); border-color: var(--primary); }
         .partner-logo {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            border-radius: 12px;
-            background: var(--bg-highlight);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            transition: transform 0.3s ease;
+            width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 12px;
+            background: var(--bg-highlight); display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; transition: transform 0.3s ease;
         }
-
         .partner-card:hover .partner-logo { transform: scale(1.1); }
-
-        .partner-card h4 {
-            font-size: 1.2rem;
-            color: var(--dark);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        .partner-card p {
-            font-size: 0.95rem;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
-        .partner-placeholder {
-            background: var(--bg-placeholder-gradient);
-            border: 2px dashed var(--border);
-        }
-        .partner-placeholder .partner-logo {
-            background: transparent;
-            border: 2px dashed var(--border);
-        }
-        .partner-placeholder:hover {
-            border-color: var(--primary);
-            border-style: solid;
-        }
-
+        .partner-card h4 { font-size: 1.2rem; color: var(--dark); margin-bottom: 10px; font-weight: 600; }
+        .partner-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+        .partner-placeholder { background: var(--bg-placeholder-gradient); border: 2px dashed var(--border); }
+        .partner-placeholder .partner-logo { background: transparent; border: 2px dashed var(--border); }
+        .partner-placeholder:hover { border-color: var(--primary); border-style: solid; }
 
         /* --- INFORMATIONS LÉGALES --- */
         .accordion-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            margin-bottom: 15px; /* Petit espace entre éléments */
-            overflow: hidden;
-            transition: all 0.3s ease;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            margin-bottom: 15px; overflow: hidden; transition: all 0.3s ease;
         }
         .accordion-item:hover { box-shadow: 0 8px 20px var(--shadow); }
-
         .accordion-header {
-            padding: 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.2s;
+            padding: 25px; cursor: pointer; display: flex; justify-content: space-between;
+            align-items: center; transition: background 0.2s;
         }
         .accordion-header:hover { background: var(--bg-highlight); }
-
-        .accordion-header h4 {
-            font-size: 1.15rem;
-            color: var(--dark);
-            font-weight: 600;
-        }
-        .accordion-header .tag {
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-
-        .accordion-body {
-            padding: 0 25px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
-
-        .accordion-item.open .accordion-body {
-            max-height: 10000px;
-            padding: 25px;
-            overflow-y: auto;
-        }
-
-        .accordion-body h3 {
-            color: var(--dark);
-            margin: 25px 0 15px;
-            font-size: 1.2rem;
-        }
-
-        .accordion-body p, .accordion-body li {
-            color: var(--muted);
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
+        .accordion-header h4 { font-size: 1.15rem; color: var(--dark); font-weight: 600; }
+        .accordion-header .tag { color: var(--muted); font-size: 0.9rem; }
+        .accordion-body { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+        .accordion-item.open .accordion-body { max-height: 10000px; padding: 25px; overflow-y: auto; }
+        .accordion-body h3 { color: var(--dark); margin: 25px 0 15px; font-size: 1.2rem; }
+        .accordion-body p, .accordion-body li { color: var(--muted); line-height: 1.8; margin-bottom: 15px; }
         .accordion-body ul { padding-left: 25px; margin: 15px 0; }
         .accordion-body strong { color: var(--dark); }
-
-        .accordion-body a {
-            color: var(--primary);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
-        }
+        .accordion-body a { color: var(--primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
         .accordion-body a:hover { border-bottom-color: var(--primary); }
-
+        
         .highlight-box {
-            background: var(--bg-highlight);
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary);
-            margin: 20px 0;
+            background: var(--bg-highlight); padding: 20px; border-radius: 8px;
+            border-left: 4px solid var(--primary); margin: 20px 0;
         }
-
-        .contact-box {
-            background: var(--bg-highlight);
-            padding: 25px;
-            border-radius: 12px;
-            margin-top: 30px;
-        }
-
+        .contact-box { background: var(--bg-highlight); padding: 25px; border-radius: 12px; margin-top: 30px; }
 
         /* --- PIED DE PAGE --- */
         .footer {
-            background: var(--bg-header);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid var(--border);
-            padding: 50px 30px 30px;
+            background: var(--bg-header); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border); padding: 50px 30px 30px;
         }
-
         .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr;
-            gap: 40px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid var(--border);
+            max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border);
         }
-
-        .footer-brand h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }
-        .footer-brand p {
-            font-size: 0.9rem;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
+        .footer-brand h3 { font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+        .footer-brand p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
         .footer-col h4 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--dark);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 16px;
+            font-size: 0.85rem; font-weight: 700; color: var(--dark); text-transform: uppercase;
+            letter-spacing: 0.08em; margin-bottom: 16px;
         }
         .footer-col a {
-            display: block;
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            transition: color 0.2s ease;
+            display: block; color: var(--muted); text-decoration: none; font-size: 0.9rem;
+            margin-bottom: 10px; transition: color 0.2s ease;
         }
         .footer-col a:hover { color: var(--primary); }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 24px auto 0;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
+        .footer-bottom { max-width: 1200px; margin: 24px auto 0; text-align: center; font-size: 0.85rem; color: var(--muted); }
 
         /* --- ADAPTATIONS MOBILES GLOBALES --- */
         .status-badge-wrapper::after { display: none !important; }
@@ -946,29 +512,20 @@
         @media (max-width: 1024px) {
             .header-content { padding: 15px 20px; }
             .menu-toggle { display: flex; }
-            
             .nav {
-                position: fixed; top: 0; right: -100%;
-                width: 280px; height: 100vh;
-                background: var(--bg-header-mobile-nav);
-                flex-direction: column;
-                padding: 80px 30px 30px; gap: 25px;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+                background: var(--bg-header-mobile-nav); flex-direction: column;
+                padding: 80px 30px 30px; gap: 25px; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
                 transition: right 0.3s ease; overflow-y: auto; z-index: 1001;
             }
             .nav.active { right: 0; }
             .nav-link { font-size: 1.1rem; padding: 10px 0; border-bottom: none; }
-            
-            .status-badge-wrapper {
-                border-bottom: none !important; display: flex;
-                justify-content: center; padding: 10px 0 !important;
-            }
+            .status-badge-wrapper { border-bottom: none !important; display: flex; justify-content: center; padding: 10px 0 !important; }
             .status-badge-wrapper iframe { width: 200px !important; }
             .btn-add { width: 100%; justify-content: center; margin-top: 20px; }
-            
             .nav-overlay {
-                display: none; position: fixed; top: 0; left: 0;
-                width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 1000;
+                display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background: rgba(0, 0, 0, 0.5); z-index: 1000;
             }
             .nav-overlay.active { display: block; }
             
@@ -976,16 +533,12 @@
             .hero p, .hero-final-content p { font-size: 1.1rem; }
             .hero-buttons { flex-direction: column; }
             .btn-primary, .btn-secondary { width: 100%; text-align: center; }
-            
             .features-grid, .commands-grid { grid-template-columns: 1fr; }
-            
             .btn-feedback { width: 100%; justify-content: center; }
             .partner-card { width: 240px; margin-right: 20px; }
-            
             .footer-grid { grid-template-columns: 1fr 1fr; }
             .footer-brand { grid-column: 1 / -1; }
             
-            .hero-transition-wrapper { min-height: 40vh; }
             .code-body { font-size: 0.85rem; padding: 20px; }
         }
 
@@ -995,15 +548,12 @@
 
         /* --- TOAST DE BIENVENUE --- */
         .welcome-toast {
-            position: fixed; bottom: 30px; right: 30px;
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-left: 4px solid var(--primary); border-radius: 12px;
+            position: fixed; bottom: 30px; right: 30px; background: var(--bg-card);
+            border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: 12px;
             padding: 16px 20px; display: flex; align-items: center; gap: 12px;
-            box-shadow: 0 8px 25px var(--shadow); z-index: 9999;
-            transform: translateX(150%);
+            box-shadow: 0 8px 25px var(--shadow); z-index: 9999; transform: translateX(150%);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
         .welcome-toast.show { transform: translateX(0); }
         .welcome-toast img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary); }
         .welcome-toast-text strong { display: block; color: var(--dark); font-size: 0.95rem; }
@@ -1119,193 +669,196 @@
 
         </section>
 
-        <section class="section container">
-            <h2 class="section-title">Principales fonctionnalités</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">🤖</span>
-                    <h3>Intelligence artificielle</h3>
-                    <p>Assistante Barbara utilise OpenAI et Mistral AI pour répondre intelligemment à vos questions et vous accompagner dans vos tâches quotidiennes.</p>
+        <div id="main-content">
+            
+            <section class="section container">
+                <h2 class="section-title">Principales fonctionnalités</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🤖</span>
+                        <h3>Intelligence artificielle</h3>
+                        <p>Assistante Barbara utilise OpenAI et Mistral AI pour répondre intelligemment à vos questions et vous accompagner dans vos tâches quotidiennes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🎵</span>
+                        <h3>Musique libre</h3>
+                        <p>Écoutez de la musique libre de droits via Jamendo. Recherche, file d'attente, contrôles de lecture et modes de répétition inclus.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚙️</span>
+                        <h3>Commandes variées</h3>
+                        <p>Informations sur les utilisateurs, salons et serveurs. Gestion des messages, générateur de nombres aléatoires et bien plus encore.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🔒</span>
+                        <h3>Respect de la vie privée</h3>
+                        <p>Aucune donnée personnelle conservée.<br>Logs temporaires supprimés régulièrement.<br>Conformité RGPD.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🌍</span>
+                        <h3>Multilingue</h3>
+                        <p>Interface et commandes disponibles en français.<br>L'IA peut communiquer dans plusieurs langues selon vos besoins.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <h3>Rapide et fiable</h3>
+                        <p>Hébergement optimisé sur KataBump pour une disponibilité maximale.<br>Réponses rapides et déconnexion automatique intelligente.</p>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🎵</span>
-                    <h3>Musique libre</h3>
-                    <p>Écoutez de la musique libre de droits via Jamendo. Recherche, file d'attente, contrôles de lecture et modes de répétition inclus.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">⚙️</span>
-                    <h3>Commandes variées</h3>
-                    <p>Informations sur les utilisateurs, salons et serveurs. Gestion des messages, générateur de nombres aléatoires et bien plus encore.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🔒</span>
-                    <h3>Respect de la vie privée</h3>
-                    <p>Aucune donnée personnelle conservée.<br>Logs temporaires supprimés régulièrement.<br>Conformité RGPD.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🌍</span>
-                    <h3>Multilingue</h3>
-                    <p>Interface et commandes disponibles en français.<br>L'IA peut communiquer dans plusieurs langues selon vos besoins.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">⚡</span>
-                    <h3>Rapide et fiable</h3>
-                    <p>Hébergement optimisé sur KataBump pour une disponibilité maximale.<br>Réponses rapides et déconnexion automatique intelligente.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section container">
-            <h2 class="section-title">Commandes disponibles</h2>
-            <div class="commands-grid">
-                <div class="command-card">
-                    <h4>/play [titre]</h4>
-                    <p>Recherche et joue une chanson depuis Jamendo avec menu de sélection.</p>
+            <section class="section container">
+                <h2 class="section-title">Commandes disponibles</h2>
+                <div class="commands-grid">
+                    <div class="command-card">
+                        <h4>/play [titre]</h4>
+                        <p>Recherche et joue une chanson depuis Jamendo avec menu de sélection.</p>
+                    </div>
+                    <div class="command-card">
+                        <h4>/stop</h4>
+                        <p>Arrête la musique et déconnecte le bot du salon vocal.</p>
+                    </div>
+                    <div class="command-card">
+                        <h4>/queue</h4>
+                        <p>Affiche la file d'attente musicale actuelle.</p>
+                    </div>
+                    <div class="command-card">
+                        <h4>/utilisateur [user]</h4>
+                        <p>Affiche les informations détaillées d'un utilisateur.</p>
+                    </div>
+                    <div class="command-card">
+                        <h4>/salon [channel]</h4>
+                        <p>Affiche les informations d'un salon Discord.</p>
+                    </div>
+                    <div class="command-card">
+                        <h4>/serveur</h4>
+                        <p>Affiche les statistiques et infos du serveur.</p>
+                    </div>
+                    <div class="command-card">
+                        <h4>/clear [nombre]</h4>
+                        <p>Supprime un nombre spécifique de messages (permissions requises).</p>
+                    </div>
+                    <div class="command-card">
+                        <h4>/nombre</h4>
+                        <p>Génère un nombre aléatoire entre 1 et 10.</p>
+                    </div>
+                    <div class="command-card">
+                        <h4>Chatbot IA</h4>
+                        <p>Mentionnez @Assistante Barbara ou écrivez dans les salons configurés pour discuter avec l'IA.</p>
+                    </div>
                 </div>
-                <div class="command-card">
-                    <h4>/stop</h4>
-                    <p>Arrête la musique et déconnecte le bot du salon vocal.</p>
-                </div>
-                <div class="command-card">
-                    <h4>/queue</h4>
-                    <p>Affiche la file d'attente musicale actuelle.</p>
-                </div>
-                <div class="command-card">
-                    <h4>/utilisateur [user]</h4>
-                    <p>Affiche les informations détaillées d'un utilisateur.</p>
-                </div>
-                <div class="command-card">
-                    <h4>/salon [channel]</h4>
-                    <p>Affiche les informations d'un salon Discord.</p>
-                </div>
-                <div class="command-card">
-                    <h4>/serveur</h4>
-                    <p>Affiche les statistiques et infos du serveur.</p>
-                </div>
-                <div class="command-card">
-                    <h4>/clear [nombre]</h4>
-                    <p>Supprime un nombre spécifique de messages (permissions requises).</p>
-                </div>
-                <div class="command-card">
-                    <h4>/nombre</h4>
-                    <p>Génère un nombre aléatoire entre 1 et 10.</p>
-                </div>
-                <div class="command-card">
-                    <h4>Chatbot IA</h4>
-                    <p>Mentionnez @Assistante Barbara ou écrivez dans les salons configurés pour discuter avec l'IA.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section container">
-            <div class="feedback-section">
-                <div class="feedback-background"></div>
-                <div class="feedback-pattern"></div>
-                <div class="feedback-content">
-                    <div class="feedback-icon">⭐</div>
-                    <h2>Votre avis compte !</h2>
+            <section class="section container">
+                <div class="feedback-section">
+                    <div class="feedback-background"></div>
+                    <div class="feedback-pattern"></div>
+                    <div class="feedback-content">
+                        <div class="feedback-icon">⭐</div>
+                        <h2>Votre avis compte !</h2>
+                        <p>
+                            Aidez-nous à améliorer Assistante Barbara en partageant votre expérience. Vos retours sont essentiels pour nous permettre d'évoluer.
+                        </p>
+
+                        <div class="feedback-features">
+                            <div class="feedback-feature">
+                                <span>⚡</span>
+                                <span>Rapide (2 minutes)</span>
+                            </div>
+                            <div class="feedback-feature">
+                                <span>🔒</span>
+                                <span>Anonyme possible</span>
+                            </div>
+                            <div class="feedback-feature">
+                                <span>💡</span>
+                                <span>Toutes suggestions bienvenues</span>
+                            </div>
+                        </div>
+
+                        <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback" target="_blank">
+                            <span>📝</span> Donner mon avis
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section container">
+                <h2 class="section-title">Nos partenaires</h2>
+
+                <div class="partners-intro">
                     <p>
-                        Aidez-nous à améliorer Assistante Barbara en partageant votre expérience. Vos retours sont essentiels pour nous permettre d'évoluer.
+                        Assistante Barbara est fière de collaborer avec des partenaires qui partagent notre vision
+                        d'améliorer l'expérience Discord. Ensemble, nous créons des solutions innovantes pour la communauté.
                     </p>
-
-                    <div class="feedback-features">
-                        <div class="feedback-feature">
-                            <span>⚡</span>
-                            <span>Rapide (2 minutes)</span>
-                        </div>
-                        <div class="feedback-feature">
-                            <span>🔒</span>
-                            <span>Anonyme possible</span>
-                        </div>
-                        <div class="feedback-feature">
-                            <span>💡</span>
-                            <span>Toutes suggestions bienvenues</span>
-                        </div>
-                    </div>
-
-                    <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback" target="_blank">
-                        <span>📝</span> Donner mon avis
-                    </a>
                 </div>
-            </div>
-        </section>
 
-        <section class="section container">
-            <h2 class="section-title">Nos partenaires</h2>
+                <div class="partners-carousel">
+                    <div class="partners-wrapper">
+                        <div class="partners-track">
+                            <div class="partner-card partner-placeholder">
+                                <div class="partner-logo">🤝</div>
+                                <h4>Votre entreprise</h4>
+                                <p>Devenez partenaire et soutenez notre projet</p>
+                            </div>
 
-            <div class="partners-intro">
-                <p>
-                    Assistante Barbara est fière de collaborer avec des partenaires qui partagent notre vision
-                    d'améliorer l'expérience Discord. Ensemble, nous créons des solutions innovantes pour la communauté.
-                </p>
-            </div>
+                            <div class="partner-card">
+                                <div class="partner-logo">🎮</div>
+                                <h4>Gaming Corp</h4>
+                                <p>Partenaire gaming depuis 2024</p>
+                            </div>
 
-            <div class="partners-carousel">
-                <div class="partners-wrapper">
-                    <div class="partners-track">
-                        <div class="partner-card partner-placeholder">
-                            <div class="partner-logo">🤝</div>
-                            <h4>Votre entreprise</h4>
-                            <p>Devenez partenaire et soutenez notre projet</p>
-                        </div>
+                            <div class="partner-card">
+                                <div class="partner-logo">🎨</div>
+                                <h4>Design Studio</h4>
+                                <p>Support créatif et design</p>
+                            </div>
 
-                        <div class="partner-card">
-                            <div class="partner-logo">🎮</div>
-                            <h4>Gaming Corp</h4>
-                            <p>Partenaire gaming depuis 2024</p>
-                        </div>
+                            <div class="partner-card">
+                                <div class="partner-logo">💻</div>
+                                <h4>Dev Community</h4>
+                                <p>Partenaire technique</p>
+                            </div>
 
-                        <div class="partner-card">
-                            <div class="partner-logo">🎨</div>
-                            <h4>Design Studio</h4>
-                            <p>Support créatif et design</p>
-                        </div>
+                            <div class="partner-card partner-placeholder">
+                                <div class="partner-logo">✨</div>
+                                <h4>Rejoignez-nous</h4>
+                                <p>Nous cherchons de nouveaux partenaires</p>
+                            </div>
 
-                        <div class="partner-card">
-                            <div class="partner-logo">💻</div>
-                            <h4>Dev Community</h4>
-                            <p>Partenaire technique</p>
-                        </div>
+                            <div class="partner-card partner-placeholder">
+                                <div class="partner-logo">🤝</div>
+                                <h4>Votre entreprise</h4>
+                                <p>Devenez partenaire et soutenez notre projet</p>
+                            </div>
 
-                        <div class="partner-card partner-placeholder">
-                            <div class="partner-logo">✨</div>
-                            <h4>Rejoignez-nous</h4>
-                            <p>Nous cherchons de nouveaux partenaires</p>
-                        </div>
+                            <div class="partner-card">
+                                <div class="partner-logo">🎮</div>
+                                <h4>Gaming Corp</h4>
+                                <p>Partenaire gaming depuis 2024</p>
+                            </div>
 
-                        <div class="partner-card partner-placeholder">
-                            <div class="partner-logo">🤝</div>
-                            <h4>Votre entreprise</h4>
-                            <p>Devenez partenaire et soutenez notre projet</p>
-                        </div>
+                            <div class="partner-card">
+                                <div class="partner-logo">🎨</div>
+                                <h4>Design Studio</h4>
+                                <p>Support créatif et design</p>
+                            </div>
 
-                        <div class="partner-card">
-                            <div class="partner-logo">🎮</div>
-                            <h4>Gaming Corp</h4>
-                            <p>Partenaire gaming depuis 2024</p>
-                        </div>
+                            <div class="partner-card">
+                                <div class="partner-logo">💻</div>
+                                <h4>Dev Community</h4>
+                                <p>Partenaire technique</p>
+                            </div>
 
-                        <div class="partner-card">
-                            <div class="partner-logo">🎨</div>
-                            <h4>Design Studio</h4>
-                            <p>Support créatif et design</p>
-                        </div>
-
-                        <div class="partner-card">
-                            <div class="partner-logo">💻</div>
-                            <h4>Dev Community</h4>
-                            <p>Partenaire technique</p>
-                        </div>
-
-                        <div class="partner-card partner-placeholder">
-                            <div class="partner-logo">✨</div>
-                            <h4>Rejoignez-nous</h4>
-                            <p>Nous cherchons de nouveaux partenaires</p>
+                            <div class="partner-card partner-placeholder">
+                                <div class="partner-logo">✨</div>
+                                <h4>Rejoignez-nous</h4>
+                                <p>Nous cherchons de nouveaux partenaires</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 
     <div id="members" class="page">
@@ -1939,6 +1492,10 @@
             });
             document.getElementById(pageId).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Si on navigue, on débloque immédiatement le scroll (s'il était bloqué)
+            document.body.classList.remove('anim-playing');
+            document.body.classList.add('content-ready');
         }
 
         function toggleMenu() {
@@ -2144,13 +1701,19 @@
             loadDiscordUser();
             loadMembersPage();
 
-            // Lancement optimisé de l'animation du terminal
+            // Séquence d'animation : On bloque le scroll et cache le contenu
             setTimeout(() => {
                 document.body.classList.add('start-anim');
+                document.body.classList.add('anim-playing');
+
+                // Au bout de 5.5s, on débloque le scroll et on affiche le contenu en fondu
+                setTimeout(() => {
+                    document.body.classList.remove('anim-playing');
+                    document.body.classList.add('content-ready');
+                }, 5500); 
             }, 300); 
 
             const animatedElements = document.querySelectorAll('.animated-element, .animated-partners-container');
-
             const animationObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -2158,13 +1721,9 @@
                         animationObserver.unobserve(entry.target);
                      }
                 });
-            }, {
-                threshold: 0.1
-            });
+            }, { threshold: 0.1 });
 
-            animatedElements.forEach(el => {
-                 animationObserver.observe(el);
-            });
+            animatedElements.forEach(el => { animationObserver.observe(el); });
         });
     </script>
 </body>
