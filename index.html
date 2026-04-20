@@ -342,16 +342,19 @@
             padding: 0 30px;
         }
 
-        /* --- NOUVEAU HERO TERMINAL SECTION --- */
-        .hero-terminal {
-            padding: 100px 0 60px;
-            display: flex;
-            flex-direction: column;
+        /* --- HERO SECTION AVEC ANIMATION DE SWITCH --- */
+        .hero-transition-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
             align-items: center;
-            gap: 45px;
+            justify-items: center;
+            width: 100%;
+            min-height: 50vh;
+            padding: 80px 0 60px;
         }
 
         .code-window {
+            grid-area: 1 / 1;
             width: 100%;
             max-width: 800px;
             background: #0d1117;
@@ -361,7 +364,11 @@
             overflow: hidden;
             opacity: 0;
             transform: translateY(30px);
-            animation: slideUpCode 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            /* Apparaît, reste visible, puis disparaît vers 4.7s */
+            animation: 
+                slideUpCode 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+                fadeOutTerminal 0.6s cubic-bezier(0.4, 0, 0.2, 1) 4.7s forwards;
+            z-index: 2;
         }
 
         .code-header {
@@ -383,7 +390,7 @@
             color: var(--muted);
             font-size: 0.85rem;
             font-family: 'SF Mono', monospace;
-            padding-right: 48px; /* Pour centrer parfaitement avec les boutons à gauche */
+            padding-right: 48px;
         }
 
         .code-body {
@@ -399,7 +406,7 @@
         .code-body pre { margin: 0; }
         .code-body code { font-family: inherit; }
 
-        /* Couleurs de syntaxe inspirées du thème */
+        /* Couleurs de syntaxe */
         .token-keyword { color: #ff7b72; }
         .token-class { color: #f0883e; }
         .token-variable { color: #79c0ff; }
@@ -417,7 +424,8 @@
             white-space: nowrap;
             border-right: 2px solid var(--primary);
             margin: 0;
-            animation: typing 2.5s steps(45, end) 1.2s forwards, blink-caret 0.75s step-end infinite;
+            /* L'animation d'écriture dure 2s et commence à 1.2s */
+            animation: typing 2s steps(45, end) 1.2s forwards, blink-caret 0.75s step-end infinite;
             width: 0;
             color: var(--primary);
             font-weight: 600;
@@ -437,68 +445,29 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .hero-text-content {
+        @keyframes fadeOutTerminal {
+            to { opacity: 0; transform: translateY(-30px) scale(0.95); visibility: hidden; pointer-events: none; }
+        }
+
+        /* --- LE CONTENU FINAL QUI REMPLACE LE TERMINAL --- */
+        .hero-final-content {
+            grid-area: 1 / 1;
+            width: 100%;
+            max-width: 800px;
             text-align: center;
-            max-width: 700px;
             opacity: 0;
-            transform: translateY(20px);
-            /* Le texte apparaît après l'animation d'écriture (environ 3.5s) */
-            animation: slideUpCode 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 3.5s forwards;
+            transform: translateY(30px) scale(0.95);
+            /* Apparaît à 5.0s, juste après le début de la disparition du terminal */
+            animation: fadeInFinal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 5.0s forwards;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        .hero-text-content p {
-            font-size: 1.25rem;
-            color: var(--muted);
-            margin: 0 auto 40px;
-            line-height: 1.7;
+        @keyframes fadeInFinal {
+            to { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
         }
 
-        /* Conserver les anciens styles Hero pour compatibilité éventuelle (page Hub) */
-        .hero {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 60px;
-        }
-
-        @media (max-width: 1024px) {
-            .hero, .hero-terminal {
-                padding-top: 60px;
-            }
-
-            .hero h2 {
-                margin-top: 30px;
-            }
-
-            .section-title {
-                margin-top: 40px;
-                padding-top: 20px;
-            }
-
-            .features {
-                padding: 80px 0 60px;
-            }
-
-            .commands-section {
-                padding: 80px 0 60px;
-            }
-
-            .partners-section {
-                padding: 100px 0 80px;
-            }
-
-            .docs {
-                padding: 80px 0 60px;
-            }
-        }
-
-        .hero h2 {
+        .hero-final-content h2 {
             font-size: 3.5rem;
             font-weight: 700;
             color: var(--dark);
@@ -507,14 +476,14 @@
             line-height: 1.1;
         }
 
-        .hero .gradient-text {
+        .hero-final-content .gradient-text {
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
+        .hero-final-content p {
             font-size: 1.25rem;
             color: var(--muted);
             max-width: 700px;
@@ -527,6 +496,35 @@
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
+        }
+
+        /* Conserver les anciens styles Hero pour le Hub */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 60px;
         }
 
         .btn-primary {
@@ -1146,11 +1144,11 @@
                 display: block;
             }
 
-            .hero h2 {
+            .hero h2, .hero-final-content h2 {
                 font-size: 2.2rem;
             }
 
-            .hero p {
+            .hero p, .hero-final-content p {
                 font-size: 1.1rem;
             }
 
@@ -1210,16 +1208,13 @@
                 grid-column: 1 / -1;
             }
 
-            .hero-terminal {
+            .hero-transition-wrapper {
                 padding: 40px 0 20px;
-                gap: 30px;
+                min-height: 40vh;
             }
             .code-body {
                 font-size: 0.85rem;
                 padding: 20px;
-            }
-            .hero-text-content {
-                animation-delay: 2s; /* Plus rapide sur mobile */
             }
         }
 
@@ -1343,7 +1338,9 @@
     </header>
 
     <div id="home" class="page active">
-        <section class="hero-terminal container">
+        
+        <section class="container hero-transition-wrapper">
+            
             <div class="code-window">
                 <div class="code-header">
                     <div class="code-dot red"></div>
@@ -1353,20 +1350,21 @@
                 </div>
                 <div class="code-body">
 <pre><code><span class="token-keyword">const</span> { <span class="token-class">Client</span>, <span class="token-class">GatewayIntentBits</span> } = <span class="token-keyword">require</span>(<span class="token-string">'discord.js'</span>);
-<span class="token-keyword">const</span> <span class="token-variable">barbara</span> = <span class="token-keyword">new</span> <span class="token-class">Client</span>({
+<span class="token-keyword">const</span> <span class="token-variable">client</span> = <span class="token-keyword">new</span> <span class="token-class">Client</span>({
     <span class="token-variable">intents</span>: [<span class="token-string">'IA'</span>, <span class="token-string">'MUSIQUE'</span>, <span class="token-string">'MODÉRATION'</span>]
 });
 
-<span class="token-variable">barbara</span>.<span class="token-method">on</span>(<span class="token-string">'ready'</span>, () => {
-    <span class="token-variable">console</span>.<span class="token-method">log</span>(<span class="token-string">'✅ Modules d\'intelligence artificielle chargés.'</span>);
+<span class="token-variable">client</span>.<span class="token-method">on</span>(<span class="token-string">'ready'</span>, () => {
+    <span class="token-variable">console</span>.<span class="token-method">log</span>(<span class="token-string">"✅ Modules d'intelligence artificielle chargés."</span>);
 });
 
 <span class="token-comment">// Lancement de l'assistante sur vos serveurs</span>
-<span class="token-variable">barbara</span>.<span class="token-method">login</span>(<span class="token-string">'</span><span class="typewriter"><span class="typewriter-text token-string">Votre assistante Discord polyvalente et intelligente</span></span><span class="token-string">'</span>);</code></pre>
+<span class="token-variable">client</span>.<span class="token-method">login</span>(<span class="token-string">'</span><span class="typewriter"><span class="typewriter-text token-string">Votre assistante Discord polyvalente et intelligente</span></span><span class="token-string">'</span>);</code></pre>
                 </div>
             </div>
 
-            <div class="hero-text-content">
+            <div class="hero-final-content">
+                <h2>Votre assistante Discord<br><span class="gradient-text">polyvalente et intelligente</span></h2>
                 <p>
                     Assistante Barbara combine intelligence artificielle, commandes variées et musique libre pour améliorer l'expérience de vos serveurs Discord.
                 </p>
@@ -1379,6 +1377,7 @@
                     </a>
                 </div>
             </div>
+
         </section>
 
         <section class="features container">
