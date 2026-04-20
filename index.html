@@ -424,16 +424,17 @@
             white-space: nowrap;
             border-right: 2px solid var(--primary);
             margin: 0;
-            /* L'animation d'écriture dure 2s et commence à 1.2s */
-            animation: typing 2s steps(45, end) 1.2s forwards, blink-caret 0.75s step-end infinite;
-            width: 0;
+            width: 0; /* On commence à largeur zéro */
+            /* L'animation d'écriture dure 2s et commence à 1.2s. Assistante Barbara = 18 caractères */
+            animation: typing 2s steps(18, end) 1.2s forwards, blink-caret 0.75s step-end infinite;
             color: var(--primary);
             font-weight: 600;
         }
 
         @keyframes typing {
             from { width: 0; }
-            to { width: 100%; }
+            /* On utilise ch (la largeur d'un caractère) pour repousser le `');` lettre par lettre */
+            to { width: 18.5ch; } 
         }
 
         @keyframes blink-caret {
