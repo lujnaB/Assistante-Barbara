@@ -104,42 +104,42 @@
 
         @media (max-width: 1024px) {
             .blob-1 { width: 100vw !important; height: 100vw !important; }
-            .blob-2 { width: 90vw !important;  height: 90vw !important;  }
-            .blob-3 { width: 80vw !important;  height: 80vw !important;  }
-            .blob-4 { width: 70vw !important;  height: 70vw !important;  }
+            .blob-2 { width: 90vw !important; height: 90vw !important;  }
+            .blob-3 { width: 80vw !important; height: 80vw !important;  }
+            .blob-4 { width: 70vw !important; height: 70vw !important;  }
         }
 
         @keyframes blob1 {
             0%   { top: -10vh; left: -10vw; }
-            20%  { top: 30vh;  left: 60vw;  }
-            40%  { top: 60vh;  left: 20vw;  }
-            60%  { top: 10vh;  left: 40vw;  }
-            80%  { top: 70vh;  left: 70vw;  }
-            100% { top: 40vh;  left: -5vw;  }
+            20%  { top: 30vh; left: 60vw;  }
+            40%  { top: 60vh; left: 20vw;  }
+            60%  { top: 10vh; left: 40vw;  }
+            80%  { top: 70vh; left: 70vw;  }
+            100% { top: 40vh;  left: -5vw; }
         }
 
         @keyframes blob2 {
-            0%   { top: 60vh;  left: 70vw;  }
-            20%  { top: 10vh;  left: 30vw;  }
-            40%  { top: 80vh;  left: 10vw;  }
-            60%  { top: 40vh;  left: 80vw;  }
-            80%  { top: 20vh;  left: 50vw;  }
-            100% { top: 70vh;  left: 30vw;  }
+            0%   { top: 60vh; left: 70vw;  }
+            20%  { top: 10vh; left: 30vw;  }
+            40%  { top: 80vh; left: 10vw;  }
+            60%  { top: 40vh; left: 80vw;  }
+            80%  { top: 20vh; left: 50vw;  }
+            100% { top: 70vh;  left: 30vw; }
         }
 
         @keyframes blob3 {
-            0%   { top: 40vh;  left: 40vw;  }
-            25%  { top: 80vh;  left: 80vw;  }
-            50%  { top: 10vh;  left: 60vw;  }
-            75%  { top: 60vh;  left: 10vw;  }
-            100% { top: 30vh;  left: 70vw;  }
+            0%   { top: 40vh; left: 40vw;  }
+            25%  { top: 80vh; left: 80vw;  }
+            50%  { top: 10vh; left: 60vw;  }
+            75%  { top: 60vh; left: 10vw;  }
+            100% { top: 30vh;  left: 70vw; }
         }
 
         @keyframes blob4 {
-            0%   { top: 20vh;  left: 80vw;  }
-            30%  { top: 70vh;  left: 40vw;  }
-            60%  { top: 10vh;  left: 10vw;  }
-            100% { top: 50vh;  left: 60vw;  }
+            0%   { top: 20vh; left: 80vw;  }
+            30%  { top: 70vh; left: 40vw;  }
+            60%  { top: 10vh; left: 10vw;  }
+            100% { top: 50vh;  left: 60vw; }
         }
 
         body::before, body::after {
@@ -342,7 +342,118 @@
             padding: 0 30px;
         }
 
-        /* Hero Section */
+        /* --- NOUVEAU HERO TERMINAL SECTION --- */
+        .hero-terminal {
+            padding: 100px 0 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 45px;
+        }
+
+        .code-window {
+            width: 100%;
+            max-width: 800px;
+            background: #0d1117;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(102, 126, 234, 0.2);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpCode 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background: rgba(30, 41, 59, 0.9);
+            border-bottom: 1px solid var(--border);
+            gap: 8px;
+        }
+
+        .code-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27c93f; }
+
+        .code-title {
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-family: 'SF Mono', monospace;
+            padding-right: 48px; /* Pour centrer parfaitement avec les boutons à gauche */
+        }
+
+        .code-body {
+            padding: 30px;
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #c9d1d9;
+            overflow-x: auto;
+            text-align: left;
+        }
+
+        .code-body pre { margin: 0; }
+        .code-body code { font-family: inherit; }
+
+        /* Couleurs de syntaxe inspirées du thème */
+        .token-keyword { color: #ff7b72; }
+        .token-class { color: #f0883e; }
+        .token-variable { color: #79c0ff; }
+        .token-string { color: #a5d6ff; }
+        .token-method { color: #d2a8ff; }
+        .token-comment { color: #8b949e; font-style: italic; }
+
+        .typewriter {
+            display: inline-flex;
+            vertical-align: bottom;
+        }
+
+        .typewriter-text {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--primary);
+            margin: 0;
+            animation: typing 2.5s steps(45, end) 1.2s forwards, blink-caret 0.75s step-end infinite;
+            width: 0;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary); }
+        }
+
+        @keyframes slideUpCode {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-text-content {
+            text-align: center;
+            max-width: 700px;
+            opacity: 0;
+            transform: translateY(20px);
+            /* Le texte apparaît après l'animation d'écriture (environ 3.5s) */
+            animation: slideUpCode 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 3.5s forwards;
+        }
+
+        .hero-text-content p {
+            font-size: 1.25rem;
+            color: var(--muted);
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        /* Conserver les anciens styles Hero pour compatibilité éventuelle (page Hub) */
         .hero {
             padding: 80px 0;
             text-align: center;
@@ -357,7 +468,7 @@
         }
 
         @media (max-width: 1024px) {
-            .hero {
+            .hero, .hero-terminal {
                 padding-top: 60px;
             }
 
@@ -1098,6 +1209,18 @@
             .footer-brand {
                 grid-column: 1 / -1;
             }
+
+            .hero-terminal {
+                padding: 40px 0 20px;
+                gap: 30px;
+            }
+            .code-body {
+                font-size: 0.85rem;
+                padding: 20px;
+            }
+            .hero-text-content {
+                animation-delay: 2s; /* Plus rapide sur mobile */
+            }
         }
 
         @media (max-width: 600px) {
@@ -1198,6 +1321,7 @@
                             ✕
                         </button>
                     </div>
+                    
                     <a id="discord-login-btn" href="https://discord.com/oauth2/authorize?client_id=992854932107579392&response_type=code&redirect_uri=https%3A%2F%2Fassistante-barbara.vercel.app%2Fapi%2Fcallback&scope=identify%20guilds"
                        style="background:var(--bg-card); color:var(--primary); padding:10px 18px; border-radius:10px; text-decoration:none; font-weight:600; font-size:0.9rem; border:2px solid var(--border); display:inline-flex; align-items:center; gap:8px; transition:all 0.3s ease;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -1219,21 +1343,41 @@
     </header>
 
     <div id="home" class="page active">
-        <section class="hero container">
-            <h2 class="animated-element">
-                Votre assistante Discord<br>
-                <span class="gradient-text">polyvalente et intelligente</span>
-            </h2>
-            <p class="animated-element">
-                Assistante Barbara combine intelligence artificielle, commandes variées et musique libre pour améliorer l'expérience de vos serveurs Discord.
-            </p>
-            <div class="hero-buttons animated-element">
-                <a href="https://discord.com/oauth2/authorize?client_id=992854932107579392" class="btn-primary" target="_blank">
-                    Ajouter à Discord
-                </a>
-                <a href="javascript:void(0)" onclick="showPage('docs')" class="btn-secondary">
-                    Informations légales
-                </a>
+        <section class="hero-terminal container">
+            <div class="code-window">
+                <div class="code-header">
+                    <div class="code-dot red"></div>
+                    <div class="code-dot yellow"></div>
+                    <div class="code-dot green"></div>
+                    <div class="code-title">index.js</div>
+                </div>
+                <div class="code-body">
+<pre><code><span class="token-keyword">const</span> { <span class="token-class">Client</span>, <span class="token-class">GatewayIntentBits</span> } = <span class="token-keyword">require</span>(<span class="token-string">'discord.js'</span>);
+<span class="token-keyword">const</span> <span class="token-variable">barbara</span> = <span class="token-keyword">new</span> <span class="token-class">Client</span>({
+    <span class="token-variable">intents</span>: [<span class="token-string">'IA'</span>, <span class="token-string">'MUSIQUE'</span>, <span class="token-string">'MODÉRATION'</span>]
+});
+
+<span class="token-variable">barbara</span>.<span class="token-method">on</span>(<span class="token-string">'ready'</span>, () => {
+    <span class="token-variable">console</span>.<span class="token-method">log</span>(<span class="token-string">'✅ Modules d\'intelligence artificielle chargés.'</span>);
+});
+
+<span class="token-comment">// Lancement de l'assistante sur vos serveurs</span>
+<span class="token-variable">barbara</span>.<span class="token-method">login</span>(<span class="token-string">'</span><span class="typewriter"><span class="typewriter-text token-string">Votre assistante Discord polyvalente et intelligente</span></span><span class="token-string">'</span>);</code></pre>
+                </div>
+            </div>
+
+            <div class="hero-text-content">
+                <p>
+                    Assistante Barbara combine intelligence artificielle, commandes variées et musique libre pour améliorer l'expérience de vos serveurs Discord.
+                </p>
+                <div class="hero-buttons">
+                    <a href="https://discord.com/oauth2/authorize?client_id=992854932107579392" class="btn-primary" target="_blank">
+                        Ajouter à Discord
+                    </a>
+                    <a href="javascript:void(0)" onclick="showPage('docs')" class="btn-secondary">
+                        Informations légales
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -2108,7 +2252,6 @@
             const username = params.get('username');
             const avatar = params.get('avatar');
             const discord_id = params.get('discord_id');
-
             if (username && avatar && discord_id) {
                 const user = { username, avatar, discord_id };
                 localStorage.setItem('discord_user', JSON.stringify(user));
@@ -2149,7 +2292,6 @@
             const content = document.getElementById('members-content');
 
             if (!content) return;
-
             if (!saved) {
                 content.innerHTML = `
                     <h2 style="color:var(--dark); font-size:2rem; margin-bottom:20px;">🔒 Espace réservé</h2>
@@ -2269,14 +2411,14 @@
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
                         animationObserver.unobserve(entry.target);
-                    }
+                     }
                 });
             }, {
                 threshold: 0.1
             });
 
             animatedElements.forEach(el => {
-                animationObserver.observe(el);
+                 animationObserver.observe(el);
             });
         });
     </script>
