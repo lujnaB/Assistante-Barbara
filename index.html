@@ -72,7 +72,7 @@
             pointer-events: none;
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
-            will-change: transform; /* Optimisation des performances */
+            will-change: transform;
         }
 
         .blob-1 { width: 55vw; height: 55vw; background: rgba(55, 38, 180, 0.45); animation: blob1 22s ease-in-out infinite alternate; }
@@ -81,7 +81,6 @@
         .blob-4 { width: 30vw; height: 30vw; background: rgba(90, 20, 60, 0.25); animation: blob4 18s ease-in-out infinite alternate; }
 
         @media (max-width: 1024px) {
-            /* On réduit drastiquement le flou sur mobile pour éviter que le téléphone ne lagge au chargement */
             .blob { filter: blur(60px); }
             .blob-1 { width: 100vw !important; height: 100vw !important; }
             .blob-2 { width: 90vw !important; height: 90vw !important;  }
@@ -94,28 +93,57 @@
         @keyframes blob3 { 0% { top: 40vh; left: 40vw; } 25% { top: 80vh; left: 80vw; } 50% { top: 10vh; left: 60vw; } 75% { top: 60vh; left: 10vw; } 100% { top: 30vh; left: 70vw; } }
         @keyframes blob4 { 0% { top: 20vh; left: 80vw; } 30% { top: 70vh; left: 40vw; } 60% { top: 10vh; left: 10vw; } 100% { top: 50vh; left: 60vw; } }
 
-        /* --- SYSTÈME D'ESPACEMENT UNIVERSEL DES SECTIONS --- */
-        .section-padding {
-            padding: 100px 0;
+        body::before, body::after { display: none; }
+
+        /* --- SYSTÈME D'ESPACEMENT UNIVERSEL ET STRUCTUREL --- */
+        /* Conteneur pour centrer et limiter la largeur sur tout le site */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
         }
 
+        /* L'espacement maître des sections (Espace normal haut et bas) */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        /* Espace entre le Titre de section et les éléments en dessous */
         .section-title {
             text-align: center;
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--dark);
-            margin-bottom: 60px;
+            margin-bottom: 60px; 
+            margin-top: 0;
         }
 
+        /* Adaptation mobile des espacements */
         @media (max-width: 1024px) {
-            .section-padding {
+            .container {
+                padding: 0 20px;
+            }
+            .section {
                 padding: 60px 0;
             }
             .section-title {
                 font-size: 2rem;
-                margin-bottom: 40px;
+                margin-bottom: 40px; 
             }
         }
+
+        /* Correction vitale : Donne toujours plus d'espace à la TOUTE PREMIÈRE section 
+           d'une page pour qu'elle ne soit jamais collée sous le menu de navigation (sticky) */
+        .page > .section:first-child {
+            padding-top: 100px;
+        }
+        @media (max-width: 1024px) {
+            .page > .section:first-child {
+                padding-top: 80px; 
+            }
+        }
+
 
         /* --- SYSTÈME D'ANIMATION AU SCROLL --- */
         .animated-element {
@@ -148,6 +176,7 @@
         .animated-partners-container.is-visible {
             opacity: 1;
         }
+
 
         /* --- NAVIGATION --- */
         .header {
@@ -263,33 +292,6 @@
         .nav-link:hover { color: var(--primary); }
         .nav-link:hover::after { width: 100%; }
 
-        .btn-add {
-            background: var(--gradient);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-add:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-            color: white;
-        }
-
-        /* Container Général */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
 
         /* --- SECTION HERO (TERMINAL -> TITRE) --- */
         .hero-transition-wrapper {
@@ -310,13 +312,12 @@
             border: 1px solid var(--border);
             box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(102, 126, 234, 0.2);
             overflow: hidden;
-            /* Invisible par défaut, contrôlé par la classe .start-anim ajoutée via JS */
             opacity: 0;
             transform: translateY(30px);
             z-index: 2;
         }
 
-        /* Les animations du terminal ne se lancent QUE si le body a la classe start-anim */
+        /* Animation au chargement JS terminé */
         body.start-anim .code-window {
             animation: 
                 slideUpCode 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
@@ -377,20 +378,19 @@
             white-space: nowrap;
             border-right: 2px solid var(--primary);
             margin: 0;
-            width: 0; /* Commence caché */
+            width: 0; 
             color: var(--primary);
             font-weight: 600;
         }
 
-        /* 18 étapes correspondant aux 18 lettres de "Assistante Barbara" */
+        /* 18 étapes = 18 lettres dans "Assistante Barbara" */
         body.start-anim .typewriter-text {
             animation: typing 2s steps(18, end) 1.2s forwards, blink-caret 0.75s step-end infinite;
         }
 
         @keyframes typing {
             from { width: 0; }
-            /* 18.5ch repousse progressivement et de façon fluide les caractères suivants `);` */
-            to { width: 18.5ch; } 
+            to { width: 18.5ch; } /* Pousse le ');' fluidement */
         }
 
         @keyframes blink-caret {
@@ -406,7 +406,7 @@
             to { opacity: 0; transform: translateY(-30px) scale(0.95); visibility: hidden; pointer-events: none; }
         }
 
-        /* Le contenu qui remplace le terminal */
+        /* Contenu final (vrai titre) */
         .hero-final-content {
             grid-area: 1 / 1;
             width: 100%;
@@ -494,11 +494,12 @@
             color: var(--primary);
         }
 
+
         /* --- GRILLE DES FONCTIONNALITÉS --- */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            gap: 30px; /* Petit espace entre les éléments composant la section */
         }
 
         .feature-card {
@@ -514,10 +515,7 @@
         .feature-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 50%;
-            width: 0;
-            height: 4px;
+            top: 0; left: 50%; width: 0; height: 4px;
             background: var(--gradient);
             transform: translateX(-50%);
             transition: width 0.3s ease;
@@ -529,7 +527,6 @@
             box-shadow: 0 20px 40px var(--shadow);
             border-color: var(--border);
         }
-
         .feature-card:hover::before { width: 98%; }
 
         .feature-icon {
@@ -538,7 +535,6 @@
             display: inline-block;
             transition: transform 0.3s ease;
         }
-
         .feature-card:hover .feature-icon {
             transform: scale(1.15);
             animation: float-smooth 2s ease-in-out infinite;
@@ -560,6 +556,7 @@
             color: var(--muted);
             line-height: 1.7;
         }
+
 
         /* --- COMMANDES --- */
         .commands-grid {
@@ -595,22 +592,19 @@
             font-size: 0.95rem;
         }
 
+
         /* --- SECTION AVIS (FEEDBACK) --- */
         .feedback-section {
             position: relative;
             overflow: hidden;
             border-radius: 20px;
             padding: 80px 30px;
-            margin: 100px auto;
-            max-width: 1200px;
-            width: calc(100% - 60px); /* Assure 30px de marge des deux côtés */
+            width: 100%;
         }
 
         @media (max-width: 1024px) {
             .feedback-section {
                 padding: 60px 20px;
-                margin: 60px auto;
-                width: calc(100% - 40px); /* Assure 20px de marge sur mobile */
             }
         }
 
@@ -685,7 +679,6 @@
             opacity: 0.95;
             color: white;
         }
-
         .feedback-feature span:first-child { font-size: 1.5rem; }
 
         .btn-feedback {
@@ -708,18 +701,19 @@
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
         }
 
+
         /* --- PARTENAIRES --- */
         .partners-intro {
             text-align: center;
             max-width: 700px;
-            margin: 0 auto 60px;
+            margin: 0 auto 40px; /* Espace ajusté pour ne pas casser la hiérarchie */
         }
 
         .partners-intro p {
             font-size: 1.15rem;
             color: var(--muted);
             line-height: 1.8;
-            margin-bottom: 30px;
+            margin-bottom: 0;
         }
 
         .partners-carousel {
@@ -739,7 +733,6 @@
             display: inline-flex;
             animation: scroll 60s linear infinite;
         }
-
         .partners-track:hover { animation-play-state: paused; }
 
         @keyframes scroll {
@@ -787,7 +780,6 @@
             margin-bottom: 10px;
             font-weight: 600;
         }
-
         .partner-card p {
             font-size: 0.95rem;
             color: var(--muted);
@@ -798,27 +790,25 @@
             background: var(--bg-placeholder-gradient);
             border: 2px dashed var(--border);
         }
-
         .partner-placeholder .partner-logo {
             background: transparent;
             border: 2px dashed var(--border);
         }
-
         .partner-placeholder:hover {
             border-color: var(--primary);
             border-style: solid;
         }
+
 
         /* --- INFORMATIONS LÉGALES --- */
         .accordion-item {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 15px; /* Petit espace entre éléments */
             overflow: hidden;
             transition: all 0.3s ease;
         }
-
         .accordion-item:hover { box-shadow: 0 8px 20px var(--shadow); }
 
         .accordion-header {
@@ -829,7 +819,6 @@
             align-items: center;
             transition: background 0.2s;
         }
-
         .accordion-header:hover { background: var(--bg-highlight); }
 
         .accordion-header h4 {
@@ -837,7 +826,6 @@
             color: var(--dark);
             font-weight: 600;
         }
-
         .accordion-header .tag {
             color: var(--muted);
             font-size: 0.9rem;
@@ -877,7 +865,6 @@
             border-bottom: 1px solid transparent;
             transition: border-color 0.2s;
         }
-
         .accordion-body a:hover { border-bottom-color: var(--primary); }
 
         .highlight-box {
@@ -894,6 +881,7 @@
             border-radius: 12px;
             margin-top: 30px;
         }
+
 
         /* --- PIED DE PAGE --- */
         .footer {
@@ -920,7 +908,6 @@
             color: var(--dark);
             margin-bottom: 8px;
         }
-
         .footer-brand p {
             font-size: 0.9rem;
             color: var(--muted);
@@ -935,7 +922,6 @@
             letter-spacing: 0.08em;
             margin-bottom: 16px;
         }
-
         .footer-col a {
             display: block;
             color: var(--muted);
@@ -944,7 +930,6 @@
             margin-bottom: 10px;
             transition: color 0.2s ease;
         }
-
         .footer-col a:hover { color: var(--primary); }
 
         .footer-bottom {
@@ -991,10 +976,12 @@
             .hero p, .hero-final-content p { font-size: 1.1rem; }
             .hero-buttons { flex-direction: column; }
             .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+            
             .features-grid, .commands-grid { grid-template-columns: 1fr; }
-            .container { padding: 0 20px; }
+            
             .btn-feedback { width: 100%; justify-content: center; }
             .partner-card { width: 240px; margin-right: 20px; }
+            
             .footer-grid { grid-template-columns: 1fr 1fr; }
             .footer-brand { grid-column: 1 / -1; }
             
@@ -1091,7 +1078,7 @@
 
     <div id="home" class="page active">
         
-        <section class="container hero-transition-wrapper section-padding">
+        <section class="section container hero-transition-wrapper">
             
             <div class="code-window">
                 <div class="code-header">
@@ -1132,7 +1119,7 @@
 
         </section>
 
-        <section class="features container section-padding">
+        <section class="section container">
             <h2 class="section-title">Principales fonctionnalités</h2>
             <div class="features-grid">
                 <div class="feature-card">
@@ -1168,7 +1155,7 @@
             </div>
         </section>
 
-        <section class="commands-section container section-padding">
+        <section class="section container">
             <h2 class="section-title">Commandes disponibles</h2>
             <div class="commands-grid">
                 <div class="command-card">
@@ -1210,38 +1197,40 @@
             </div>
         </section>
 
-        <section class="feedback-section">
-            <div class="feedback-background"></div>
-            <div class="feedback-pattern"></div>
-            <div class="feedback-content">
-                <div class="feedback-icon">⭐</div>
-                <h2>Votre avis compte !</h2>
-                <p>
-                    Aidez-nous à améliorer Assistante Barbara en partageant votre expérience. Vos retours sont essentiels pour nous permettre d'évoluer.
-                </p>
+        <section class="section container">
+            <div class="feedback-section">
+                <div class="feedback-background"></div>
+                <div class="feedback-pattern"></div>
+                <div class="feedback-content">
+                    <div class="feedback-icon">⭐</div>
+                    <h2>Votre avis compte !</h2>
+                    <p>
+                        Aidez-nous à améliorer Assistante Barbara en partageant votre expérience. Vos retours sont essentiels pour nous permettre d'évoluer.
+                    </p>
 
-                <div class="feedback-features">
-                    <div class="feedback-feature">
-                        <span>⚡</span>
-                        <span>Rapide (2 minutes)</span>
+                    <div class="feedback-features">
+                        <div class="feedback-feature">
+                            <span>⚡</span>
+                            <span>Rapide (2 minutes)</span>
+                        </div>
+                        <div class="feedback-feature">
+                            <span>🔒</span>
+                            <span>Anonyme possible</span>
+                        </div>
+                        <div class="feedback-feature">
+                            <span>💡</span>
+                            <span>Toutes suggestions bienvenues</span>
+                        </div>
                     </div>
-                    <div class="feedback-feature">
-                        <span>🔒</span>
-                        <span>Anonyme possible</span>
-                    </div>
-                    <div class="feedback-feature">
-                        <span>💡</span>
-                        <span>Toutes suggestions bienvenues</span>
-                    </div>
+
+                    <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback" target="_blank">
+                        <span>📝</span> Donner mon avis
+                    </a>
                 </div>
-
-                <a href="https://forms.google.com/VOTRE_FORMULAIRE_ICI" class="btn-feedback" target="_blank">
-                    <span>📝</span> Donner mon avis
-                </a>
             </div>
         </section>
 
-        <section class="partners-section container section-padding">
+        <section class="section container">
             <h2 class="section-title">Nos partenaires</h2>
 
             <div class="partners-intro">
@@ -1320,13 +1309,13 @@
     </div>
 
     <div id="members" class="page">
-        <section class="container section-padding" style="text-align:center;">
+        <section class="section container" style="text-align:center;">
             <div id="members-content"></div>
         </section>
     </div>
 
     <div id="docs" class="page">
-        <section class="docs container section-padding">
+        <section class="section container">
             <h2 class="section-title animated-element">Informations légales</h2>
 
             <div class="accordion-item animated-element">
@@ -2155,10 +2144,10 @@
             loadDiscordUser();
             loadMembersPage();
 
-            // Lancement optimisé de l'animation du terminal après le chargement du DOM
+            // Lancement optimisé de l'animation du terminal
             setTimeout(() => {
                 document.body.classList.add('start-anim');
-            }, 300); // 300ms laissent au téléphone le temps de calculer le rendu fluide avant d'animer
+            }, 300); 
 
             const animatedElements = document.querySelectorAll('.animated-element, .animated-partners-container');
 
