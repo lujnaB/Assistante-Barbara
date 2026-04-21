@@ -219,10 +219,16 @@
 
         /* BOUTON MAGNÉTIQUE - Configuration globale */
         .magnetic-btn {
-            /* AJOUT : Une transition rapide sur le transform pour lisser le tout premier mouvement (anti-téléportation) */
-            transition: transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease !important;
+            /* Transition ultra fluide simulant un "ressort" (cubic-bezier) pour le mouvement */
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease !important;
             will-change: transform;
             cursor: pointer;
+            position: relative; /* Indispensable pour gérer le z-index proprement */
+        }
+        
+        /* Assure que n'importe quel bouton survolé passe toujours par-dessus les autres */
+        .magnetic-btn:hover {
+            z-index: 10;
         }
 
         .btn-nav-login {
@@ -359,6 +365,10 @@
             gap: 12px;
         }
 
+        /* Force l'ordre d'affichage (Z-index) quand les boutons sont immobiles */
+        .hero-buttons .btn-primary { z-index: 2; }
+        .hero-buttons .btn-secondary { z-index: 1; }
+
         .btn-primary {
             background: var(--primary);
             color: white;
@@ -377,11 +387,12 @@
         }
         
         .btn-primary:not(:hover), .btn-secondary:not(:hover), .btn-nav-login:not(:hover), .btn-feedback:not(:hover) {
+            /* S'il n'y a pas de JS, on garde une transition propre */
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
         }
         
-        /* On garde le hover basique si le JS ne s'active pas */
         .btn-primary:hover, .btn-secondary:hover, .btn-nav-login:hover, .btn-feedback:hover {
+            /* Sans JS, ceci fera juste un zoom. Avec JS, le script prend le relais pour le mouvement. */
             transform: scale(1.05); 
         }
 
@@ -578,7 +589,6 @@
             .nav.active { right: 0; }
             .nav-link { font-size: 1.1rem; padding: 10px 0; border-bottom: none; }
             
-            /* Suppression du séparateur sur mobile */
             .nav-separator { display: none; }
             
             .status-badge-wrapper { border-bottom: none !important; display: flex; justify-content: center; padding: 10px 0 !important; }
@@ -1111,7 +1121,7 @@
                     <p><strong>Interdictions :</strong> Il est strictement interdit d'utiliser l'IA pour :</p>
                     <ul>
                         <li>Générer du contenu illégal, haineux, discriminatoire ou violent</li>
-                        <li>Tenter de contourner les systèmes de modération</li>
+                        <li>Tenter de contourner systems de modération</li>
                         <li>Collecter des données personnelles sur d'autres utilisateurs</li>
                         <li>Diffuser de la désinformation ou des contenus trompeurs</li>
                     </ul>
@@ -1764,7 +1774,7 @@
                 document.body.classList.add('start-anim');
             }, 300); 
 
-            // Script pour les boutons magnétiques (corrigé avec anti-saut CSS)
+            // Script pour les boutons magnétiques (fluide)
             const magneticBtns = document.querySelectorAll('.magnetic-btn');
             magneticBtns.forEach(btn => {
                 btn.addEventListener('mousemove', function(e) {
@@ -1772,8 +1782,8 @@
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
                     
-                    // Léger déplacement directionnel + zoom
-                    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.2}px) scale(1.05)`;
+                    // Mouvement très doux grace au multiplicateur 0.1 et à la transition CSS
+                    btn.style.transform = `translate(${x * 0.1}px, ${y * 0.15}px) scale(1.05)`;
                 });
                 
                 btn.addEventListener('mouseleave', function() {
