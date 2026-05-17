@@ -217,7 +217,7 @@
         .nav-link:hover { color: var(--primary); }
         .nav-link:hover::after { width: 100%; }
 
-        /* BOUTON MAGNÉTIQUE - Configuration globale */
+        /* BOUTON MAGNÉTIQUE */
         .magnetic-btn {
             transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease !important;
             will-change: transform;
@@ -349,7 +349,6 @@
             margin: 0 auto 40px; line-height: 1.7;
         }
 
-        /* --- STYLES DES BOUTONS --- */
         .hero-buttons {
             display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
         }
@@ -408,7 +407,7 @@
             color: var(--primary);
         }
 
-        /* --- GRILLE DES FONCTIONNALITÉS AVEC ANIMATIONS SVG --- */
+        /* --- GRILLE DES FONCTIONNALITÉS (SVGs PREMIUM) --- */
         .features-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
         }
@@ -424,75 +423,127 @@
         .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
         .feature-card:hover::before { width: 98%; }
 
-        /* Style global pour les SVG */
+        /* Configuration globale des nouvelles icônes SVG */
         .feature-icon-wrapper {
             margin-bottom: 20px;
-            display: inline-block;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary);
+            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
         }
-        
+
         .feature-icon-svg {
-            width: 46px;
-            height: 46px;
-            stroke: var(--primary);
-            transition: stroke 0.3s ease, filter 0.3s ease;
-            will-change: transform;
+            width: 32px;
+            height: 32px;
+            transform-origin: center;
+            will-change: transform, opacity, filter;
         }
 
-        /* Effet lumineux général au survol de la carte */
-        .feature-card:hover .feature-icon-svg {
-            stroke: #a5d6ff;
-            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.6));
+        /* Effet d'illumination de l'icône au survol de la carte entière */
+        .feature-card:hover .feature-icon-wrapper {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
         }
 
-        /* 1. Animation Robot */
-        @keyframes bot-nod {
-            0%, 100% { transform: translateY(0) rotate(0); }
-            25% { transform: translateY(-4px) rotate(-5deg); }
-            75% { transform: translateY(2px) rotate(5deg); }
+        /* 1. Animation Robot (Entrée = Glisse + Boucle = Lévitation) */
+        @keyframes robot-entry {
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
-        .feature-card:hover .icon-robot { animation: bot-nod 1.5s ease-in-out infinite; }
-
-        /* 2. Animation Bouclier */
-        @keyframes shield-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+        @keyframes robot-loop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5px); }
         }
-        .feature-card:hover .icon-shield { animation: shield-pulse 1.5s ease-in-out infinite; }
-
-        /* 3. Animation Confettis (Party) */
-        @keyframes tada {
-            0% { transform: scale(1) rotate(0deg); }
-            10%, 20% { transform: scale(0.9) rotate(-4deg); }
-            30%, 50%, 70%, 90% { transform: scale(1.15) rotate(4deg); }
-            40%, 60%, 80% { transform: scale(1.15) rotate(-4deg); }
-            100% { transform: scale(1) rotate(0deg); }
+        .feature-card:hover .icon-robot {
+            animation: 
+                robot-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                robot-loop 2s ease-in-out 0.4s infinite alternate;
         }
-        .feature-card:hover .icon-party { animation: tada 1.5s ease-in-out infinite; }
 
-        /* 4. Animation Cadenas */
-        @keyframes lock-wiggle {
-            0%, 100% { transform: rotate(0); }
-            25% { transform: rotate(-12deg); }
-            75% { transform: rotate(12deg); }
+        /* 2. Animation Bouclier (Entrée = Zoom + Boucle = Pulsation de protection) */
+        @keyframes shield-entry {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
-        .feature-card:hover .icon-lock { animation: lock-wiggle 1s ease-in-out infinite; }
-
-        /* 5. Animation Étoiles EU */
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes shield-loop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5)); }
         }
-        .feature-card:hover .icon-eu { animation: spin-slow 4s linear infinite; }
-
-        /* 6. Animation Éclair */
-        @keyframes flash-zap {
-            0%, 100% { transform: scale(1) rotate(0); }
-            25% { transform: scale(1.15) rotate(-8deg); }
-            75% { transform: scale(1.15) rotate(8deg); }
+        .feature-card:hover .icon-shield {
+            animation: 
+                shield-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                shield-loop 2s ease-in-out 0.4s infinite alternate;
         }
-        .feature-card:hover .icon-zap { animation: flash-zap 1s ease-in-out infinite; }
 
-        /* Textes des cartes */
+        /* 3. Animation Magie/Divertissement (Entrée = Rotation + Boucle = Clignotement des étoiles) */
+        @keyframes party-entry {
+            0% { transform: scale(0) rotate(-90deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        @keyframes party-loop {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+        .feature-card:hover .icon-party {
+            animation: 
+                party-entry 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                party-loop 3s ease-in-out 0.5s infinite;
+        }
+
+        /* 4. Animation Cadenas (Entrée = Chute + Boucle = Pendule) */
+        .icon-lock { transform-origin: top center; } /* Pivot par le haut */
+        @keyframes lock-entry {
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes lock-loop {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-8deg); }
+            75% { transform: rotate(8deg); }
+        }
+        .feature-card:hover .icon-lock {
+            animation: 
+                lock-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                lock-loop 2s ease-in-out 0.4s infinite;
+        }
+
+        /* 5. Animation Étoiles UE (Entrée = Zoom In + Boucle = Rotation 360°) */
+        @keyframes eu-entry {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes eu-loop {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .feature-card:hover .icon-eu {
+            animation: 
+                eu-entry 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                eu-loop 10s linear 0.5s infinite;
+        }
+
+        /* 6. Animation Éclair (Entrée = Frappe/Flash + Boucle = Vibe électrique) */
+        @keyframes zap-entry {
+            0% { transform: scale(0) skewX(20deg); opacity: 0; }
+            50% { transform: scale(1.3) skewX(-10deg); opacity: 1; }
+            100% { transform: scale(1) skewX(0deg); opacity: 1; }
+        }
+        @keyframes zap-loop {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-3px) scale(1.05); filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)); }
+        }
+        .feature-card:hover .icon-zap {
+            animation: 
+                zap-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                zap-loop 1.2s ease-in-out 0.4s infinite alternate;
+        }
+
         .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 600; }
         .feature-card p { color: var(--muted); line-height: 1.7; }
 
@@ -803,10 +854,9 @@
         <section class="section container">
             <h2 class="section-title">Ses atouts majeurs</h2>
             <div class="features-grid">
-                
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-robot">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-robot">
                             <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
                         </svg>
                     </div>
@@ -816,7 +866,7 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-shield">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-shield">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                         </svg>
                     </div>
@@ -826,8 +876,10 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-party">
-                            <path d="M5.8 11.3 2 22l10.7-3.79"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12v0c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-.82-.33c-.86-.36-1.86.07-2.27.91l-.15.3b-.51.85-.09 1.84.9 2.27l.33.82"/><path d="m11 22 .33-.82c.36-.86-.07-1.86-.91-2.27l-.3-.15c-.85-.51-1.84-.09-2.27.9l-.82.33"/>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-party">
+                            <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z"/>
+                            <path d="M5 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>
+                            <path d="M19 15l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>
                         </svg>
                     </div>
                     <h3>Divertissement</h3>
@@ -836,7 +888,7 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-lock">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-lock">
                             <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                         </svg>
                     </div>
@@ -846,8 +898,21 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-eu">
-                            <circle cx="12" cy="12" r="10"/><polygon points="12 6 13.85 9.77 18 10.38 15 13.31 15.7 17.41 12 15.47 8.3 17.41 9 13.31 6 10.38 10.15 9.77 12 6"/>
+                        <svg viewBox="0 0 24 24" fill="none" class="feature-icon-svg icon-eu">
+                            <g fill="currentColor">
+                                <circle cx="12" cy="3" r="1.5"/>
+                                <circle cx="16.5" cy="4.2" r="1.5"/>
+                                <circle cx="19.8" cy="7.5" r="1.5"/>
+                                <circle cx="21" cy="12" r="1.5"/>
+                                <circle cx="19.8" cy="16.5" r="1.5"/>
+                                <circle cx="16.5" cy="19.8" r="1.5"/>
+                                <circle cx="12" cy="21" r="1.5"/>
+                                <circle cx="7.5" cy="19.8" r="1.5"/>
+                                <circle cx="4.2" cy="16.5" r="1.5"/>
+                                <circle cx="3" cy="12" r="1.5"/>
+                                <circle cx="4.2" cy="7.5" r="1.5"/>
+                                <circle cx="7.5" cy="4.2" r="1.5"/>
+                            </g>
                         </svg>
                     </div>
                     <h3>Ancrage européen</h3>
@@ -856,14 +921,13 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-zap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-zap">
                             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                         </svg>
                     </div>
                     <h3>Haute disponibilité</h3>
                     <p>Hébergée sur l'infrastructure optimisée de KataBump, l'application assure un temps de réponse éclair et une fiabilité constante.</p>
                 </div>
-                
             </div>
         </section>
 
