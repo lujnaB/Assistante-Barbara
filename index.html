@@ -217,7 +217,7 @@
         .nav-link:hover { color: var(--primary); }
         .nav-link:hover::after { width: 100%; }
 
-        /* BOUTON MAGNÉTIQUE */
+        /* BOUTON MAGNÉTIQUE - Configuration globale */
         .magnetic-btn {
             transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease !important;
             will-change: transform;
@@ -349,6 +349,7 @@
             margin: 0 auto 40px; line-height: 1.7;
         }
 
+        /* --- STYLES DES BOUTONS --- */
         .hero-buttons {
             display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
         }
@@ -407,7 +408,7 @@
             color: var(--primary);
         }
 
-        /* --- GRILLE DES FONCTIONNALITÉS (SVGs PREMIUM) --- */
+        /* --- GRILLE DES FONCTIONNALITÉS (SVGs PREMIUM & ANIMATIONS) --- */
         .features-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
         }
@@ -423,126 +424,79 @@
         .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
         .feature-card:hover::before { width: 98%; }
 
-        /* Configuration globale des nouvelles icônes SVG */
+        /* Conteneur de l'icône, purifié pour laisser l'icône respirer */
         .feature-icon-wrapper {
             margin-bottom: 20px;
             display: inline-flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 14px;
-            background: rgba(102, 126, 234, 0.1);
-            color: var(--primary);
-            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
         }
 
         .feature-icon-svg {
-            width: 32px;
-            height: 32px;
+            width: 48px;
+            height: 48px;
+            stroke: var(--primary);
             transform-origin: center;
-            will-change: transform, opacity, filter;
+            /* La transition gère l'entrée fluide (le zoom initial et le glow) */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), stroke 0.4s ease, filter 0.4s ease;
+            will-change: transform, filter;
         }
 
-        /* Effet d'illumination de l'icône au survol de la carte entière */
-        .feature-card:hover .feature-icon-wrapper {
-            background: var(--gradient);
-            color: white;
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        /* Effet d'illumination de l'icône au survol */
+        .feature-card:hover .feature-icon-svg {
+            stroke: #a5d6ff;
+            filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
+            /* Le transform initial place l'icône pour la suite de l'animation */
+            transform: scale(1.15) translateY(-5px);
         }
 
-        /* 1. Animation Robot (Entrée = Glisse + Boucle = Lévitation) */
-        @keyframes robot-entry {
-            0% { transform: translateY(-20px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
+        /* 1. Animation Robot (Hochement de tête fluide) */
         @keyframes robot-loop {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-5px); }
+            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
+            33% { transform: scale(1.15) translateY(-5px) rotate(-8deg); }
+            66% { transform: scale(1.15) translateY(-5px) rotate(8deg); }
         }
-        .feature-card:hover .icon-robot {
-            animation: 
-                robot-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                robot-loop 2s ease-in-out 0.4s infinite alternate;
-        }
+        .feature-card:hover .icon-robot { animation: robot-loop 2s ease-in-out 0.4s infinite; }
 
-        /* 2. Animation Bouclier (Entrée = Zoom + Boucle = Pulsation de protection) */
-        @keyframes shield-entry {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        /* 2. Animation Bouclier (Pulsation protectrice) */
         @keyframes shield-loop {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5)); }
+            0%, 100% { transform: scale(1.15) translateY(-5px); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
+            50% { transform: scale(1.25) translateY(-5px); filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.9)); }
         }
-        .feature-card:hover .icon-shield {
-            animation: 
-                shield-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                shield-loop 2s ease-in-out 0.4s infinite alternate;
-        }
+        .feature-card:hover .icon-shield { animation: shield-loop 1.8s ease-in-out 0.4s infinite; }
 
-        /* 3. Animation Magie/Divertissement (Entrée = Rotation + Boucle = Clignotement des étoiles) */
-        @keyframes party-entry {
-            0% { transform: scale(0) rotate(-90deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        /* 3. Animation Magie / Divertissement (Balançoire étoilée) */
+        @keyframes magic-loop {
+            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
+            50% { transform: scale(1.15) translateY(-5px) rotate(12deg); }
         }
-        @keyframes party-loop {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(5deg); }
-        }
-        .feature-card:hover .icon-party {
-            animation: 
-                party-entry 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                party-loop 3s ease-in-out 0.5s infinite;
-        }
+        .feature-card:hover .icon-magic { animation: magic-loop 2s ease-in-out 0.4s infinite; }
 
-        /* 4. Animation Cadenas (Entrée = Chute + Boucle = Pendule) */
-        .icon-lock { transform-origin: top center; } /* Pivot par le haut */
-        @keyframes lock-entry {
-            0% { transform: translateY(-20px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
+        /* 4. Animation Cadenas (Rotation 3D de vérification) */
         @keyframes lock-loop {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-8deg); }
-            75% { transform: rotate(8deg); }
+            0%, 100% { transform: scale(1.15) translateY(-5px) rotateY(0deg); }
+            25% { transform: scale(1.15) translateY(-5px) rotateY(-25deg); }
+            75% { transform: scale(1.15) translateY(-5px) rotateY(25deg); }
         }
-        .feature-card:hover .icon-lock {
-            animation: 
-                lock-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                lock-loop 2s ease-in-out 0.4s infinite;
-        }
+        .feature-card:hover .icon-lock { animation: lock-loop 2.5s ease-in-out 0.4s infinite; }
 
-        /* 5. Animation Étoiles UE (Entrée = Zoom In + Boucle = Rotation 360°) */
-        @keyframes eu-entry {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        /* 5. Animation Cercle Étoiles UE (Rotation orbitale infinie) */
         @keyframes eu-loop {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
+            100% { transform: scale(1.15) translateY(-5px) rotate(360deg); }
         }
-        .feature-card:hover .icon-eu {
-            animation: 
-                eu-entry 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                eu-loop 10s linear 0.5s infinite;
-        }
+        .feature-card:hover .icon-eu { animation: eu-loop 8s linear 0.4s infinite; }
 
-        /* 6. Animation Éclair (Entrée = Frappe/Flash + Boucle = Vibe électrique) */
-        @keyframes zap-entry {
-            0% { transform: scale(0) skewX(20deg); opacity: 0; }
-            50% { transform: scale(1.3) skewX(-10deg); opacity: 1; }
-            100% { transform: scale(1) skewX(0deg); opacity: 1; }
-        }
+        /* 6. Animation Éclair (Vibration / Haute tension) */
         @keyframes zap-loop {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-3px) scale(1.05); filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)); }
+            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
+            10% { transform: scale(1.2) translateY(-5px) rotate(-5deg); filter: drop-shadow(0 0 15px #a5d6ff); }
+            20% { transform: scale(1.15) translateY(-5px) rotate(5deg); }
+            30% { transform: scale(1.2) translateY(-5px) rotate(-5deg); }
+            40% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
         }
-        .feature-card:hover .icon-zap {
-            animation: 
-                zap-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                zap-loop 1.2s ease-in-out 0.4s infinite alternate;
-        }
+        .feature-card:hover .icon-zap { animation: zap-loop 2.5s ease-in-out 0.4s infinite; }
+
 
         .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 600; }
         .feature-card p { color: var(--muted); line-height: 1.7; }
@@ -854,10 +808,15 @@
         <section class="section container">
             <h2 class="section-title">Ses atouts majeurs</h2>
             <div class="features-grid">
+                
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-robot">
-                            <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
+                            <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+                            <circle cx="12" cy="5" r="2"></circle>
+                            <path d="M12 7v4"></path>
+                            <line x1="8" y1="16" x2="8" y2="16"></line>
+                            <line x1="16" y1="16" x2="16" y2="16"></line>
                         </svg>
                     </div>
                     <h3>Intelligence artificielle</h3>
@@ -867,7 +826,7 @@
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-shield">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                         </svg>
                     </div>
                     <h3>Modération simplifiée</h3>
@@ -876,10 +835,10 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-party">
-                            <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z"/>
-                            <path d="M5 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>
-                            <path d="M19 15l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-magic">
+                            <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                            <line x1="16" y1="8" x2="2" y2="22"></line>
+                            <line x1="17.5" y1="15" x2="9" y2="6.5"></line>
                         </svg>
                     </div>
                     <h3>Divertissement</h3>
@@ -889,7 +848,8 @@
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-lock">
-                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                         </svg>
                     </div>
                     <h3>Confidentialité garantie</h3>
@@ -898,36 +858,33 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" class="feature-icon-svg icon-eu">
-                            <g fill="currentColor">
-                                <circle cx="12" cy="3" r="1.5"/>
-                                <circle cx="16.5" cy="4.2" r="1.5"/>
-                                <circle cx="19.8" cy="7.5" r="1.5"/>
-                                <circle cx="21" cy="12" r="1.5"/>
-                                <circle cx="19.8" cy="16.5" r="1.5"/>
-                                <circle cx="16.5" cy="19.8" r="1.5"/>
-                                <circle cx="12" cy="21" r="1.5"/>
-                                <circle cx="7.5" cy="19.8" r="1.5"/>
-                                <circle cx="4.2" cy="16.5" r="1.5"/>
-                                <circle cx="3" cy="12" r="1.5"/>
-                                <circle cx="4.2" cy="7.5" r="1.5"/>
-                                <circle cx="7.5" cy="4.2" r="1.5"/>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" class="feature-icon-svg icon-eu">
+                            <g>
+                                <polygon points="12 2 12.5 3.5 14 3.5 12.8 4.5 13.2 6 12 5 10.8 6 11.2 4.5 10 3.5 11.5 3.5" />
+                                <polygon points="12 18 12.5 19.5 14 19.5 12.8 20.5 13.2 22 12 21 10.8 22 11.2 20.5 10 19.5 11.5 19.5" />
+                                <polygon points="4 10 4.5 11.5 6 11.5 4.8 12.5 5.2 14 4 13 2.8 14 3.2 12.5 2 11.5 3.5 11.5" />
+                                <polygon points="20 10 20.5 11.5 22 11.5 20.8 12.5 21.2 14 20 13 18.8 14 19.2 12.5 18 11.5 19.5 11.5" />
+                                <polygon points="6.3 4.3 6.8 5.8 8.3 5.8 7.1 6.8 7.5 8.3 6.3 7.3 5.1 8.3 5.5 6.8 4.3 5.8 5.8 5.8" />
+                                <polygon points="17.7 4.3 18.2 5.8 19.7 5.8 18.5 6.8 18.9 8.3 17.7 7.3 16.5 8.3 16.9 6.8 15.7 5.8 17.2 5.8" />
+                                <polygon points="6.3 15.7 6.8 17.2 8.3 17.2 7.1 18.2 7.5 19.7 6.3 18.7 5.1 19.7 5.5 18.2 4.3 17.2 5.8 17.2" />
+                                <polygon points="17.7 15.7 18.2 17.2 19.7 17.2 18.5 18.2 18.9 19.7 17.7 18.7 16.5 19.7 16.9 18.2 15.7 17.2 17.2 17.2" />
                             </g>
                         </svg>
                     </div>
                     <h3>Ancrage européen</h3>
-                    <p>Assistante Barbara s’appuie sur des solutions locales. L'hébergement et le traitement de données favorisent la souveraineté européenne.</p>
+                    <p>Assistante Barbara s’appuie sur des solutions locales. L'hébergement et le traitement des données favorisent la souveraineté européenne.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-zap">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                         </svg>
                     </div>
                     <h3>Haute disponibilité</h3>
                     <p>Hébergée sur l'infrastructure optimisée de KataBump, l'application assure un temps de réponse éclair et une fiabilité constante.</p>
                 </div>
+
             </div>
         </section>
 
@@ -1253,7 +1210,7 @@
                             <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
                             <li>Ne pas tenter de contourner les limitations techniques</li>
                             <li>Respecter les autres utilisateurs</li>
-                            <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
+                            <li>Ne pas utiliser le bot à fins illégales ou malveillantes</li>
                             <li>Utiliser les commandes de manière raisonnable et appropriée</li>
                         </ul>
                     </div>
