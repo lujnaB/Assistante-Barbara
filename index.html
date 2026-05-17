@@ -217,7 +217,7 @@
         .nav-link:hover { color: var(--primary); }
         .nav-link:hover::after { width: 100%; }
 
-        /* BOUTON MAGNÉTIQUE - Configuration globale */
+        /* BOUTON MAGNÉTIQUE */
         .magnetic-btn {
             transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease !important;
             will-change: transform;
@@ -424,7 +424,7 @@
         .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
         .feature-card:hover::before { width: 98%; }
 
-        /* Conteneur de l'icône, purifié pour laisser l'icône respirer */
+        /* Conteneur de l'icône purifié */
         .feature-icon-wrapper {
             margin-bottom: 20px;
             display: inline-flex;
@@ -437,57 +437,102 @@
             height: 48px;
             stroke: var(--primary);
             transform-origin: center;
-            /* La transition gère l'entrée fluide (le zoom initial et le glow) */
+            /* La transition gère l'entrée fluide avant l'activation des Keyframes */
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), stroke 0.4s ease, filter 0.4s ease;
             will-change: transform, filter;
         }
 
-        /* Effet d'illumination de l'icône au survol */
+        /* Effet visuel immédiat (couleur + lueur) */
         .feature-card:hover .feature-icon-svg {
             stroke: #a5d6ff;
             filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
-            /* Le transform initial place l'icône pour la suite de l'animation */
-            transform: scale(1.15) translateY(-5px);
         }
 
-        /* 1. Animation Robot (Hochement de tête fluide) */
+        /* Enchaînement parfait : Animation d'entrée suivie de l'animation en boucle (délai de 0.4s) */
+        
+        /* 1. Animation Robot (Lévitation + Hochement de tête) */
+        @keyframes robot-entry {
+            0% { transform: scale(0.5) translateY(20px); opacity: 0; }
+            100% { transform: scale(1.15) translateY(-5px); opacity: 1; }
+        }
         @keyframes robot-loop {
             0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
             33% { transform: scale(1.15) translateY(-5px) rotate(-8deg); }
             66% { transform: scale(1.15) translateY(-5px) rotate(8deg); }
         }
-        .feature-card:hover .icon-robot { animation: robot-loop 2s ease-in-out 0.4s infinite; }
+        .feature-card:hover .icon-robot {
+            animation: 
+                robot-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                robot-loop 2s ease-in-out 0.4s infinite alternate;
+        }
 
-        /* 2. Animation Bouclier (Pulsation protectrice) */
+        /* 2. Animation Bouclier (Zoom in + Pulsation protectrice 100% raccord) */
+        @keyframes shield-entry {
+            0% { transform: scale(0.5) translateY(10px); opacity: 0; }
+            100% { transform: scale(1.15) translateY(-5px); opacity: 1; }
+        }
         @keyframes shield-loop {
             0%, 100% { transform: scale(1.15) translateY(-5px); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
             50% { transform: scale(1.25) translateY(-5px); filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.9)); }
         }
-        .feature-card:hover .icon-shield { animation: shield-loop 1.8s ease-in-out 0.4s infinite; }
+        .feature-card:hover .icon-shield {
+            animation: 
+                shield-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                shield-loop 2s ease-in-out 0.4s infinite;
+        }
 
-        /* 3. Animation Magie / Divertissement (Balançoire étoilée) */
+        /* 3. Animation Magie / Divertissement (Tirage de baguette fluide) */
+        @keyframes magic-entry {
+            0% { transform: scale(0.5) rotate(-45deg); opacity: 0; }
+            100% { transform: scale(1.15) translateY(-5px) rotate(0deg); opacity: 1; }
+        }
         @keyframes magic-loop {
-            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
-            50% { transform: scale(1.15) translateY(-5px) rotate(12deg); }
+            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
+            50% { transform: scale(1.15) translateY(-8px) rotate(5deg); filter: drop-shadow(0 0 15px #a5d6ff); }
         }
-        .feature-card:hover .icon-magic { animation: magic-loop 2s ease-in-out 0.4s infinite; }
+        .feature-card:hover .icon-magic {
+            animation: 
+                magic-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                magic-loop 2.5s ease-in-out 0.4s infinite;
+        }
 
-        /* 4. Animation Cadenas (Rotation 3D de vérification) */
+        /* 4. Animation Cadenas (Chute 2D + Pendule naturel) */
+        .icon-lock { transform-origin: 50% 20%; /* Le point de rotation est l'anse du cadenas */ }
+        @keyframes lock-entry {
+            0% { transform: scale(0.5) translateY(-20px); opacity: 0; }
+            100% { transform: scale(1.15) translateY(-5px) rotate(0deg); opacity: 1; }
+        }
         @keyframes lock-loop {
-            0%, 100% { transform: scale(1.15) translateY(-5px) rotateY(0deg); }
-            25% { transform: scale(1.15) translateY(-5px) rotateY(-25deg); }
-            75% { transform: scale(1.15) translateY(-5px) rotateY(25deg); }
+            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
+            25% { transform: scale(1.15) translateY(-5px) rotate(-10deg); }
+            75% { transform: scale(1.15) translateY(-5px) rotate(10deg); }
         }
-        .feature-card:hover .icon-lock { animation: lock-loop 2.5s ease-in-out 0.4s infinite; }
+        .feature-card:hover .icon-lock {
+            animation: 
+                lock-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                lock-loop 2s ease-in-out 0.4s infinite;
+        }
 
-        /* 5. Animation Cercle Étoiles UE (Rotation orbitale infinie) */
+        /* 5. Animation Cercle Étoiles UE (Apparition centrale + Rotation infinie) */
+        @keyframes eu-entry {
+            0% { transform: scale(0.5) translateY(10px); opacity: 0; }
+            100% { transform: scale(1.15) translateY(-5px) rotate(0deg); opacity: 1; }
+        }
         @keyframes eu-loop {
             0% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
             100% { transform: scale(1.15) translateY(-5px) rotate(360deg); }
         }
-        .feature-card:hover .icon-eu { animation: eu-loop 8s linear 0.4s infinite; }
+        .feature-card:hover .icon-eu {
+            animation: 
+                eu-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                eu-loop 12s linear 0.4s infinite;
+        }
 
-        /* 6. Animation Éclair (Vibration / Haute tension) */
+        /* 6. Animation Éclair (Frappe Flash + Vibration) */
+        @keyframes zap-entry {
+            0% { transform: scale(0.5) skewX(20deg); opacity: 0; }
+            100% { transform: scale(1.15) translateY(-5px) skewX(0deg); opacity: 1; }
+        }
         @keyframes zap-loop {
             0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
             10% { transform: scale(1.2) translateY(-5px) rotate(-5deg); filter: drop-shadow(0 0 15px #a5d6ff); }
@@ -495,7 +540,11 @@
             30% { transform: scale(1.2) translateY(-5px) rotate(-5deg); }
             40% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
         }
-        .feature-card:hover .icon-zap { animation: zap-loop 2.5s ease-in-out 0.4s infinite; }
+        .feature-card:hover .icon-zap {
+            animation: 
+                zap-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                zap-loop 2.5s ease-in-out 0.4s infinite;
+        }
 
 
         .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 600; }
@@ -835,10 +884,15 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-magic">
-                            <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
-                            <line x1="16" y1="8" x2="2" y2="22"></line>
-                            <line x1="17.5" y1="15" x2="9" y2="6.5"></line>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-magic">
+                            <path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"></path>
+                            <path d="m14 7 3 3"></path>
+                            <path d="M5 6v4"></path>
+                            <path d="M19 14v4"></path>
+                            <path d="M10 2v2"></path>
+                            <path d="M7 8H3"></path>
+                            <path d="M21 16h-4"></path>
+                            <path d="M11 3H9"></path>
                         </svg>
                     </div>
                     <h3>Divertissement</h3>
@@ -858,21 +912,28 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" class="feature-icon-svg icon-eu">
-                            <g>
-                                <polygon points="12 2 12.5 3.5 14 3.5 12.8 4.5 13.2 6 12 5 10.8 6 11.2 4.5 10 3.5 11.5 3.5" />
-                                <polygon points="12 18 12.5 19.5 14 19.5 12.8 20.5 13.2 22 12 21 10.8 22 11.2 20.5 10 19.5 11.5 19.5" />
-                                <polygon points="4 10 4.5 11.5 6 11.5 4.8 12.5 5.2 14 4 13 2.8 14 3.2 12.5 2 11.5 3.5 11.5" />
-                                <polygon points="20 10 20.5 11.5 22 11.5 20.8 12.5 21.2 14 20 13 18.8 14 19.2 12.5 18 11.5 19.5 11.5" />
-                                <polygon points="6.3 4.3 6.8 5.8 8.3 5.8 7.1 6.8 7.5 8.3 6.3 7.3 5.1 8.3 5.5 6.8 4.3 5.8 5.8 5.8" />
-                                <polygon points="17.7 4.3 18.2 5.8 19.7 5.8 18.5 6.8 18.9 8.3 17.7 7.3 16.5 8.3 16.9 6.8 15.7 5.8 17.2 5.8" />
-                                <polygon points="6.3 15.7 6.8 17.2 8.3 17.2 7.1 18.2 7.5 19.7 6.3 18.7 5.1 19.7 5.5 18.2 4.3 17.2 5.8 17.2" />
-                                <polygon points="17.7 15.7 18.2 17.2 19.7 17.2 18.5 18.2 18.9 19.7 17.7 18.7 16.5 19.7 16.9 18.2 15.7 17.2 17.2 17.2" />
+                        <svg viewBox="0 0 24 24" class="feature-icon-svg icon-eu">
+                            <defs>
+                                <polygon id="eu-star" points="0,-1 0.224,-0.309 0.951,-0.309 0.363,0.118 0.588,0.809 0,0.382 -0.588,0.809 -0.363,0.118 -0.951,-0.309 -0.224,-0.309" transform="translate(0, -9) scale(1.4)" fill="currentColor" stroke="none" />
+                            </defs>
+                            <g transform="translate(12, 12)">
+                                <use href="#eu-star" />
+                                <use href="#eu-star" transform="rotate(30)" />
+                                <use href="#eu-star" transform="rotate(60)" />
+                                <use href="#eu-star" transform="rotate(90)" />
+                                <use href="#eu-star" transform="rotate(120)" />
+                                <use href="#eu-star" transform="rotate(150)" />
+                                <use href="#eu-star" transform="rotate(180)" />
+                                <use href="#eu-star" transform="rotate(210)" />
+                                <use href="#eu-star" transform="rotate(240)" />
+                                <use href="#eu-star" transform="rotate(270)" />
+                                <use href="#eu-star" transform="rotate(300)" />
+                                <use href="#eu-star" transform="rotate(330)" />
                             </g>
                         </svg>
                     </div>
                     <h3>Ancrage européen</h3>
-                    <p>Assistante Barbara s’appuie sur des solutions locales. L'hébergement et le traitement des données favorisent la souveraineté européenne.</p>
+                    <p>Assistante Barbara s’appuie sur des solutions locales. L'hébergement et le traitement de données favorisent la souveraineté européenne.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -1129,7 +1190,7 @@
                         <li><strong>Droit à la portabilité (Article 20) :</strong> Recevoir vos données dans un format structuré</li>
                         <li><strong>Droit de retrait du consentement :</strong> Retirer votre consentement à tout moment</li>
                     </ul>
-                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatiquement satisfait par notre politique de suppression automatique. Néanmoins, vous pouvez nous contacter pour toute question ou demande spécifique.</p>
+                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatically satisfait par notre politique de suppression automatique. Néanmoins, vous pouvez nous contacter pour toute question ou demande spécifique.</p>
                     <p><strong>Droit de réclamation :</strong> Vous avez le droit d'introduire une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés) si vous estimez que vos droits ne sont pas respectés : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
 
                     <h3>8. Sécurité des données</h3>
@@ -1210,7 +1271,7 @@
                             <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
                             <li>Ne pas tenter de contourner les limitations techniques</li>
                             <li>Respecter les autres utilisateurs</li>
-                            <li>Ne pas utiliser le bot à fins illégales ou malveillantes</li>
+                            <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
                             <li>Utiliser les commandes de manière raisonnable et appropriée</li>
                         </ul>
                     </div>
@@ -1269,7 +1330,7 @@
                         <p><strong>Assistante Barbara est fournie "en l'état" et "selon disponibilité".</strong> Dans toute la mesure permise par la loi applicable, nous déclinons toute responsabilité concernant :</p>
                         <ul>
                             <li>Les dommages directs, indirects, accessoires, spéciaux, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le bot</li>
-                            <li>La précision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
+                            <li>La precision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
                             <li>Les pertes de données, interruptions de service ou tout dysfonctionnement technique</li>
                             <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
                             <li>Les décisions prises sur la base des informations fournies par le bot</li>
