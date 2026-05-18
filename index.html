@@ -468,21 +468,23 @@
 
         /* 2. LES ANIMATIONS EN BOUCLE (Appliquées aux groupes internes <g> après un délai) */
 
-        /* Robot Tête : Balancement et Inclinaison douce au survol */
+        /* Robot Tête : Balancement avec pause, 0.4s de délai pour éviter le bug de collision */
         @keyframes robot-head-tilt-loop {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(-5deg) translateY(-2px); }
-            50% { transform: rotate(0deg) translateY(0px); }
-            75% { transform: rotate(5deg) translateY(-2px); }
-            100% { transform: rotate(0deg); }
+            0%, 15% { transform: rotate(0deg) translateY(0px); }
+            35% { transform: rotate(-8deg) translateY(-2px); } /* S'incline à gauche */
+            55% { transform: rotate(8deg) translateY(-2px); }  /* S'incline à droite */
+            75%, 100% { transform: rotate(0deg) translateY(0px); } /* Revient et pause nette */
         }
         
         .feature-card:hover .icon-loop-robot-head {
             transform-origin: center bottom;
-            animation: robot-head-tilt-loop 2s ease-in-out infinite;
+            animation: robot-head-tilt-loop 2.5s ease-in-out 0.4s infinite;
         }
         
-        /* Cohérence des couleurs des yeux du robot au survol */
+        /* Cohérence des yeux du robot au survol avec transition fluide */
+        .icon-robot-head .robot-head-eyes circle { transition: fill 0.4s ease; }
+        .icon-robot-head .robot-head-eyes { transition: filter 0.4s ease; }
+        
         .feature-card:hover .icon-robot-head .robot-head-eyes circle {
             fill: #a5d6ff;
         }
