@@ -482,10 +482,12 @@
             animation: robot-head-tilt-loop 2s ease-in-out infinite;
         }
         
-        /* Cohérence des yeux du robot au survol (prennent la même couleur que le contour) */
-        .feature-card:hover .icon-robot-head .robot-head-eyes {
+        /* Cohérence des couleurs des yeux du robot au survol */
+        .feature-card:hover .icon-robot-head .robot-head-eyes circle {
             fill: #a5d6ff;
-            filter: drop-shadow(0 0 3px #a5d6ff);
+        }
+        .feature-card:hover .icon-robot-head .robot-head-eyes {
+            filter: drop-shadow(0 0 4px #a5d6ff);
         }
 
         /* Bouclier : S'élève, se plante, explosion de poussière sur les côtés */
@@ -902,12 +904,13 @@
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-robot-head">
                             <g class="icon-loop-robot-head">
-                                <rect x="5" y="6" width="14" height="10" rx="2" ry="2"/>
+                                <rect x="3" y="8" width="18" height="12" rx="3" ry="3"/>
+                                <path d="M12 8V4"/>
+                                <circle cx="12" cy="3" r="1"/>
                                 <g class="robot-head-eyes">
-                                    <circle cx="9" cy="11" r="1.5" fill="currentColor" stroke="none"/>
-                                    <circle cx="15" cy="11" r="1.5" fill="currentColor" stroke="none"/>
+                                    <circle cx="8" cy="14" r="1.5" fill="var(--primary)" stroke="none"/>
+                                    <circle cx="16" cy="14" r="1.5" fill="var(--primary)" stroke="none"/>
                                 </g>
-                                <path d="M12 6V2a1 1 0 1 0 0-2 1 1 0 1 0 0 2"/>
                             </g>
                         </svg>
                     </div>
@@ -984,22 +987,22 @@
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" class="feature-icon-svg icon-eu">
                             <defs>
-                                <polygon id="eu-star" points="0,-1 0.224,-0.309 0.951,-0.309 0.363,0.118 0.588,0.809 0,0.382 -0.588,0.809 -0.363,0.118 -0.951,-0.309 -0.224,-0.309" transform="scale(1.25)"/>
+                                <polygon id="eu-star" points="0,-1 0.224,-0.309 0.951,-0.309 0.363,0.118 0.588,0.809 0,0.382 -0.588,0.809 -0.363,0.118 -0.951,-0.309 -0.224,-0.309" transform="scale(1.8)"/>
                             </defs>
                             <g class="icon-loop-eu" style="transform-origin: 12px 12px;">
                                 <g transform="translate(12, 12)">
                                     <use href="#eu-star" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(30)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(60)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(90)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(120)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(150)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(180)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(210)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(240)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(270)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(300)" x="0" y="-8" />
-                                    <use href="#eu-star" transform="rotate(330)" x="0" y="-8" />
+                                    <use href="#eu-star" x="4" y="-6.928" />
+                                    <use href="#eu-star" x="6.928" y="-4" />
+                                    <use href="#eu-star" x="8" y="0" />
+                                    <use href="#eu-star" x="6.928" y="4" />
+                                    <use href="#eu-star" x="4" y="6.928" />
+                                    <use href="#eu-star" x="0" y="8" />
+                                    <use href="#eu-star" x="-4" y="6.928" />
+                                    <use href="#eu-star" x="-6.928" y="4" />
+                                    <use href="#eu-star" x="-8" y="0" />
+                                    <use href="#eu-star" x="-6.928" y="-4" />
+                                    <use href="#eu-star" x="-4" y="-6.928" />
                                 </g>
                             </g>
                         </svg>
@@ -1345,7 +1348,7 @@
                             <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
                             <li>Ne pas tenter de contourner les limitations techniques</li>
                             <li>Respecter les autres utilisateurs</li>
-                            <li>Ne pas utiliser le bot à fins illégales ou malveillantes</li>
+                            <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
                             <li>Utiliser les commandes de manière raisonnable et appropriée</li>
                         </ul>
                     </div>
@@ -1757,7 +1760,7 @@
                         <p>For any questions regarding these ToS:</p>
                         <ul>
                             <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
                             <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
                     </div>
