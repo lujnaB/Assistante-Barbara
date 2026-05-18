@@ -408,7 +408,7 @@
             color: var(--primary);
         }
 
-        /* --- GRILLE DES FONCTIONNALITÉS (SVGs PREMIUM & ANIMATIONS) --- */
+        /* --- GRILLE DES FONCTIONNALITÉS --- */
         .features-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
         }
@@ -424,9 +424,9 @@
         .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
         .feature-card:hover::before { width: 98%; }
 
-        /* Conteneur de l'icône purifié */
+        /* Configuration des icônes SVG sans fond */
         .feature-icon-wrapper {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: inline-flex;
             justify-content: flex-start;
             align-items: center;
@@ -437,118 +437,132 @@
             height: 48px;
             stroke: var(--primary);
             transform-origin: center;
-            /* La transition gère l'entrée fluide avant l'activation des Keyframes */
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), stroke 0.4s ease, filter 0.4s ease;
             will-change: transform, filter;
         }
 
-        /* Effet visuel immédiat (couleur + lueur) */
+        /* Spécificité pour l'icône Europe (Fill vs Stroke) */
+        .icon-eu { fill: var(--primary); stroke: none; }
+        
+        /* ANIMATION UNIVERSELLE D'ENTRÉE (POP) 
+           Toutes les icônes font ce rebond de 0 à 0.4s au survol
+        */
+        @keyframes pop-entry {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1.15); opacity: 1; }
+        }
+
         .feature-card:hover .feature-icon-svg {
+            animation: pop-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Coloration et lueur au survol sur le SVG global */
+        .feature-card:hover .feature-icon-svg:not(.icon-eu) {
             stroke: #a5d6ff;
             filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
         }
-
-        /* Enchaînement parfait : Animation d'entrée suivie de l'animation en boucle (délai de 0.4s) */
-        
-        /* 1. Animation Robot (Lévitation + Hochement de tête) */
-        @keyframes robot-entry {
-            0% { transform: scale(0.5) translateY(20px); opacity: 0; }
-            100% { transform: scale(1.15) translateY(-5px); opacity: 1; }
-        }
-        @keyframes robot-loop {
-            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
-            33% { transform: scale(1.15) translateY(-5px) rotate(-8deg); }
-            66% { transform: scale(1.15) translateY(-5px) rotate(8deg); }
-        }
-        .feature-card:hover .icon-robot {
-            animation: 
-                robot-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-                robot-loop 2s ease-in-out 0.4s infinite alternate;
-        }
-
-        /* 2. Animation Bouclier (Zoom in + Pulsation protectrice 100% raccord) */
-        @keyframes shield-entry {
-            0% { transform: scale(0.5) translateY(10px); opacity: 0; }
-            100% { transform: scale(1.15) translateY(-5px); opacity: 1; }
-        }
-        @keyframes shield-loop {
-            0%, 100% { transform: scale(1.15) translateY(-5px); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
-            50% { transform: scale(1.25) translateY(-5px); filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.9)); }
-        }
-        .feature-card:hover .icon-shield {
-            animation: 
-                shield-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-                shield-loop 2s ease-in-out 0.4s infinite;
-        }
-
-        /* 3. Animation Magie / Divertissement (Tirage de baguette fluide) */
-        @keyframes magic-entry {
-            0% { transform: scale(0.5) rotate(-45deg); opacity: 0; }
-            100% { transform: scale(1.15) translateY(-5px) rotate(0deg); opacity: 1; }
-        }
-        @keyframes magic-loop {
-            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
-            50% { transform: scale(1.15) translateY(-8px) rotate(5deg); filter: drop-shadow(0 0 15px #a5d6ff); }
-        }
-        .feature-card:hover .icon-magic {
-            animation: 
-                magic-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-                magic-loop 2.5s ease-in-out 0.4s infinite;
-        }
-
-        /* 4. Animation Cadenas (Chute 2D + Pendule naturel) */
-        .icon-lock { transform-origin: 50% 20%; /* Le point de rotation est l'anse du cadenas */ }
-        @keyframes lock-entry {
-            0% { transform: scale(0.5) translateY(-20px); opacity: 0; }
-            100% { transform: scale(1.15) translateY(-5px) rotate(0deg); opacity: 1; }
-        }
-        @keyframes lock-loop {
-            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
-            25% { transform: scale(1.15) translateY(-5px) rotate(-10deg); }
-            75% { transform: scale(1.15) translateY(-5px) rotate(10deg); }
-        }
-        .feature-card:hover .icon-lock {
-            animation: 
-                lock-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-                lock-loop 2s ease-in-out 0.4s infinite;
-        }
-
-        /* 5. Animation Cercle Étoiles UE (Apparition centrale + Rotation infinie) */
-        @keyframes eu-entry {
-            0% { transform: scale(0.5) translateY(10px); opacity: 0; }
-            100% { transform: scale(1.15) translateY(-5px) rotate(0deg); opacity: 1; }
-        }
-        @keyframes eu-loop {
-            0% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
-            100% { transform: scale(1.15) translateY(-5px) rotate(360deg); }
-        }
         .feature-card:hover .icon-eu {
-            animation: 
-                eu-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-                eu-loop 12s linear 0.4s infinite;
+            fill: #a5d6ff;
+            filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
         }
 
-        /* 6. Animation Éclair (Frappe Flash + Vibration) */
-        @keyframes zap-entry {
-            0% { transform: scale(0.5) skewX(20deg); opacity: 0; }
-            100% { transform: scale(1.15) translateY(-5px) skewX(0deg); opacity: 1; }
+        /* ANIMATIONS EN BOUCLE SPÉCIFIQUES 
+           (Activées à l'intérieur du SVG après un délai de 0.4s pour s'enchainer avec le Pop)
+        */
+
+        /* 1. Robot : Hochement de tête gauche/droite + Pause */
+        @keyframes robot-head-shake {
+            0%, 20% { transform: rotate(0deg); }
+            30% { transform: rotate(-15deg); }
+            50% { transform: rotate(15deg); }
+            60%, 100% { transform: rotate(0deg); }
         }
-        @keyframes zap-loop {
-            0%, 100% { transform: scale(1.15) translateY(-5px) rotate(0deg); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
-            10% { transform: scale(1.2) translateY(-5px) rotate(-5deg); filter: drop-shadow(0 0 15px #a5d6ff); }
-            20% { transform: scale(1.15) translateY(-5px) rotate(5deg); }
-            30% { transform: scale(1.2) translateY(-5px) rotate(-5deg); }
-            40% { transform: scale(1.15) translateY(-5px) rotate(0deg); }
-        }
-        .feature-card:hover .icon-zap {
-            animation: 
-                zap-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-                zap-loop 2.5s ease-in-out 0.4s infinite;
+        .feature-card:hover .icon-loop-robot {
+            transform-origin: center 16px; /* Axe de rotation au niveau du "cou" */
+            animation: robot-head-shake 2.5s ease-in-out 0.4s infinite;
         }
 
+        /* 2. Bouclier : Plantage dans le sol + particules */
+        @keyframes shield-plant {
+            0%, 20% { transform: translateY(0); }
+            30% { transform: translateY(-8px); } /* S'élève */
+            40% { transform: translateY(6px); }  /* Frappe le sol */
+            50%, 100% { transform: translateY(0); }
+        }
+        @keyframes shield-particles {
+            0%, 35% { opacity: 0; transform: translateY(0) scale(0.8); }
+            40% { opacity: 1; transform: translateY(4px) scale(1.2); }
+            55%, 100% { opacity: 0; transform: translateY(8px) scale(1); }
+        }
+        .feature-card:hover .icon-loop-shield {
+            transform-origin: center;
+            animation: shield-plant 2.5s ease-in-out 0.4s infinite;
+        }
+        .feature-card:hover .shield-part {
+            transform-origin: center bottom;
+            animation: shield-particles 2.5s ease-out 0.4s infinite;
+        }
 
+        /* 3. Baguette Magique : Coup de baguette + apparition d'étoiles */
+        @keyframes wand-shake {
+            0%, 20% { transform: rotate(0deg); }
+            30% { transform: rotate(-15deg); }
+            40% { transform: rotate(10deg); }
+            50%, 100% { transform: rotate(0deg); }
+        }
+        @keyframes wand-stars-anim {
+            0%, 35% { opacity: 0; transform: scale(0.5); }
+            45% { opacity: 1; transform: scale(1.1); }
+            60%, 100% { opacity: 0; transform: scale(1); }
+        }
+        .feature-card:hover .icon-loop-wand {
+            transform-origin: center;
+            animation: wand-shake 2.5s ease-in-out 0.4s infinite;
+        }
+        .feature-card:hover .wand-stars {
+            transform-origin: center top;
+            animation: wand-stars-anim 2.5s ease-in-out 0.4s infinite;
+        }
+
+        /* 4. Cadenas : Anse se lève doucement puis se referme sec */
+        @keyframes shackle-move {
+            0%, 10% { transform: translateY(0); }
+            40% { transform: translateY(-4px); } /* Monte très doucement */
+            45% { transform: translateY(0); } /* Claque d'un coup sec */
+            100% { transform: translateY(0); }
+        }
+        .feature-card:hover .lock-shackle {
+            animation: shackle-move 2.5s ease-in-out 0.4s infinite;
+        }
+
+        /* 5. Europe : Rotation fluide du cercle de 12 étoiles */
+        @keyframes eu-spin {
+            0%, 10% { transform: rotate(0deg); }
+            70% { transform: rotate(360deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .feature-card:hover .icon-loop-eu {
+            transform-origin: 12px 12px; /* Centre exact du SVG (ViewBox 24x24) */
+            animation: eu-spin 4s cubic-bezier(0.45, 0, 0.15, 1) 0.4s infinite;
+        }
+
+        /* 6. Éclair : Apparitions stroboscopiques (Flash) */
+        @keyframes zap-flash {
+            0%, 20% { opacity: 1; transform: scale(1); }
+            22% { opacity: 0; }
+            24% { opacity: 1; transform: scale(1.15); } /* Gros flash */
+            26% { opacity: 0; }
+            28% { opacity: 1; transform: scale(1); }
+            100% { opacity: 1; }
+        }
+        .feature-card:hover .icon-loop-zap {
+            transform-origin: center;
+            animation: zap-flash 3s linear 0.4s infinite;
+        }
+
+        /* Textes justifiés et soignés */
         .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 600; }
-        .feature-card p { color: var(--muted); line-height: 1.7; }
+        .feature-card p { color: var(--muted); line-height: 1.7; text-align: justify; hyphens: auto; }
 
         /* --- COMMANDES --- */
         .commands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
@@ -861,11 +875,13 @@
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-robot">
-                            <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-                            <circle cx="12" cy="5" r="2"></circle>
-                            <path d="M12 7v4"></path>
-                            <line x1="8" y1="16" x2="8" y2="16"></line>
-                            <line x1="16" y1="16" x2="16" y2="16"></line>
+                            <g class="icon-loop-robot">
+                                <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+                                <circle cx="12" cy="5" r="2"></circle>
+                                <path d="M12 7v4"></path>
+                                <line x1="8" y1="16" x2="8" y2="16"></line>
+                                <line x1="16" y1="16" x2="16" y2="16"></line>
+                            </g>
                         </svg>
                     </div>
                     <h3>Intelligence artificielle</h3>
@@ -875,7 +891,12 @@
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-shield">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <g class="icon-loop-shield">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </g>
+                            <g class="shield-part" opacity="0">
+                                <path d="M5 21 l-2 2 M19 21 l2 2" stroke-linecap="round"/>
+                            </g>
                         </svg>
                     </div>
                     <h3>Modération simplifiée</h3>
@@ -885,14 +906,18 @@
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-magic">
-                            <path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"></path>
-                            <path d="m14 7 3 3"></path>
-                            <path d="M5 6v4"></path>
-                            <path d="M19 14v4"></path>
-                            <path d="M10 2v2"></path>
-                            <path d="M7 8H3"></path>
-                            <path d="M21 16h-4"></path>
-                            <path d="M11 3H9"></path>
+                            <g class="icon-loop-wand">
+                                <path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"></path>
+                                <path d="m14 7 3 3"></path>
+                            </g>
+                            <g class="wand-stars" opacity="0">
+                                <path d="M5 6v4"></path>
+                                <path d="M19 14v4"></path>
+                                <path d="M10 2v2"></path>
+                                <path d="M7 8H3"></path>
+                                <path d="M21 16h-4"></path>
+                                <path d="M11 3H9"></path>
+                            </g>
                         </svg>
                     </div>
                     <h3>Divertissement</h3>
@@ -903,7 +928,7 @@
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-lock">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            <path class="lock-shackle" d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                         </svg>
                     </div>
                     <h3>Confidentialité garantie</h3>
@@ -916,7 +941,7 @@
                             <defs>
                                 <polygon id="eu-star" points="0,-1 0.224,-0.309 0.951,-0.309 0.363,0.118 0.588,0.809 0,0.382 -0.588,0.809 -0.363,0.118 -0.951,-0.309 -0.224,-0.309" transform="translate(0, -9) scale(1.4)" fill="currentColor" stroke="none" />
                             </defs>
-                            <g transform="translate(12, 12)">
+                            <g class="icon-loop-eu" transform="translate(12, 12)">
                                 <use href="#eu-star" />
                                 <use href="#eu-star" transform="rotate(30)" />
                                 <use href="#eu-star" transform="rotate(60)" />
@@ -939,7 +964,9 @@
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-zap">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            <g class="icon-loop-zap">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </g>
                         </svg>
                     </div>
                     <h3>Haute disponibilité</h3>
@@ -1190,7 +1217,7 @@
                         <li><strong>Droit à la portabilité (Article 20) :</strong> Recevoir vos données dans un format structuré</li>
                         <li><strong>Droit de retrait du consentement :</strong> Retirer votre consentement à tout moment</li>
                     </ul>
-                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatically satisfait par notre politique de suppression automatique. Néanmoins, vous pouvez nous contacter pour toute question ou demande spécifique.</p>
+                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatiquement satisfait par notre politique de suppression automatique. Néanmoins, vous pouvez nous contacter pour toute question ou demande spécifique.</p>
                     <p><strong>Droit de réclamation :</strong> Vous avez le droit d'introduire une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés) si vous estimez que vos droits ne sont pas respectés : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
 
                     <h3>8. Sécurité des données</h3>
@@ -1282,7 +1309,7 @@
                         <li>Les réponses de l'IA sont générées automatiquement par des services tiers (OpenAI, Mistral AI) et peuvent contenir des inexactitudes, des erreurs ou des informations obsolètes</li>
                         <li>L'IA peut produire du contenu imprévisible ou inapproprié malgré nos efforts de modération</li>
                         <li>Ne vous fiez jamais exclusivement aux réponses de l'IA pour des décisions importantes, notamment en matière de santé, juridique, financière ou de sécurité</li>
-                        <li>Les conversations avec l'IA sont traitées par des services tiers conformément à leurs politiques respectives</li>
+                        <li>Les conversations avec l'IA sont traitées par des services tiers conformément à policies respectives</li>
                         <li>Nous ne sommes pas responsables du contenu généré par l'IA ni de son utilisation</li>
                         <li>L'utilisateur est seul responsable de la vérification des informations fournies par l'IA</li>
                         <li>En utilisant ces fonctionnalités, vous acceptez que vos messages soient transmis et traités par OpenAI et/ou Mistral AI</li>
@@ -1330,7 +1357,7 @@
                         <p><strong>Assistante Barbara est fournie "en l'état" et "selon disponibilité".</strong> Dans toute la mesure permise par la loi applicable, nous déclinons toute responsabilité concernant :</p>
                         <ul>
                             <li>Les dommages directs, indirects, accessoires, spéciaux, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le bot</li>
-                            <li>La precision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
+                            <li>La précision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
                             <li>Les pertes de données, interruptions de service ou tout dysfonctionnement technique</li>
                             <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
                             <li>Les décisions prises sur la base des informations fournies par le bot</li>
