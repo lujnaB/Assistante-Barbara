@@ -468,7 +468,7 @@
 
         /* 2. LES ANIMATIONS EN BOUCLE (Appliquées aux groupes internes <g> après un délai) */
 
-        /* Robot Tête : Balancement et Inclinaison douce au survol - FIX DESIGN & ANIMATION */
+        /* Robot Tête : Balancement et Inclinaison douce au survol */
         @keyframes robot-head-tilt-loop {
             0% { transform: rotate(0deg); }
             25% { transform: rotate(-5deg) translateY(-2px); }
@@ -482,1178 +482,7 @@
             animation: robot-head-tilt-loop 2s ease-in-out infinite;
         }
         
-        /* Fix Robot Head eyes fill color & glow consistency on hover */
-        .feature-card:hover .icon-robot-head .robot-head-eyes {
-            fill: #a5d6ff;
-            filter: drop-shadow(0 0 3px #a5d6ff);
-        }
-
-        /* Bouclier : S'élève, se plante, explosion de poussière sur les côtés */
-        @keyframes shield-slam-loop {
-            0%, 20% { transform: scale(1) translateY(0); }
-            35% { transform: scale(1.15) translateY(-8px); } /* S'élève en s'agrandissant */
-            45% { transform: scale(0.95) translateY(4px); }  /* Plante lourdement */
-            60%, 100% { transform: scale(1) translateY(0); } /* Revient en place */
-        }
-        @keyframes shield-dust-left {
-            0%, 40% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-            45% { opacity: 1; transform: translate(-4px, -1px) scale(1.2); }
-            65%, 100% { opacity: 0; transform: translate(-10px, -4px) scale(0.3); }
-        }
-        @keyframes shield-dust-right {
-            0%, 40% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-            45% { opacity: 1; transform: translate(4px, -1px) scale(1.2); }
-            65%, 100% { opacity: 0; transform: translate(10px, -4px) scale(0.3); }
-        }
-        .feature-card:hover .icon-loop-shield {
-            transform-origin: center;
-            animation: shield-slam-loop 2.5s ease-in-out 0.4s infinite;
-        }
-        .feature-card:hover .shield-part-left {
-            transform-origin: 6px 21px;
-            animation: shield-dust-left 2.5s ease-out 0.4s infinite;
-        }
-        .feature-card:hover .shield-part-right {
-            transform-origin: 18px 21px;
-            animation: shield-dust-right 2.5s ease-out 0.4s infinite;
-        }
-
-        /* Baguette Magique : Coup sec + Étoiles qui s'attardent */
-        @keyframes wand-flick {
-            0%, 15% { transform: rotate(0deg); }
-            20% { transform: rotate(-15deg); }
-            30% { transform: rotate(10deg); }
-            40%, 100% { transform: rotate(0deg); }
-        }
-        @keyframes wand-stars-fade {
-            0%, 25% { opacity: 0; transform: scale(0.5); }
-            30% { opacity: 1; transform: scale(1.1); }
-            70% { opacity: 1; transform: scale(1); } /* Reste visible et brille```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistante Barbara</title>
-    <link rel="icon" type="image/png" href="logo-ab.png">
-    <link rel="apple-touch-icon" href="logo-ab.png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            /* Textes & Titres */
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --dark: #f1f5f9;
-            --light: #1e293b;
-            --text: #cbd5e1;
-            --muted: #94a3b8;
-            --border: #334155;
-            --shadow: rgba(0, 0, 0, 0.5);
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-            /* Fonds */
-            --bg-body: #0f172a;
-            --bg-card: #1e293b;
-
-            /* Navigation */
-            --bg-header: rgba(15, 23, 42, 0.95);
-            --bg-header-mobile-nav: #1e293b;
-
-            /* Éléments UI */
-            --bg-highlight: #334155;
-            --bg-placeholder-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: var(--bg-body);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .partner-cta, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
-            transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        /* --- ARRIÈRE-PLAN ANIMÉ --- */
-        #blob-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-        }
-
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            z-index: -1;
-            pointer-events: none;
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-            will-change: transform;
-        }
-
-        .blob-1 { width: 55vw; height: 55vw; background: rgba(55, 38, 180, 0.45); animation: blob1 22s ease-in-out infinite alternate; }
-        .blob-2 { width: 45vw; height: 45vw; background: rgba(110, 35, 80, 0.35); animation: blob2 28s ease-in-out infinite alternate; }
-        .blob-3 { width: 40vw; height: 40vw; background: rgba(70, 30, 150, 0.3); animation: blob3 35s ease-in-out infinite alternate; }
-        .blob-4 { width: 30vw; height: 30vw; background: rgba(90, 20, 60, 0.25); animation: blob4 18s ease-in-out infinite alternate; }
-
-        @media (max-width: 1024px) {
-            .blob { filter: blur(60px); }
-            .blob-1 { width: 100vw !important; height: 100vw !important; }
-            .blob-2 { width: 90vw !important; height: 90vw !important;  }
-            .blob-3 { width: 80vw !important; height: 80vw !important;  }
-            .blob-4 { width: 70vw !important; height: 70vw !important;  }
-        }
-
-        @keyframes blob1 { 0% { top: -10vh; left: -10vw; } 20% { top: 30vh; left: 60vw; } 40% { top: 60vh; left: 20vw; } 60% { top: 10vh; left: 40vw; } 80% { top: 70vh; left: 70vw; } 100% { top: 40vh; left: -5vw; } }
-        @keyframes blob2 { 0% { top: 60vh; left: 70vw; } 20% { top: 10vh; left: 30vw; } 40% { top: 80vh; left: 10vw; } 60% { top: 40vh; left: 80vw; } 80% { top: 20vh; left: 50vw; } 100% { top: 70vh; left: 30vw; } }
-        @keyframes blob3 { 0% { top: 40vh; left: 40vw; } 25% { top: 80vh; left: 80vw; } 50% { top: 10vh; left: 60vw; } 75% { top: 60vh; left: 10vw; } 100% { top: 30vh; left: 70vw; } }
-        @keyframes blob4 { 0% { top: 20vh; left: 80vw; } 30% { top: 70vh; left: 40vw; } 60% { top: 10vh; left: 10vw; } 100% { top: 50vh; left: 60vw; } }
-
-        body::before, body::after { display: none; }
-
-        /* --- SYSTÈME D'ESPACEMENT UNIVERSEL ET STRUCTUREL --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-
-        .section {
-            padding: 80px 0;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 60px; 
-            margin-top: 0;
-        }
-
-        @media (max-width: 1024px) {
-            .container { padding: 0 20px; }
-            .section { padding: 60px 0; }
-            .section-title { font-size: 2rem; margin-bottom: 40px; }
-        }
-
-        .page > .section:first-child {
-            padding-top: 100px;
-        }
-        @media (max-width: 1024px) {
-            .page > .section:first-child { padding-top: 80px; }
-        }
-
-        /* --- SYSTÈME D'ANIMATION AU SCROLL --- */
-        .animated-element {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.45s cubic-bezier(0.215, 0.61, 0.355, 1),
-                        transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-
-        .animated-element.is-visible { opacity: 1; transform: translateY(0); }
-        .animated-element.is-visible:nth-child(1) { transition-delay: 0.04s; }
-        .animated-element.is-visible:nth-child(2) { transition-delay: 0.08s; }
-        .animated-element.is-visible:nth-child(3) { transition-delay: 0.12s; }
-        .animated-element.is-visible:nth-child(4) { transition-delay: 0.16s; }
-        .animated-element.is-visible:nth-child(5) { transition-delay: 0.20s; }
-        .animated-element.is-visible:nth-child(6) { transition-delay: 0.24s; }
-        .animated-element.is-visible:nth-child(7) { transition-delay: 0.28s; }
-        .animated-element.is-visible:nth-child(8) { transition-delay: 0.32s; }
-        .animated-element.is-visible:nth-child(9) { transition-delay: 0.36s; }
-
-        .animated-partners-container {
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-
-        .animated-partners-container.is-visible { opacity: 1; }
-
-        /* --- NAVIGATION --- */
-        .header {
-            background: var(--bg-header);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .menu-toggle {
-            display: none; flex-direction: column; gap: 5px;
-            cursor: pointer; padding: 8px; background: transparent;
-            border: none; z-index: 1002; position: relative;
-        }
-
-        .menu-toggle span {
-            width: 25px; height: 3px; background: var(--text);
-            border-radius: 3px; transition: all 0.3s ease;
-        }
-
-        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
-        .menu-toggle.active span:nth-child(2) { opacity: 0; }
-        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
-
-        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-        .logo-img {
-            width: 50px; height: 50px; border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
-            transition: transform 0.3s ease; object-fit: cover;
-        }
-        .logo:hover .logo-img { transform: scale(1.05); }
-
-        .logo-text h1 { font-size: 1.4rem; font-weight: 600; color: var(--dark); letter-spacing: -0.02em; }
-        .logo-text p { font-size: 0.85rem; color: var(--muted); }
-
-        .nav { display: flex; gap: 30px; align-items: center; }
-        .nav-separator { width: 1px; height: 24px; background: var(--border); margin: 0; flex-shrink: 0; }
-        
-        .nav-link {
-            color: var(--text); text-decoration: none; font-weight: 500;
-            font-size: 0.95rem; transition: color 0.2s; position: relative; white-space: nowrap;
-        }
-        .nav-link::after {
-            content: ''; position: absolute; bottom: -5px; left: 0;
-            width: 0; height: 2px; background: var(--gradient);
-            transition: width 0.3s ease; border-radius: 2px;
-        }
-        .nav-link:hover { color: var(--primary); }
-        .nav-link:hover::after { width: 100%; }
-
-        /* BOUTON MAGNÉTIQUE */
-        .magnetic-btn {
-            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease !important;
-            will-change: transform;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .magnetic-btn:hover {
-            z-index: 10;
-        }
-
-        .btn-nav-login {
-            background: var(--bg-card);
-            color: var(--primary);
-            padding: 10px 18px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: 2px solid var(--border);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-nav-login:hover {
-            border-color: var(--primary);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-            color: var(--primary);
-        }
-
-        /* --- SECTION HERO (TERMINAL -> TITRE) --- */
-        .hero-transition-wrapper {
-            display: grid;
-            grid-template-columns: 1fr;
-            align-items: center;
-            justify-items: center;
-            width: 100%;
-            position: relative;
-        }
-
-        .code-window {
-            grid-area: 1 / 1;
-            position: absolute;
-            width: 100%;
-            max-width: 800px;
-            background: #0d1117;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(102, 126, 234, 0.2);
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-            z-index: 2;
-        }
-
-        body.start-anim .code-window {
-            animation: 
-                slideUpCode 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
-                fadeOutTerminal 0.6s cubic-bezier(0.4, 0, 0.2, 1) 4.7s forwards;
-        }
-
-        .code-header {
-            display: flex; align-items: center; padding: 12px 20px;
-            background: rgba(30, 41, 59, 0.9); border-bottom: 1px solid var(--border); gap: 8px;
-        }
-        .code-dot { width: 12px; height: 12px; border-radius: 50%; }
-        .code-dot.red { background: #ff5f56; }
-        .code-dot.yellow { background: #ffbd2e; }
-        .code-dot.green { background: #27c93f; }
-
-        .code-title {
-            margin: 0 auto; color: var(--muted); font-size: 0.85rem;
-            font-family: 'SF Mono', monospace; padding-right: 48px;
-        }
-
-        .code-body {
-            padding: 30px; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 1.05rem; line-height: 1.6; color: #c9d1d9; overflow-x: auto; text-align: left;
-        }
-        .code-body pre { margin: 0; }
-        .code-body code { font-family: inherit; }
-
-        .token-keyword { color: #ff7b72; }
-        .token-class { color: #f0883e; }
-        .token-variable { color: #79c0ff; }
-        .token-string { color: #a5d6ff; }
-        .token-method { color: #d2a8ff; }
-        .token-punctuation { color: #c9d1d9; }
-        .token-comment { color: #8b949e; font-style: italic; }
-
-        .typewriter { display: inline-flex; vertical-align: bottom; }
-        .typewriter-text {
-            overflow: hidden; white-space: nowrap; border-right: 2px solid var(--primary);
-            margin: 0; width: 0; color: var(--primary); font-weight: 600;
-        }
-
-        body.start-anim .typewriter-text {
-            animation: typing 2s steps(18, end) 1.2s forwards, blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes typing { from { width: 0; } to { width: 18.5ch; } }
-        @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: var(--primary); } }
-        @keyframes slideUpCode { to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOutTerminal { to { opacity: 0; transform: translateY(-30px) scale(0.95); visibility: hidden; pointer-events: none; } }
-
-        .hero-final-content {
-            grid-area: 1 / 1; width: 100%; max-width: 800px; text-align: center;
-            opacity: 0; transform: translateY(30px) scale(0.95); z-index: 1; pointer-events: none;
-        }
-
-        body.start-anim .hero-final-content {
-            animation: fadeInFinal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 5.0s forwards;
-        }
-
-        @keyframes fadeInFinal { to { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; } }
-
-        .hero-final-content h2, .hero h2 {
-            font-size: 3.5rem; font-weight: 700; color: var(--dark);
-            margin-bottom: 20px; letter-spacing: -0.03em; line-height: 1.1;
-        }
-
-        .hero-final-content .gradient-text {
-            background: var(--gradient); -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; background-clip: text;
-        }
-
-        .hero-final-content p, .hero p {
-            font-size: 1.25rem; color: var(--muted); max-width: 700px;
-            margin: 0 auto 40px; line-height: 1.7;
-        }
-
-        /* --- STYLES DES BOUTONS --- */
-        .hero-buttons {
-            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
-        }
-
-        .hero-btn {
-            width: 280px; 
-            max-width: 100%;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .hero-buttons .btn-primary { z-index: 2; }
-        .hero-buttons .btn-secondary { z-index: 1; }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            padding: 16px 30px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-            border: 2px solid transparent;
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
-            color: white;
-        }
-        
-        .btn-primary:not(:hover), .btn-secondary:not(:hover), .btn-nav-login:not(:hover), .btn-feedback:not(:hover) {
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-        
-        .btn-primary:hover, .btn-secondary:hover, .btn-nav-login:hover, .btn-feedback:hover {
-            transform: scale(1.05); 
-        }
-
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--primary);
-            padding: 16px 30px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: 2px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
-            color: var(--primary);
-        }
-
-        /* --- GRILLE DES FONCTIONNALITÉS (SVGs PREMIUM & ANIMATIONS) --- */
-        .features-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
-        }
-
-        .feature-card {
-            background: var(--bg-card); padding: 40px; border-radius: 16px;
-            border: 1px solid var(--border); transition: all 0.3s ease; position: relative; overflow: hidden;
-        }
-        .feature-card::before {
-            content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 4px;
-            background: var(--gradient); transform: translateX(-50%); transition: width 0.3s ease; border-radius: 3px;
-        }
-        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
-        .feature-card:hover::before { width: 98%; }
-
-        .feature-icon-wrapper {
-            margin-bottom: 25px;
-            display: inline-flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        /* OVERFLOW VISIBLE : Interdit aux animations d'être coupées ! */
-        .feature-icon-svg {
-            width: 48px;
-            height: 48px;
-            stroke: var(--primary);
-            transform-origin: center;
-            overflow: visible !important; 
-            will-change: transform, filter;
-        }
-
-        .icon-eu { fill: var(--primary); stroke: none !important; transition: fill 0.4s ease, filter 0.4s ease; }
-        
-        /* 1. L'ANIMATION D'ENTRÉE (Le SVG global fait un POP) */
-        @keyframes pop-entry {
-            0% { transform: scale(0.5) translateY(10px); opacity: 0; }
-            70% { transform: scale(1.25) translateY(-7px); opacity: 1; }
-            100% { transform: scale(1.15) translateY(-5px); opacity: 1; }
-        }
-
-        .feature-card:hover .feature-icon-svg {
-            transform: scale(1.15) translateY(-5px);
-            animation: pop-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        /* Changement de couleur + Glow global */
-        .feature-card:hover .feature-icon-svg:not(.icon-eu) {
-            stroke: #a5d6ff;
-            filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
-            transition: stroke 0.4s ease, filter 0.4s ease;
-        }
-        .feature-card:hover .icon-eu {
-            fill: #a5d6ff !important;
-            filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
-        }
-
-        /* 2. LES ANIMATIONS EN BOUCLE (Appliquées aux groupes internes <g> après un délai) */
-
-        /* Robot Tête : Balancement et Inclinaison douce au survol - FIX DESIGN & ANIMATION */
-        @keyframes robot-head-tilt-loop {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(-5deg) translateY(-2px); }
-            50% { transform: rotate(0deg) translateY(0px); }
-            75% { transform: rotate(5deg) translateY(-2px); }
-            100% { transform: rotate(0deg); }
-        }
-        
-        .feature-card:hover .icon-loop-robot-head {
-            transform-origin: center bottom;
-            animation: robot-head-tilt-loop 2s ease-in-out infinite;
-        }
-        
-        /* Fix Robot Head eyes fill color & glow consistency on hover */
-        .feature-card:hover .icon-robot-head .robot-head-eyes {
-            fill: #a5d6ff;
-            filter: drop-shadow(0 0 3px #a5d6ff);
-        }
-
-        /* Bouclier : S'élève, se plante, explosion de poussière sur les côtés */
-        @keyframes shield-slam-loop {
-            0%, 20% { transform: scale(1) translateY(0); }
-            35% { transform: scale(1.15) translateY(-8px); } /* S'élève en s'agrandissant */
-            45% { transform: scale(0.95) translateY(4px); }  /* Plante lourdement */
-            60%, 100% { transform: scale(1) translateY(0); } /* Revient en place */
-        }
-        @keyframes shield-dust-left {
-            0%, 40% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-            45% { opacity: 1; transform: translate(-4px, -1px) scale(1.2); }
-            65%, 100% { opacity: 0; transform: translate(-10px, -4px) scale(0.3); }
-        }
-        @keyframes shield-dust-right {
-            0%, 40% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-            45% { opacity: 1; transform: translate(4px, -1px) scale(1.2); }
-            65%, 100% { opacity: 0; transform: translate(10px, -4px) scale(0.3); }
-        }
-        .feature-card:hover .icon-loop-shield {
-            transform-origin: center;
-            animation: shield-slam-loop 2.5s ease-in-out 0.4s infinite;
-        }
-        .feature-card:hover .shield-part-left {
-            transform-origin: 6px 21px;
-            animation: shield-dust-left 2.5s ease-out 0.4s infinite;
-        }
-        .feature-card:hover .shield-part-right {
-            transform-origin: 18px 21px;
-            animation: shield-dust-right 2.5s ease-out 0.4s infinite;
-        }
-
-        /* Baguette Magique : Coup sec + Étoiles qui s'attardent */
-        @keyframes wand-flick {
-            0%, 15% { transform: rotate(0deg); }
-            20% { transform: rotate(-15deg); }
-            30% { transform: rotate(10deg); }
-            40%, 100% { transform: rotate(0deg); }
-        }
-        @keyframes wand-stars-fade {
-            0%, 25% { opacity: 0; transform: scale(0.5); }
-            30% { opacity: 1; transform: scale(1.1); }
-            70% { opacity: 1; transform: scale(1); } /* Reste visible et brille */
-            85%, 100% { opacity: 0; transform: scale(0.8); }
-        }
-        .feature-card:hover .icon-loop-wand {
-            transform-origin: center;
-            animation: wand-flick 2.5s ease-in-out 0.4s infinite;
-        }
-        .feature-card:hover .wand-stars {
-            transform-origin: center;
-            animation: wand-stars-fade 2.5s ease-in-out 0.4s infinite;
-        }
-
-        /* Cadenas : Anse qui s'étire puis claque, cadenas entier s'abaisse */
-        @keyframes lock-body-snap {
-            0%, 48% { transform: translateY(0); }
-            50% { transform: translateY(3px); } /* Le cadenas entier sursaute vers le bas au claquement */
-            65%, 100% { transform: translateY(0); }
-        }
-        @keyframes shackle-pull {
-            0%, 20% { transform: translateY(0); }
-            45% { transform: translateY(-4px); } /* L'anse monte doucement */
-            50% { transform: translateY(0); } /* Claque */
-            100% { transform: translateY(0); }
-        }
-        .feature-card:hover .icon-loop-lock {
-            transform-origin: center;
-            animation: lock-body-snap 2.5s ease-in-out 0.4s infinite;
-        }
-        .feature-card:hover .lock-shackle {
-            animation: shackle-pull 2.5s ease-in-out 0.4s infinite;
-        }
-
-        /* Europe : Rotation accélérée puis décélérée du cercle de 12 étoiles */
-        @keyframes eu-spin-complex {
-            0% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-            80%, 100% { transform: rotate(1080deg); } /* Fait exactement 3 tours complets puis pause */
-        }
-        .feature-card:hover .icon-loop-eu {
-            transform-origin: 12px 12px; /* Centre exact du SVG */
-            animation: eu-spin-complex 5s forwards 0.4s infinite;
-        }
-
-        /* Éclair : Stroboscope flash violent */
-        @keyframes zap-flash {
-            0%, 10% { opacity: 1; transform: scale(1); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
-            12% { opacity: 0; }
-            14% { opacity: 1; transform: scale(1.25); filter: drop-shadow(0 0 20px #a5d6ff); } /* Flash massif */
-            16% { opacity: 0; }
-            18% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 10px #a5d6ff); }
-            20% { opacity: 0; }
-            22% { opacity: 1; transform: scale(1); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        .feature-card:hover .icon-loop-zap {
-            transform-origin: center;
-            animation: zap-flash 3s linear 0.4s infinite;
-        }
-
-        /* Textes justifiés */
-        .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 600; }
-        .feature-card p { color: var(--muted); line-height: 1.7; text-align: justify; hyphens: auto; }
-
-        /* --- COMMANDES --- */
-        .commands-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .command-card {
-            background: var(--bg-card); padding: 25px; border-radius: 12px;
-            border: 1px solid var(--border); border-left: 4px solid var(--primary); transition: all 0.2s ease;
-        }
-        .command-card:hover { transform: translateX(5px); box-shadow: 0 8px 20px var(--shadow); }
-        .command-card h4 {
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
-            font-size: 1.05rem; color: var(--primary); margin-bottom: 10px; font-weight: 600;
-        }
-        .command-card p { color: var(--muted); font-size: 0.95rem; }
-
-        /* --- SECTION AVIS (FEEDBACK) --- */
-        .feedback-section {
-            position: relative; overflow: hidden; border-radius: 20px;
-            padding: 80px 30px; width: 100%;
-        }
-        @media (max-width: 1024px) { .feedback-section { padding: 60px 20px; } }
-
-        .feedback-background {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--gradient); opacity: 0.95; z-index: 0;
-        }
-        .feedback-pattern {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
-            z-index: 1;
-        }
-        .feedback-content { position: relative; z-index: 2; text-align: center; color: white; }
-        .feedback-icon { font-size: 4rem; margin-bottom: 20px; display: inline-block; animation: pulse 2s ease-in-out infinite; }
-        
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        
-        .feedback-section h2 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; color: white; }
-        .feedback-section p {
-            font-size: 1.2rem; margin-bottom: 40px; opacity: 0.95;
-            max-width: 600Voilà qui est corrigé. J'ai repris ces deux éléments méthodiquement pour qu'ils soient parfaits et conformes à vos attentes, sans toucher au reste.
-
-Voici les corrections apportées :
-
-1.  **Robot (Carte "IA")** : Comme demandé, j'ai supprimé tout le corps pour ne conserver **que la tête**. J'ai également ajusté l'animation au survol : elle n'est plus une marche (ce qui n'a plus de sens), mais un balancement doux (bobbing) et une inclinaison, pour un effet "IA volante" plus cohérent. Les couleurs des yeux sont maintenant parfaitement gérées lors de l'animation.
-2.  **Drapeau Européen (Carte "Ancrage européen")** : J'ai entièrement refait le calcul du tracé SVG. Les 12 étoiles sont maintenant **parfaitement complètes**, bien définies, et forment un cercle impeccable qui remplit tout le cadre de 48px, à l'égal des autres icônes. Plus aucune étoile n'est coupée.
-
-Voici le code complet et corrigé, prêt à l'emploi :
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistante Barbara</title>
-    <link rel="icon" type="image/png" href="logo-ab.png">
-    <link rel="apple-touch-icon" href="logo-ab.png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            /* Textes & Titres */
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --dark: #f1f5f9;
-            --light: #1e293b;
-            --text: #cbd5e1;
-            --muted: #94a3b8;
-            --border: #334155;
-            --shadow: rgba(0, 0, 0, 0.5);
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-            /* Fonds */
-            --bg-body: #0f172a;
-            --bg-card: #1e293b;
-
-            /* Navigation */
-            --bg-header: rgba(15, 23, 42, 0.95);
-            --bg-header-mobile-nav: #1e293b;
-
-            /* Éléments UI */
-            --bg-highlight: #334155;
-            --bg-placeholder-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: var(--bg-body);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .header, .nav, .btn-secondary, .btn-feedback, .feature-card, .command-card, .partner-card, .accordion-item, .partner-cta, .highlight-box, .contact-box, .accordion-header, .partner-placeholder {
-            transition: background-color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        /* --- ARRIÈRE-PLAN ANIMÉ --- */
-        #blob-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-        }
-
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            z-index: -1;
-            pointer-events: none;
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-            will-change: transform;
-        }
-
-        .blob-1 { width: 55vw; height: 55vw; background: rgba(55, 38, 180, 0.45); animation: blob1 22s ease-in-out infinite alternate; }
-        .blob-2 { width: 45vw; height: 45vw; background: rgba(110, 35, 80, 0.35); animation: blob2 28s ease-in-out infinite alternate; }
-        .blob-3 { width: 40vw; height: 40vw; background: rgba(70, 30, 150, 0.3); animation: blob3 35s ease-in-out infinite alternate; }
-        .blob-4 { width: 30vw; height: 30vw; background: rgba(90, 20, 60, 0.25); animation: blob4 18s ease-in-out infinite alternate; }
-
-        @media (max-width: 1024px) {
-            .blob { filter: blur(60px); }
-            .blob-1 { width: 100vw !important; height: 100vw !important; }
-            .blob-2 { width: 90vw !important; height: 90vw !important;  }
-            .blob-3 { width: 80vw !important; height: 80vw !important;  }
-            .blob-4 { width: 70vw !important; height: 70vw !important;  }
-        }
-
-        @keyframes blob1 { 0% { top: -10vh; left: -10vw; } 20% { top: 30vh; left: 60vw; } 40% { top: 60vh; left: 20vw; } 60% { top: 10vh; left: 40vw; } 80% { top: 70vh; left: 70vw; } 100% { top: 40vh; left: -5vw; } }
-        @keyframes blob2 { 0% { top: 60vh; left: 70vw; } 20% { top: 10vh; left: 30vw; } 40% { top: 80vh; left: 10vw; } 60% { top: 40vh; left: 80vw; } 80% { top: 20vh; left: 50vw; } 100% { top: 70vh; left: 30vw; } }
-        @keyframes blob3 { 0% { top: 40vh; left: 40vw; } 25% { top: 80vh; left: 80vw; } 50% { top: 10vh; left: 60vw; } 75% { top: 60vh; left: 10vw; } 100% { top: 30vh; left: 70vw; } }
-        @keyframes blob4 { 0% { top: 20vh; left: 80vw; } 30% { top: 70vh; left: 40vw; } 60% { top: 10vh; left: 10vw; } 100% { top: 50vh; left: 60vw; } }
-
-        body::before, body::after { display: none; }
-
-        /* --- SYSTÈME D'ESPACEMENT UNIVERSEL ET STRUCTUREL --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-
-        .section {
-            padding: 80px 0;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 60px; 
-            margin-top: 0;
-        }
-
-        @media (max-width: 1024px) {
-            .container { padding: 0 20px; }
-            .section { padding: 60px 0; }
-            .section-title { font-size: 2rem; margin-bottom: 40px; }
-        }
-
-        .page > .section:first-child {
-            padding-top: 100px;
-        }
-        @media (max-width: 1024px) {
-            .page > .section:first-child { padding-top: 80px; }
-        }
-
-        /* --- SYSTÈME D'ANIMATION AU SCROLL --- */
-        .animated-element {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.45s cubic-bezier(0.215, 0.61, 0.355, 1),
-                        transform 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-
-        .animated-element.is-visible { opacity: 1; transform: translateY(0); }
-        .animated-element.is-visible:nth-child(1) { transition-delay: 0.04s; }
-        .animated-element.is-visible:nth-child(2) { transition-delay: 0.08s; }
-        .animated-element.is-visible:nth-child(3) { transition-delay: 0.12s; }
-        .animated-element.is-visible:nth-child(4) { transition-delay: 0.16s; }
-        .animated-element.is-visible:nth-child(5) { transition-delay: 0.20s; }
-        .animated-element.is-visible:nth-child(6) { transition-delay: 0.24s; }
-        .animated-element.is-visible:nth-child(7) { transition-delay: 0.28s; }
-        .animated-element.is-visible:nth-child(8) { transition-delay: 0.32s; }
-        .animated-element.is-visible:nth-child(9) { transition-delay: 0.36s; }
-
-        .animated-partners-container {
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-
-        .animated-partners-container.is-visible { opacity: 1; }
-
-        /* --- NAVIGATION --- */
-        .header {
-            background: var(--bg-header);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .menu-toggle {
-            display: none; flex-direction: column; gap: 5px;
-            cursor: pointer; padding: 8px; background: transparent;
-            border: none; z-index: 1002; position: relative;
-        }
-
-        .menu-toggle span {
-            width: 25px; height: 3px; background: var(--text);
-            border-radius: 3px; transition: all 0.3s ease;
-        }
-
-        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
-        .menu-toggle.active span:nth-child(2) { opacity: 0; }
-        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
-
-        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-        .logo-img {
-            width: 50px; height: 50px; border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
-            transition: transform 0.3s ease; object-fit: cover;
-        }
-        .logo:hover .logo-img { transform: scale(1.05); }
-
-        .logo-text h1 { font-size: 1.4rem; font-weight: 600; color: var(--dark); letter-spacing: -0.02em; }
-        .logo-text p { font-size: 0.85rem; color: var(--muted); }
-
-        .nav { display: flex; gap: 30px; align-items: center; }
-        .nav-separator { width: 1px; height: 24px; background: var(--border); margin: 0; flex-shrink: 0; }
-        
-        .nav-link {
-            color: var(--text); text-decoration: none; font-weight: 500;
-            font-size: 0.95rem; transition: color 0.2s; position: relative; white-space: nowrap;
-        }
-        .nav-link::after {
-            content: ''; position: absolute; bottom: -5px; left: 0;
-            width: 0; height: 2px; background: var(--gradient);
-            transition: width 0.3s ease; border-radius: 2px;
-        }
-        .nav-link:hover { color: var(--primary); }
-        .nav-link:hover::after { width: 100%; }
-
-        /* BOUTON MAGNÉTIQUE */
-        .magnetic-btn {
-            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease !important;
-            will-change: transform;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .magnetic-btn:hover {
-            z-index: 10;
-        }
-
-        .btn-nav-login {
-            background: var(--bg-card);
-            color: var(--primary);
-            padding: 10px 18px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: 2px solid var(--border);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-nav-login:hover {
-            border-color: var(--primary);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-            color: var(--primary);
-        }
-
-        /* --- SECTION HERO (TERMINAL -> TITRE) --- */
-        .hero-transition-wrapper {
-            display: grid;
-            grid-template-columns: 1fr;
-            align-items: center;
-            justify-items: center;
-            width: 100%;
-            position: relative;
-        }
-
-        .code-window {
-            grid-area: 1 / 1;
-            position: absolute;
-            width: 100%;
-            max-width: 800px;
-            background: #0d1117;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(102, 126, 234, 0.2);
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-            z-index: 2;
-        }
-
-        body.start-anim .code-window {
-            animation: 
-                slideUpCode 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
-                fadeOutTerminal 0.6s cubic-bezier(0.4, 0, 0.2, 1) 4.7s forwards;
-        }
-
-        .code-header {
-            display: flex; align-items: center; padding: 12px 20px;
-            background: rgba(30, 41, 59, 0.9); border-bottom: 1px solid var(--border); gap: 8px;
-        }
-        .code-dot { width: 12px; height: 12px; border-radius: 50%; }
-        .code-dot.red { background: #ff5f56; }
-        .code-dot.yellow { background: #ffbd2e; }
-        .code-dot.green { background: #27c93f; }
-
-        .code-title {
-            margin: 0 auto; color: var(--muted); font-size: 0.85rem;
-            font-family: 'SF Mono', monospace; padding-right: 48px;
-        }
-
-        .code-body {
-            padding: 30px; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 1.05rem; line-height: 1.6; color: #c9d1d9; overflow-x: auto; text-align: left;
-        }
-        .code-body pre { margin: 0; }
-        .code-body code { font-family: inherit; }
-
-        .token-keyword { color: #ff7b72; }
-        .token-class { color: #f0883e; }
-        .token-variable { color: #79c0ff; }
-        .token-string { color: #a5d6ff; }
-        .token-method { color: #d2a8ff; }
-        .token-punctuation { color: #c9d1d9; }
-        .token-comment { color: #8b949e; font-style: italic; }
-
-        .typewriter { display: inline-flex; vertical-align: bottom; }
-        .typewriter-text {
-            overflow: hidden; white-space: nowrap; border-right: 2px solid var(--primary);
-            margin: 0; width: 0; color: var(--primary); font-weight: 600;
-        }
-
-        body.start-anim .typewriter-text {
-            animation: typing 2s steps(18, end) 1.2s forwards, blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes typing { from { width: 0; } to { width: 18.5ch; } }
-        @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: var(--primary); } }
-        @keyframes slideUpCode { to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOutTerminal { to { opacity: 0; transform: translateY(-30px) scale(0.95); visibility: hidden; pointer-events: none; } }
-
-        .hero-final-content {
-            grid-area: 1 / 1; width: 100%; max-width: 800px; text-align: center;
-            opacity: 0; transform: translateY(30px) scale(0.95); z-index: 1; pointer-events: none;
-        }
-
-        body.start-anim .hero-final-content {
-            animation: fadeInFinal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 5.0s forwards;
-        }
-
-        @keyframes fadeInFinal { to { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; } }
-
-        .hero-final-content h2, .hero h2 {
-            font-size: 3.5rem; font-weight: 700; color: var(--dark);
-            margin-bottom: 20px; letter-spacing: -0.03em; line-height: 1.1;
-        }
-
-        .hero-final-content .gradient-text {
-            background: var(--gradient); -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; background-clip: text;
-        }
-
-        .hero-final-content p, .hero p {
-            font-size: 1.25rem; color: var(--muted); max-width: 700px;
-            margin: 0 auto 40px; line-height: 1.7;
-        }
-
-        /* --- STYLES DES BOUTONS --- */
-        .hero-buttons {
-            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
-        }
-
-        .hero-btn {
-            width: 280px; 
-            max-width: 100%;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .hero-buttons .btn-primary { z-index: 2; }
-        .hero-buttons .btn-secondary { z-index: 1; }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            padding: 16px 30px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-            border: 2px solid transparent;
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
-            color: white;
-        }
-        
-        .btn-primary:not(:hover), .btn-secondary:not(:hover), .btn-nav-login:not(:hover), .btn-feedback:not(:hover) {
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-        
-        .btn-primary:hover, .btn-secondary:hover, .btn-nav-login:hover, .btn-feedback:hover {
-            transform: scale(1.05); 
-        }
-
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--primary);
-            padding: 16px 30px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: 2px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
-            color: var(--primary);
-        }
-
-        /* --- GRILLE DES FONCTIONNALITÉS (SVGs PREMIUM & ANIMATIONS) --- */
-        .features-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
-        }
-
-        .feature-card {
-            background: var(--bg-card); padding: 40px; border-radius: 16px;
-            border: 1px solid var(--border); transition: all 0.3s ease; position: relative; overflow: hidden;
-        }
-        .feature-card::before {
-            content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 4px;
-            background: var(--gradient); transform: translateX(-50%); transition: width 0.3s ease; border-radius: 3px;
-        }
-        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--border); }
-        .feature-card:hover::before { width: 98%; }
-
-        .feature-icon-wrapper {
-            margin-bottom: 25px;
-            display: inline-flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        /* OVERFLOW VISIBLE : Interdit aux animations d'être coupées ! */
-        .feature-icon-svg {
-            width: 48px;
-            height: 48px;
-            stroke: var(--primary);
-            transform-origin: center;
-            overflow: visible !important; 
-            will-change: transform, filter;
-        }
-
-        .icon-eu { fill: var(--primary); stroke: none !important; transition: fill 0.4s ease, filter 0.4s ease; }
-        
-        /* 1. L'ANIMATION D'ENTRÉE (Le SVG global fait un POP) */
-        @keyframes pop-entry {
-            0% { transform: scale(0.5) translateY(10px); opacity: 0; }
-            70% { transform: scale(1.25) translateY(-7px); opacity: 1; }
-            100% { transform: scale(1.15) translateY(-5px); opacity: 1; }
-        }
-
-        .feature-card:hover .feature-icon-svg {
-            transform: scale(1.15) translateY(-5px);
-            animation: pop-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        /* Changement de couleur + Glow global */
-        .feature-card:hover .feature-icon-svg:not(.icon-eu) {
-            stroke: #a5d6ff;
-            filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
-            transition: stroke 0.4s ease, filter 0.4s ease;
-        }
-        .feature-card:hover .icon-eu {
-            fill: #a5d6ff !important;
-            filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
-        }
-
-        /* 2. LES ANIMATIONS EN BOUCLE (Appliquées aux groupes internes <g> après un délai) */
-
-        /* Robot Tête : Balancement et Inclinaison douce au survol - FIX DESIGN & ANIMATION */
-        @keyframes robot-head-tilt-loop {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(-5deg) translateY(-2px); }
-            50% { transform: rotate(0deg) translateY(0px); }
-            75% { transform: rotate(5deg) translateY(-2px); }
-            100% { transform: rotate(0deg); }
-        }
-        
-        .feature-card:hover .icon-loop-robot-head {
-            transform-origin: center bottom;
-            animation: robot-head-tilt-loop 2s ease-in-out infinite;
-        }
-        
-        /* Fix Robot Head eyes fill color & glow consistency on hover */
+        /* Cohérence des yeux du robot au survol (prennent la même couleur que le contour) */
         .feature-card:hover .icon-robot-head .robot-head-eyes {
             fill: #a5d6ff;
             filter: drop-shadow(0 0 3px #a5d6ff);
@@ -2073,10 +902,10 @@ Voici le code complet et corrigé, prêt à l'emploi :
                     <div class="feature-icon-wrapper">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feature-icon-svg icon-robot-head">
                             <g class="icon-loop-robot-head">
-                                <rect x="7" y="6" width="10" height="9" rx="2" ry="2"/>
+                                <rect x="5" y="6" width="14" height="10" rx="2" ry="2"/>
                                 <g class="robot-head-eyes">
-                                    <circle cx="10" cy="10.5" r="1" fill="currentColor" stroke="none"/>
-                                    <circle cx="14" cy="10.5" r="1" fill="currentColor" stroke="none"/>
+                                    <circle cx="9" cy="11" r="1.5" fill="currentColor" stroke="none"/>
+                                    <circle cx="15" cy="11" r="1.5" fill="currentColor" stroke="none"/>
                                 </g>
                                 <path d="M12 6V2a1 1 0 1 0 0-2 1 1 0 1 0 0 2"/>
                             </g>
@@ -2153,24 +982,24 @@ Voici le code complet et corrigé, prêt à l'emploi :
                 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
-                        <svg viewBox="0 0 240 240" class="feature-icon-svg icon-eu">
+                        <svg viewBox="0 0 24 24" class="feature-icon-svg icon-eu">
                             <defs>
-                                <polygon id="eu-star-pol" points="0,-1 0.224,-0.309 0.951,-0.309 0.363,0.118 0.588,0.809 0,0.382 -0.588,0.809 -0.363,0.118 -0.951,-0.309 -0.224,-0.309"/>
+                                <polygon id="eu-star" points="0,-1 0.224,-0.309 0.951,-0.309 0.363,0.118 0.588,0.809 0,0.382 -0.588,0.809 -0.363,0.118 -0.951,-0.309 -0.224,-0.309" transform="scale(1.25)"/>
                             </defs>
-                            <g class="icon-loop-eu" style="transform-origin: 120px 120px;">
-                                <g transform="translate(120, 120) scale(15)">
-                                    <use href="#eu-star-pol" x="0" y="-8" />
-                                    <use href="#eu-star-pol" x="4" y="-6.928" />
-                                    <use href="#eu-star-pol" x="6.928" y="-4" />
-                                    <use href="#eu-star-pol" x="8" y="0" />
-                                    <use href="#eu-star-pol" x="6.928" y="4" />
-                                    <use href="#eu-star-pol" x="4" y="6.928" />
-                                    <use href="#eu-star-pol" x="0" y="8" />
-                                    <use href="#eu-star-pol" x="-4" y="6.928" />
-                                    <use href="#eu-star-pol" x="-6.928" y="4" />
-                                    <use href="#eu-star-pol" x="-8" y="0" />
-                                    <use href="#eu-star-pol" x="-6.928" y="-4" />
-                                    <use href="#eu-star-pol" x="-4" y="-6.928" />
+                            <g class="icon-loop-eu" style="transform-origin: 12px 12px;">
+                                <g transform="translate(12, 12)">
+                                    <use href="#eu-star" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(30)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(60)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(90)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(120)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(150)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(180)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(210)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(240)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(270)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(300)" x="0" y="-8" />
+                                    <use href="#eu-star" transform="rotate(330)" x="0" y="-8" />
                                 </g>
                             </g>
                         </svg>
@@ -2472,10 +1301,299 @@ Voici le code complet et corrigé, prêt à l'emploi :
                         <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits RGPD :</p>
                         <ul>
                             <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
+                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
                             <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
                         <p>Nous nous engageons à répondre à vos demandes dans un délai maximum d'un mois conformément au RGPD.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item animated-element">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <h4>🇫🇷 Conditions générales d'utilisation</h4>
+                        <p class="tag">Dernière mise à jour : 12 novembre 2025</p>
+                    </div>
+                    <span style="color: var(--muted);">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>En utilisant <strong>Assistante Barbara</strong>, vous acceptez les présentes Conditions Générales d'Utilisation (CGU). Veuillez les lire attentivement.</p>
+
+                    <div class="highlight-box">
+                        <p><strong>Champ d'application :</strong> Ces Conditions Générales d'Utilisation s'appliquent à l'ensemble des interactions avec le bot Assistante Barbara sur Discord, quel que soit le serveur ou l'utilisateur.</p>
+                    </div>
+
+                    <h3>1. Description du service</h3>
+                    <p><strong>Assistante Barbara</strong> est une application Discord (bot) à but non commercial offrant :</p>
+                    <ul>
+                        <li>Une variété de commandes slash</li>
+                        <li>Des fonctionnalités musicales (via Jamendo)</li>
+                        <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
+                    </ul>
+                    <p><strong>Le service est fourni gratuitement, sans obligation contractuelle ni garantie de disponibilité continue.</strong> Il s'agit d'un projet personnel géré par l'équipe de développement d'Assistante Barbara.</p>
+
+                    <h3>2. Acceptation des conditions</h3>
+                    <p>L'utilisation d'Assistante Barbara implique votre acceptation complète et sans réserve des présentes CGU ainsi que de notre <strong>Politique de confidentialité</strong>. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le bot.</p>
+                    <p>En ajoutant le bot à votre serveur Discord ou en interagissant avec lui, vous reconnaissez avoir lu, compris et accepté l'intégralité des présentes conditions.</p>
+
+                    <h3>3. Utilisation autorisée</h3>
+                    <div class="highlight-box">
+                        <strong>Vous vous engagez à :</strong>
+                        <ul>
+                            <li>Utiliser le bot conformément aux <a href="https://discord.com/terms" target="_blank">Conditions d'Utilisation de Discord</a></li>
+                            <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
+                            <li>Ne pas tenter de contourner les limitations techniques</li>
+                            <li>Respecter les autres utilisateurs</li>
+                            <li>Ne pas utiliser le bot à fins illégales ou malveillantes</li>
+                            <li>Utiliser les commandes de manière raisonnable et appropriée</li>
+                        </ul>
+                    </div>
+
+                    <h3>4. Fonctionnalités d'intelligence artificielle</h3>
+                    <p><strong>Important - Limitations et avertissements :</strong></p>
+                    <ul>
+                        <li>Les réponses de l'IA sont générées automatiquement par des services tiers (OpenAI, Mistral AI) et peuvent contenir des inexactitudes, des erreurs ou des informations obsolètes</li>
+                        <li>L'IA peut produire du contenu imprévisible ou inapproprié malgré nos efforts de modération</li>
+                        <li>Ne vous fiez jamais exclusivement aux réponses de l'IA pour des décisions importantes, notamment en matière de santé, juridique, financière ou de sécurité</li>
+                        <li>Les conversations avec l'IA sont traitées par des services tiers conformément à policies respectives</li>
+                        <li>Nous ne sommes pas responsables du contenu généré par l'IA ni de son utilisation</li>
+                        <li>L'utilisateur est seul responsable de la vérification des informations fournies par l'IA</li>
+                        <li>En utilisant ces fonctionnalités, vous acceptez que vos messages soient transmis et traités par OpenAI et/ou Mistral AI</li>
+                    </ul>
+                    <p><strong>Interdictions :</strong> Il est strictement interdit d'utiliser l'IA pour :</p>
+                    <ul>
+                        <li>Générer du contenu illégal, haineux, discriminatoire ou violent</li>
+                        <li>Tenter de contourner les systèmes de modération</li>
+                        <li>Collecter des données personnelles sur d'autres utilisateurs</li>
+                        <li>Diffuser de la désinformation ou des contenus trompeurs</li>
+                    </ul>
+
+                    <h3>5. Fonctionnalités musicales</h3>
+                    <ul>
+                        <li>La musique est fournie via <strong>Jamendo</strong> (musique libre de droits)</li>
+                        <li>Le catalogue est limité au contenu disponible sur Jamendo</li>
+                        <li>La disponibilité du service musical peut varier</li>
+                        <li>Respectez les droits d'auteur et les <a href="https://www.jamendo.com/legal/terms-of-use" target="_blank">CGU de Jamendo</a></li>
+                    </ul>
+
+                    <h3>6. Disponibilité du service</h3>
+                    <p>Nous nous efforçons de maintenir Assistante Barbara opérationnelle 24/7, mais :</p>
+                    <ul>
+                        <li>Le service peut être interrompu pour maintenance, mises à jour ou améliorations</li>
+                        <li>Des interruptions peuvent survenir en cas de problème technique</li>
+                        <li>Nous ne garantissons pas une disponibilité absolue ou ininterrompue</li>
+                        <li>Aucun remboursement n'est applicable (service gratuit)</li>
+                        <li>Aucun dédommagement ne pourra être réclamé en cas d'indisponibilité</li>
+                    </ul>
+
+                    <h3>6 bis. Force majeure</h3>
+                    <p>Nous ne saurions être tenus responsables en cas d'interruption du service résultant d'un événement de force majeure, notamment :</p>
+                    <ul>
+                        <li>Panne d'infrastructure ou d'hébergement (KataBump, serveurs)</li>
+                        <li>Défaillance des services tiers (Discord, OpenAI, Mistral AI, Jamendo)</li>
+                        <li>Coupure réseau, interruption d'accès à Internet</li>
+                        <li>Cyberattaque, piratage informatique, déni de service (DDoS)</li>
+                        <li>Décision administrative ou judiciaire</li>
+                        <li>Catastrophe naturelle ou tout autre événement échappant à notre contrôle raisonnable</li>
+                    </ul>
+                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant à un délai de rétablissement.</p>
+
+                    <h3>7. Limitation de responsabilité</h3>
+                    <div class="highlight-box">
+                        <p><strong>Assistante Barbara est fournie "en l'état" et "selon disponibilité".</strong> Dans toute la mesure permise par la loi applicable, nous déclinons toute responsabilité concernant :</p>
+                        <ul>
+                            <li>Les dommages directs, indirects, accessoires, spéciaux, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le bot</li>
+                            <li>La précision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
+                            <li>Les pertes de données, interruptions de service ou tout dysfonctionnement technique</li>
+                            <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
+                            <li>Les décisions prises sur la base des informations fournies par le bot</li>
+                            <li>Les préjudices causés par des utilisateurs tiers ou des actes malveillants</li>
+                            <li>La compatibilité avec d'autres services ou applications</li>
+                        </ul>
+                        <p><strong>Absence de garantie :</strong> Nous ne garantissons pas que le service sera ininterrompu, sans erreur, sécurisé ou exempt de virus ou autres components nuisibles.</p>
+                    </div>
+                    <p><strong>Indemnisation :</strong> Vous acceptez d'indemniser et de dégager de toute responsabilité l'équipe d'Assistante Barbara contre toute réclamation résultant de votre utilisation du service en violation des présentes CGU.</p>
+
+                    <h3>8. Propriété intellectuelle</h3>
+                    <ul>
+                        <li>Assistante Barbara et son code source appartiennent à leur créateur</li>
+                        <li>Les réponses générées par l'IA suivent les politiques de propriété intellectuelle d'OpenAI et Mistral AI</li>
+                        <li>La musique est soumise aux licences de Jamendo</li>
+                        <li>Discord et son logo sont des marques déposées de Discord Inc.</li>
+                    </ul>
+
+                    <h3>9. Modifications du service</h3>
+                    <p>Nous nous réservons le droit, à notre seule discrétion, de :</p>
+                    <ul>
+                        <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
+                        <li>Modifier les fonctionnalités disponibles</li>
+                        <li>Bloquer l'accès à des utilisateurs ou serveurs en cas d'abus, de violation des présentes CGU ou des conditions d'utilisation de Discord</li>
+                        <li>Modifier les présentes CGU. Les modifications substantielles seront communiquées via le site web. La poursuite de l'utilisation après modification vaut acceptation</li>
+                    </ul>
+                    <p>Nous ne serons pas responsables envers vous ou envers des tiers de toute modification, suspension ou interruption du service.</p>
+
+                    <h3>10. Conformité légale</h3>
+                    <p>Ce service est conforme à :</p>
+                    <ul>
+                        <li>RGPD (Règlement Général sur la Protection des Données)</li>
+                        <li>Conditions d'Utilisation de Discord</li>
+                        <li>Lois françaises et européennes applicables</li>
+                    </ul>
+
+                    <h3>11. Résiliation</h3>
+                    <p><strong>Par l'utilisateur :</strong> Vous pouvez cesser d'utiliser Assistante Barbara à tout moment en :</p>
+                    <ul>
+                        <li>Retirant le bot de votre serveur Discord</li>
+                        <li>Cessant d'interagir avec le bot</li>
+                    </ul>
+                    <p><strong>Par Assistante Barbara :</strong> Nous pouvons suspendre ou bloquer votre accès au service, immédiatement et sans préavis, en cas de :</p>
+                    <ul>
+                        <li>Violation des présentes CGU</li>
+                        <li>Violation des Conditions d'Utilisation de Discord</li>
+                        <li>Utilisation abusive ou frauduleuse du service</li>
+                        <li>Comportement nuisible envers d'autres utilisateurs</li>
+                        <li>Activité illégale</li>
+                    </ul>
+                    <p><strong>Effets de la résiliation :</strong> En cas de résiliation, vous perdez immédiatement tout droit d'utiliser le service. Les dispositions des présentes CGU qui, par leur nature, doivent survivre à la résiliation (notamment les limitations de responsabilité) resteront en vigueur.</p>
+
+                    <h3>12. Droit applicable et juridiction</h3>
+                    <p>Les présentes CGU sont régies et interprétées conformément au droit français, sans égard aux principes de conflits de lois.</p>
+                    <p><strong>Résolution des litiges :</strong> En cas de litige relatif à l'interprétation ou à l'exécution des présentes CGU, les parties s'efforceront de le résoudre à l'amiable. À défaut, les tribunaux français seront seuls compétents.</p>
+                    <p><strong>Médiation :</strong> Conformément aux articles L.611-1 et suivants du Code de la consommation, si vous êtes un consommateur, vous avez le droit de recourir gratuitement à un médiateur de la consommation en cas de litige.</p>
+                    <p><strong>Divisibilité :</strong> Si une disposition des présentes CGU est jugée invalide ou inapplicable, les autres dispositions resteront en vigueur.</p>
+
+                    <div class="contact-box">
+                        <h4>13. Contact</h4>
+                        <p>Pour toute question concernant ces CGU :</p>
+                        <ul>
+                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item animated-element">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div>
+                        <h4>🇺🇸 Privacy Policy</h4>
+                        <p class="tag">Last updated: November 12, 2025</p>
+                    </div>
+                    <span style="color: var(--muted);">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <p>Welcome to <strong>Assistante Barbara</strong>. This privacy policy explains how we collect, use, and protect your data when using our Discord bot.</p>
+
+                    <h3>1. Data Controller</h3>
+                    <p><strong>Controller:</strong> The Assistante Barbara development team (non-commercial project)<br>
+                    <strong>Service name:</strong> Assistante Barbara<br>
+                    <strong>Nature:</strong> Discord Application (bot)<br>
+                    <strong>Hosting:</strong> KataBump and local servers (maintenance)<br>
+                    <strong>Contact:</strong> assistante.barbara.contact@gmail.com</p>
+
+                    <p>As data controller, the Assistante Barbara team determines the purposes and means of processing your personal data in accordance with the GDPR. This is a non-commercial project.</p>
+
+                    <h3>2. Data Collected and Source</h3>
+                    <div class="highlight-box">
+                        <strong>Assistante Barbara collecte un minimum absolu de données :</strong>
+                        <ul>
+                            <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande, identifiant du serveur) sont temporairement stockées dans les logs système pour assurer le bon fonctionnement du service.</li>
+                            <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
+                            <li><strong>No persistent personal data:</strong> No messages, personal user identifiers, conversation history, music preferences, or other identifiable personal data is permanently stored in our systems.</li>
+                            <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
+                        </ul>
+                        <p><strong>Data source:</strong> All processed data originates exclusively from interactions between users and the bot on the Discord platform, and is never obtained from third parties.</p>
+                    </div>
+
+                    <h3>3. Legal Basis for Processing</h3>
+                    <p>Processing operations carried out by Assistante Barbara are based on:</p>
+                    <ul>
+                        <li><strong>Contract performance (Article 6.1.b GDPR):</strong> Necessary to provide bot functionalities requested by users (diverse commands, server information).</li>
+                        <li><strong>Legitimate interest (Article 6.1.f GDPR):</strong> Ensuring security, maintenance, and proper technical operation of the service.</li>
+                        <li><strong>Consent (Article 6.1.a GDPR):</strong> Only when users interact with artificial intelligence or music features requiring third-party API calls (OpenAI, Mistral AI, Jamendo). By using these specific features, you consent to processing by these third-party services.</li>
+                    </ul>
+
+                    <h3>4. Third-Party APIs Usage and Joint Controllership</h3>
+                    <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
+                    <ul>
+                        <li><strong>Discord API:</strong> Discord acts as joint controller for data processed through its platform in accordance with its own <a href="https://discord.com/privacy" target="_blank">privacy policy</a>.</li>
+                        <li><strong>OpenAI API:</strong> For artificial intelligence features. Messages sent to configured channels are processed by OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
+                        <li><strong>Mistral AI API:</strong> Pour les fonctionnalités d'intelligence artificielle. See <a href="https://mistral.ai/privacy" target="_blank">Mistral AI's privacy policy</a>.</li>
+                        <li><strong>Jamendo API:</strong> For music features. See <a href="https://www.jamendo.com/legal/privacy" target="_blank">Jamendo's privacy policy</a>.</li>
+                    </ul>
+                    <p><strong>Important:</strong> AI conversations and music searches are transmitted to these APIs for processing in accordance with their respective policies. Assistante Barbara has no control over processing performed by these third-party services. Your consent is required for using these specific features.</p>
+
+                    <h3>5. Purpose of Processing</h3>
+                    <p>Temporary data collected (command logs) are used exclusively to:</p>
+                    <ul>
+                        <li>Ensure proper technical functioning of the bot</li>
+                        <li>Debug and fix technical issues</li>
+                        <li>Improve performance and service stability</li>
+                        <li>Ensure service security</li>
+                    </ul>
+                    <p><strong>This data is never used for commercial, advertising, or profiling purposes.</strong></p>
+
+                    <h3>6. Data Retention</h3>
+                    <p><strong>Retention period:</strong></p>
+                    <ul>
+                        <li>System logs: Kept until the next application restart (typically 2 to 7 days maximum)</li>
+                        <li>No personal data is archived or retained beyond this period</li>
+                    </ul>
+
+                    <h3>7. User Rights (GDPR)</h3>
+                    <p>In accordance with the General Data Protection Regulation (GDPR), you have the following rights:</p>
+                    <ul>
+                        <li><strong>Droit d'accès (Article 15):</strong> Obtain confirmation of data processing and access to it</li>
+                        <li><strong>Droit de rectification (Article 16):</strong> Correct inaccurate or incomplete data</li>
+                        <li><strong>Droit à l'effacement (Article 17):</strong> Request deletion of your data ("right to be forgotten")</li>
+                        <li><strong>Droit d'opposition (Article 21):</strong> Object to data processing</li>
+                        <li><strong>Droit à la limitation (Article 18):</strong> Request processing limitation</li>
+                        <li><strong>Droit à la portabilité (Article 20):</strong> Receive your data in a structured format</li>
+                        <li><strong>Droit de retrait du consentement:</strong> Withdraw your consent at any time</li>
+                    </ul>
+                    <p><strong>Note:</strong> Since we do not permanently store any personal data, the exercise of most of these rights is automatically satisfied by our automatic deletion policy. However, you may contact us for any specific question or request.</p>
+                    <p><strong>Right to lodge a complaint:</strong> You have the right to lodge a complaint with the CNIL (French Data Protection Authority) if you believe your rights are not being respected: <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
+
+                    <h3>8. Data Security</h3>
+                    <p>We implement appropriate technical and organizational measures to protect processed data:</p>
+                    <ul>
+                        <li>Secure hosting on professional infrastructure (KataBump)</li>
+                        <li>Restricted access to system logs (authentication required)</li>
+                        <li>Encrypted communications (HTTPS/TLS)</li>
+                        <li>Automatic and regular deletion of temporary data</li>
+                        <li>Security incident monitoring</li>
+                        <li>Regular system updates</li>
+                    </ul>
+
+                    <h3>9. Data Transfers</h3>
+                    <p>Data may be transferred to the following countries:</p>
+                    <ul>
+                        <li><strong>United States:</strong> OpenAI, Discord. These transfers are governed by the EU-US Data Privacy Framework or, when not applicable, by European Union standard contractual clauses.</li>
+                        <li><strong>France/Europe:</strong> Mistral AI, KataBump (GDPR compliant)</li>
+                        <li><strong>Luxembourg:</strong> Jamendo (European Union, GDPR compliant)</li>
+                    </ul>
+                    <p>These transfers are made in accordance with Chapter V of the GDPR and are governed by appropriate safeguards.</p>
+
+                    <h3>10. Automated Decision-Making and Profiling</h3>
+                    <p>Assistante Barbara does <strong>not perform any automated decision-making</strong> or <strong>profiling</strong> within the meaning of Article 22 of the GDPR. Responses generated by artificial intelligence are informative suggestions and do not produce legal effects concerning you.</p>
+
+                    <h3>11. Cookies and Similar Technologies</h3>
+                    <p>This website does not use any tracking, advertising, or analytics cookies. Only strictly necessary cookies for site functionality may be used.</p>
+
+                    <h3>12. Policy Changes</h3>
+                    <p>This policy may be modified occasionnellement to reflect service developments or legislative changes. The last update date will always be indicated at the top of the document. In case of substantial changes, we will endeavor to inform users.</p>
+
+                    <div class="contact-box">
+                        <h4>13. Contact and Exercise of Your Rights</h4>
+                        <p>For any questions regarding this privacy policy or to exercise your GDPR rights:</p>
+                        <ul>
+                            <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
+                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                        </ul>
+                        <p>We are committed to responding to your requests within a maximum of one month in accordance with the GDPR.</p>
                     </div>
                 </div>
             </div>
@@ -2635,7 +1753,7 @@ Voici le code complet et corrigé, prêt à l'emploi :
                     <p><strong>Severability:</strong> If any provision of these ToS is deemed invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
 
                     <div class="contact-box">
-                        <h4>13. Contact</td>
+                        <h4>13. Contact</h4>
                         <p>For any questions regarding these ToS:</p>
                         <ul>
                             <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
