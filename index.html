@@ -468,28 +468,24 @@
 
         /* 2. LES ANIMATIONS EN BOUCLE (Appliquées aux groupes internes <g> après un délai) */
 
-        /* Robot Tête : Balancement avec pause, 0.4s de délai pour éviter le bug de collision */
-        @keyframes robot-head-tilt-loop {
-            0%, 15% { transform: rotate(0deg) translateY(0px); }
-            35% { transform: rotate(-8deg) translateY(-2px); } /* S'incline à gauche */
-            55% { transform: rotate(8deg) translateY(-2px); }  /* S'incline à droite */
-            75%, 100% { transform: rotate(0deg) translateY(0px); } /* Revient et pause nette */
+        /* Robot Tête : Marche saccadée mécanique (0.4s de délai pour éviter le bug de collision) */
+        @keyframes robot-march-loop {
+            0%, 20% { transform: rotate(0deg); } /* Stable center (Pause) */
+            28% { transform: rotate(-10deg) translateY(-2px); } /* Sèche à gauche */
+            48%, 68% { transform: rotate(-10deg); } /* Pause stable à gauche */
+            76% { transform: rotate(10deg) translateY(-2px); }  /* Sèche à droite */
+            96%, 100% { transform: rotate(0deg); } /* Revient et pause center */
         }
         
         .feature-card:hover .icon-loop-robot-head {
             transform-origin: center bottom;
-            animation: robot-head-tilt-loop 2.5s ease-in-out 0.4s infinite;
+            animation: robot-march-loop 3s ease-in-out 0.4s infinite;
         }
         
-        /* Cohérence des yeux du robot au survol avec transition fluide */
-        .icon-robot-head .robot-head-eyes circle { transition: fill 0.4s ease; }
-        .icon-robot-head .robot-head-eyes { transition: filter 0.4s ease; }
-        
+        /* Cohérence des yeux du robot au survol */
         .feature-card:hover .icon-robot-head .robot-head-eyes circle {
             fill: #a5d6ff;
-        }
-        .feature-card:hover .icon-robot-head .robot-head-eyes {
-            filter: drop-shadow(0 0 4px #a5d6ff);
+            filter: drop-shadow(0 0 3px #a5d6ff);
         }
 
         /* Bouclier : S'élève, se plante, explosion de poussière sur les côtés */
@@ -725,6 +721,8 @@
             margin-bottom: 10px; transition: color 0.2s ease;
         }
         .footer-col a:hover { color: var(--primary); }
+        .footer-col a { transition: color 0.2s ease; }
+
         .footer-bottom { max-width: 1200px; margin: 24px auto 0; text-align: center; font-size: 0.85rem; color: var(--muted); }
 
         /* --- ADAPTATIONS MOBILES GLOBALES --- */
@@ -1336,7 +1334,7 @@
                         <li>Des fonctionnalités musicales (via Jamendo)</li>
                         <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
                     </ul>
-                    <p><strong>Le service est fourni gratuitement, sans obligation contractuelle ni garantie de disponibilité continue.</strong> Il s'agit d'un projet personnel géré par l'équipe de développement d'Assistante Barbara.</p>
+                    <p><strong>Le service est fourni gratuitement, sans obligation contractuelle ni garantie de disponibilité continue.</strong> It is a personal project managed by the Assistante Barbara development team.</p>
 
                     <h3>2. Acceptation des conditions</h3>
                     <p>L'utilisation d'Assistante Barbara implique votre acceptation complète et sans réserve des présentes CGU ainsi que de notre <strong>Politique de confidentialité</strong>. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le bot.</p>
@@ -1350,7 +1348,7 @@
                             <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
                             <li>Ne pas tenter de contourner les limitations techniques</li>
                             <li>Respecter les autres utilisateurs</li>
-                            <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
+                            <li>Ne pas utiliser le bot à fins illégales ou malveillantes</li>
                             <li>Utiliser les commandes de manière raisonnable et appropriée</li>
                         </ul>
                     </div>
@@ -1434,7 +1432,7 @@
                         <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
                         <li>Modifier les fonctionnalités disponibles</li>
                         <li>Bloquer l'accès à des utilisateurs ou serveurs en cas d'abus, de violation des présentes CGU ou des conditions d'utilisation de Discord</li>
-                        <li>Modifier les présentes CGU. Les modifications substantielles seront communiquées via le site web. La poursuite de l'utilisation après modification vaut acceptation</li>
+                        <li>Modifier les présentes CGU. Substantial changes will be communicated via the website. Continued use after changes constitutes acceptance</li>
                     </ul>
                     <p>Nous ne serons pas responsables envers vous ou envers des tiers de toute modification, suspension ou interruption du service.</p>
 
@@ -1506,99 +1504,99 @@
                         <ul>
                             <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande, identifiant du serveur) sont temporairement stockées dans les logs système pour assurer le bon fonctionnement du service.</li>
                             <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
-                            <li><strong>No persistent personal data:</strong> No messages, personal user identifiers, conversation history, music preferences, or other identifiable personal data is permanently stored in our systems.</li>
+                            <li><strong>Aucune donnée personnelle persistante :</strong> Aucun message, identifiant utilisateur personnel, historique de conversation, préférence musicale ou autre donnée personnelle identifiable n'est conservée de manière permanente dans nos systèmes.</li>
                             <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
                         </ul>
-                        <p><strong>Data source:</strong> All processed data originates exclusively from interactions between users and the bot on the Discord platform, and is never obtained from third parties.</p>
+                        <p><strong>Source des données :</strong> Les données traitées proviennent exclusivement des interactions entre les utilisateurs et le bot sur la plateforme Discord, et ne sont jamais obtenues auprès de tiers.</p>
                     </div>
 
                     <h3>3. Legal Basis for Processing</h3>
-                    <p>Processing operations carried out by Assistante Barbara are based on:</p>
+                    <p>Les traitements effectués par Assistante Barbara reposent sur :</p>
                     <ul>
-                        <li><strong>Contract performance (Article 6.1.b GDPR):</strong> Necessary to provide bot functionalities requested by users (diverse commands, server information).</li>
-                        <li><strong>Legitimate interest (Article 6.1.f GDPR):</strong> Ensuring security, maintenance, and proper technical operation of the service.</li>
-                        <li><strong>Consent (Article 6.1.a GDPR):</strong> Only when users interact with artificial intelligence or music features requiring third-party API calls (OpenAI, Mistral AI, Jamendo). By using these specific features, you consent to processing by these third-party services.</li>
+                        <li><strong>L'exécution d'un contrat (Article 6.1.b du RGPD) :</strong> Nécessaire pour fournir les fonctionnalités du bot demandées par les utilisateurs (commandes variées, informations serveur).</li>
+                        <li><strong>L'intérêt légitime (Article 6.1.f du RGPD) :</strong> Assurer la sécurité, la maintenance et le bon fonctionnement technique du service.</li>
+                        <li><strong>Le consentement (Article 6.1.a du RGPD) :</strong> Uniquement lorsque l'utilisateur interagit avec les fonctionnalités d'intelligence artificielle ou musicales nécessitant l'appel d'APIs tierces (OpenAI, Mistral AI, Jamendo). En utilisant ces fonctionnalités spécifiques, vous consentez au traitement par ces services tiers.</li>
                     </ul>
 
-                    <h3>4. Third-Party APIs Usage and Joint Controllership</h3>
+                    <h3>4. Utilisation des APIs tierces et coresponsabilité</h3>
                     <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
                     <ul>
-                        <li><strong>Discord API:</strong> Discord acts as joint controller for data processed through its platform in accordance with its own <a href="https://discord.com/privacy" target="_blank">privacy policy</a>.</li>
-                        <li><strong>OpenAI API:</strong> For artificial intelligence features. Messages sent to configured channels are processed by OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
-                        <li><strong>Mistral AI API:</strong> Pour les fonctionnalités d'intelligence artificielle. See <a href="https://mistral.ai/privacy" target="_blank">Mistral AI's privacy policy</a>.</li>
-                        <li><strong>Jamendo API:</strong> For music features. See <a href="https://www.jamendo.com/legal/privacy" target="_blank">Jamendo's privacy policy</a>.</li>
+                        <li><strong>Discord API :</strong> Discord agit comme responsable conjoint pour les données traitées via sa plateforme conformément à sa propre <a href="https://discord.com/privacy" target="_blank">politique de confidentialité</a>.</li>
+                        <li><strong>OpenAI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Les messages envoyés aux salons configurés sont traités par OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
+                        <li><strong>Mistral AI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Consultez la <a href="https://mistral.ai/privacy" target="_blank">politique de confidentialité de Mistral AI</a>.</li>
+                        <li><strong>Jamendo API :</strong> Pour les fonctionnalités musicales. Consultez la <a href="https://www.jamendo.com/legal/privacy" target="_blank">politique de confidentialité de Jamendo</a>.</li>
                     </ul>
-                    <p><strong>Important:</strong> AI conversations and music searches are transmitted to these APIs for processing in accordance with their respective policies. Assistante Barbara has no control over processing performed by these third-party services. Your consent is required for using these specific features.</p>
+                    <p><strong>Important :</strong> Les conversations avec l'IA et les recherches musicales sont transmises à ces APIs pour traitement conformément à leurs politiques respectives. Assistante Barbara n'a aucun contrôle sur le traitement effectué par ces services tiers. Votre consentement est requis pour l'utilisation de ces fonctionnalités spécifiques.</p>
 
-                    <h3>5. Purpose of Processing</h3>
+                    <h3>5. Finalité du traitement</h3>
                     <p>Temporary data collected (command logs) are used exclusively to:</p>
                     <ul>
-                        <li>Ensure proper technical functioning of the bot</li>
-                        <li>Debug and fix technical issues</li>
-                        <li>Improve performance and service stability</li>
-                        <li>Ensure service security</li>
+                        <li>Assurer le bon fonctionnement technique du bot</li>
+                        <li>Déboguer et corriger d'éventuels problèmes techniques</li>
+                        <li>Améliorer les performances et la stabilité du service</li>
+                        <li>Garantir la sécurité du service</li>
                     </ul>
-                    <p><strong>This data is never used for commercial, advertising, or profiling purposes.</strong></p>
+                    <p><strong>Ces données ne sont jamais utilisées à des fins commerciales, publicitaires ou de profilage.</strong></p>
 
-                    <h3>6. Data Retention</h3>
-                    <p><strong>Retention period:</strong></p>
+                    <h3>6. Conservation des données</h3>
+                    <p><strong>Durée de conservation :</strong></p>
                     <ul>
-                        <li>System logs: Kept until the next application restart (typically 2 to 7 days maximum)</li>
-                        <li>No personal data is archived or retained beyond this period</li>
+                        <li>Logs système : Conservés jusqu'au prochain redémarrage de l'application (généralement 2 à 7 jours maximum)</li>
+                        <li>Aucune donnée personnelle n'est archivée ou conservée au-delà de cette période</li>
                     </ul>
 
                     <h3>7. User Rights (GDPR)</h3>
                     <p>In accordance with the General Data Protection Regulation (GDPR), you have the following rights:</p>
                     <ul>
-                        <li><strong>Droit d'accès (Article 15):</strong> Obtain confirmation of data processing and access to it</li>
-                        <li><strong>Droit de rectification (Article 16):</strong> Correct inaccurate or incomplete data</li>
-                        <li><strong>Droit à l'effacement (Article 17):</strong> Request deletion of your data ("right to be forgotten")</li>
-                        <li><strong>Droit d'opposition (Article 21):</strong> Object to data processing</li>
-                        <li><strong>Droit à la limitation (Article 18):</strong> Request processing limitation</li>
-                        <li><strong>Droit à la portabilité (Article 20):</strong> Receive your data in a structured format</li>
-                        <li><strong>Droit de retrait du consentement:</strong> Withdraw your consent at any time</li>
+                        <li><strong>Droit d'accès (Article 15) :</strong> Obtenir confirmation du traitement de vos données et accéder à celles-ci</li>
+                        <li><strong>Droit de rectification (Article 16) :</strong> Corriger des données inexactes ou incomplètes</li>
+                        <li><strong>Droit à l'effacement (Article 17) :</strong> Demander la suppression de vos données ("droit à l'oubli")</li>
+                        <li><strong>Droit d'opposition (Article 21) :</strong> Vous opposer au traitement de vos données</li>
+                        <li><strong>Droit à la limitation (Article 18) :</strong> Demander la limitation du traitement</li>
+                        <li><strong>Droit à la portabilité (Article 20) :</strong> Recevoir vos données dans un format structuré</li>
+                        <li><strong>Droit de retrait du consentement :</strong> Retirer votre consentement à tout moment</li>
                     </ul>
-                    <p><strong>Note:</strong> Since we do not permanently store any personal data, the exercise of most of these rights is automatically satisfied by our automatic deletion policy. However, you may contact us for any specific question or request.</p>
-                    <p><strong>Right to lodge a complaint:</strong> You have the right to lodge a complaint with the CNIL (French Data Protection Authority) if you believe your rights are not being respected: <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
+                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatically satisfait par notre politique de suppression automatique. Néanmoins, you may contact us for any specific question or request.</p>
+                    <p><strong>Right to lodge a complaint:</strong> Vous avez le droit d'introduire une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés) if you believe your rights are not being respected: <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
 
-                    <h3>8. Data Security</h3>
-                    <p>We implement appropriate technical and organizational measures to protect processed data:</p>
+                    <h3>8. Sécurité des données</h3>
+                    <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger les données traitées :</p>
                     <ul>
-                        <li>Secure hosting on professional infrastructure (KataBump)</li>
-                        <li>Restricted access to system logs (authentication required)</li>
-                        <li>Encrypted communications (HTTPS/TLS)</li>
-                        <li>Automatic and regular deletion of temporary data</li>
-                        <li>Security incident monitoring</li>
-                        <li>Regular system updates</li>
+                        <li>Hébergement sécurisé sur infrastructure professionnelle (KataBump)</li>
+                        <li>Accès restreint aux logs système (authentification requise)</li>
+                        <li>Chiffrement des communications (HTTPS/TLS)</li>
+                        <li>Suppression automatique et régulière des données temporaires</li>
+                        <li>Surveillance des incidents de sécurité</li>
+                        <li>Mises à jour régulières des systèmes</li>
                     </ul>
 
-                    <h3>9. Data Transfers</h3>
-                    <p>Data may be transferred to the following countries:</p>
+                    <h3>9. Transfert de données</h3>
+                    <p>Les données peuvent être transférées vers les pays suivants :</p>
                     <ul>
-                        <li><strong>United States:</strong> OpenAI, Discord. These transfers are governed by the EU-US Data Privacy Framework or, when not applicable, by European Union standard contractual clauses.</li>
-                        <li><strong>France/Europe:</strong> Mistral AI, KataBump (GDPR compliant)</li>
-                        <li><strong>Luxembourg:</strong> Jamendo (European Union, GDPR compliant)</li>
+                        <li><strong>États-Unis :</strong> OpenAI, Discord. Ces transferts sont encadrés par le EU-US Data Privacy Framework (Cadre de protection des données UE-États-Unis) ou, lorsque non applicable, par des clauses contractuelles types de l'Union européenne.</li>
+                        <li><strong>France/Europe :</strong> Mistral AI, KataBump (conformes au RGPD)</li>
+                        <li><strong>Luxembourg :</strong> Jamendo (Union Européenne, conforme au RGPD)</li>
                     </ul>
-                    <p>These transfers are made in accordance with Chapter V of the GDPR and are governed by appropriate safeguards.</p>
+                    <p>Ces transferts sont effectués conformément au Chapitre V du RGPD et sont encadrés par des garanties appropriées.</p>
 
-                    <h3>10. Automated Decision-Making and Profiling</h3>
-                    <p>Assistante Barbara does <strong>not perform any automated decision-making</strong> or <strong>profiling</strong> within the meaning of Article 22 of the GDPR. Responses generated by artificial intelligence are informative suggestions and do not produce legal effects concerning you.</p>
+                    <h3>10. Décisions automatisées et profilage</h3>
+                    <p>Assistante Barbara ne réalise <strong>aucune prise de décision automatisée</strong> ni <strong>profilage</strong> au sens de l'article 22 du RGPD. Les réponses générées par l'intelligence artificielle sont des suggestions informatives et ne produisent pas d'effets juridiques vous concernant.</p>
 
-                    <h3>11. Cookies and Similar Technologies</h3>
+                    <h3>11. Cookies et technologies similaires</h3>
                     <p>This website does not use any tracking, advertising, or analytics cookies. Only strictly necessary cookies for site functionality may be used.</p>
 
-                    <h3>12. Policy Changes</h3>
-                    <p>This policy may be modified occasionnellement to reflect service developments or legislative changes. The last update date will always be indicated at the top of the document. In case of substantial changes, we will endeavor to inform users.</p>
+                    <h3>12. Modifications de la politique</h3>
+                    <p>Cette politique peut être modifiée occasionnellement pour refléter les évolutions du service ou les changements législatifs. La date de dernière mise à jour sera toujours indiquée en haut du document. En cas de modification substantielle, nous nous efforcerons d'en informer les utilisateurs.</p>
 
                     <div class="contact-box">
-                        <h4>13. Contact and Exercise of Your Rights</h4>
-                        <p>For any questions regarding this privacy policy or to exercise your GDPR rights:</p>
+                        <h4>13. Contact et exercice de vos droits</h4>
+                        <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits RGPD :</p>
                         <ul>
-                            <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
-                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
-                        <p>We are committed to responding to your requests within a maximum of one month in accordance with the GDPR.</p>
+                        <p>Nous nous engageons à répondre à vos demandes dans un délai maximum d'un mois conformément au RGPD.</p>
                     </div>
                 </div>
             </div>
@@ -1612,31 +1610,31 @@
                     <span style="color: var(--muted);">▼</span>
                 </div>
                 <div class="accordion-body">
-                    <p>By using <strong>Assistante Barbara</strong>, you agree to these Terms of Service (ToS). Please read them carefully.</p>
+                    <p>By using <strong>Assistante Barbara</strong>, you agree to these Terms of Service (ToS). Veuillez les lire attentivement.</p>
 
                     <div class="highlight-box">
-                        <p><strong>Scope:</strong> These Terms of Service apply to all interactions with the Assistante Barbara bot on Discord, regardless of server or user.</p>
+                        <p><strong>Champ d'application :</strong> Ces Conditions Générales d'Utilisation s'appliquent à l'ensemble des interactions avec le bot Assistante Barbara sur Discord, quel que soit le serveur ou l'utilisateur.</p>
                     </div>
 
-                    <h3>1. Service description</h3>
-                    <p><strong>Assistante Barbara</strong> is a non-commercial Discord bot application offering:</p>
+                    <h3>1. Description du service</h3>
+                    <p><strong>Assistante Barbara</strong> est une application Discord (bot) à but non commercial offrant :</p>
                     <ul>
-                        <li>A variety of slash commands</li>
-                        <li>Music features (via Jamendo)</li>
-                        <li>An AI-powered assistance chatbot (OpenAI and Mistral AI)</li>
+                        <li>Une variété de commandes slash</li>
+                        <li>Des fonctionnalités musicales (via Jamendo)</li>
+                        <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
                     </ul>
                     <p><strong>The service is provided free of charge, without contractual obligation or guarantee of continuous availability.</strong> It is a personal project managed by the Assistante Barbara development team.</p>
 
-                    <h3>2. Acceptance of terms</h3>
-                    <p>Using Assistante Barbara implies your complete and unreserved acceptance of these ToS as well as our <strong>Privacy Policy</strong>. If you do not accept these terms, please do not use the bot.</p>
-                    <p>By adding the bot to your Discord server or interacting with it, you acknowledge that you have read, understood, and agreed to all of these terms.</p>
+                    <h3>2. Acceptation des conditions</h3>
+                    <p>L'utilisation d'Assistante Barbara implique votre acceptation complète et sans réserve des présentes CGU ainsi que de notre <strong>Politique de confidentialité</strong>. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le bot.</p>
+                    <p>En ajoutant le bot à votre serveur Discord ou en interagissant avec lui, vous reconnaissez avoir lu, compris et accepté l'intégralité des présentes conditions.</p>
 
-                    <h3>3. Authorized use</h3>
+                    <h3>3. Utilisation autorisée</h3>
                     <div class="highlight-box">
-                        <strong>You agree to:</strong>
+                        <strong>Vous vous engagez à :</strong>
                         <ul>
                             <li>Utiliser le bot conformément aux <a href="https://discord.com/terms" target="_blank">Conditions d'Utilisation de Discord</a></li>
-                            <li>Ne pas abuser des fonctionnalités (spam, flooding, etc.)</li>
+                            <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
                             <li>Ne pas tenter de contourner les limitations techniques</li>
                             <li>Respecter les autres utilisateurs</li>
                             <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
@@ -1644,126 +1642,126 @@
                         </ul>
                     </div>
 
-                    <h3>4. Artificial intelligence features</h3>
+                    <h3>4. Fonctionnalités d'intelligence artificielle</h3>
                     <p><strong>Important - Limitations and warnings:</strong></p>
                     <ul>
-                        <li>AI responses are automatically generated by third-party services (OpenAI, Mistral AI) and may contain inaccuracies, errors, or outdated information</li>
-                        <li>AI may produce unpredictable or inappropriate content despite our moderation efforts</li>
-                        <li>Never rely exclusively on AI responses for important decisions, particularly regarding health, legal, financial, or safety matters</li>
-                        <li>Conversations with AI are processed by third-party services in accordance with their respective policies</li>
-                        <li>We are not responsible for content generated by AI or its use</li>
-                        <li>Users are solely responsible for verifying information provided by AI</li>
-                        <li>By using these features, you agree that your messages will be transmitted and processed by OpenAI and/or Mistral AI</li>
+                        <li>Les réponses de l'IA sont générées automatiquement par des services tiers (OpenAI, Mistral AI) et peuvent contenir des inexactitudes, des erreurs ou des informations obsolètes</li>
+                        <li>L'IA peut produire du contenu imprévisible ou inapproprié malgré nos efforts de modération</li>
+                        <li>Ne vous fiez jamais exclusivement aux réponses de l'IA pour des décisions importantes, notamment en matière de santé, juridique, financière ou de sécurité</li>
+                        <li>Les conversations avec l'IA sont traitées par des services tiers conformément à policies respectives</li>
+                        <li>Nous ne sommes pas responsables du contenu généré par l'IA ni de son utilisation</li>
+                        <li>L'utilisateur est seul responsable de la vérification des informations fournies par l'IA</li>
+                        <li>En utilisant ces fonctionnalités, vous acceptez que vos messages soient transmis et traités par OpenAI et/ou Mistral AI</li>
                     </ul>
-                    <p><strong>Prohibitions:</strong> It is strictly forbidden to use AI to:</p>
+                    <p><strong>Prohibitions :</strong> Il est strictement interdit d'utiliser l'IA pour :</p>
                     <ul>
-                        <li>Generate illegal, hateful, discriminatory, or violent content</li>
-                        <li>Attempt to circumvent moderation systems</li>
-                        <li>Collect personal data about other users</li>
-                        <li>Spread disinformation or misleading content</li>
+                        <li>Générer du contenu illégal, haineux, discriminatoire ou violent</li>
+                        <li>Tenter de contourner les systèmes de modération</li>
+                        <li>Collecter des données personnelles sur d'autres utilisateurs</li>
+                        <li>Diffuser de la désinformation ou des contenus trompeurs</li>
                     </ul>
 
-                    <h3>5. Music features</h3>
+                    <h3>5. Fonctionnalités musicales</h3>
                     <ul>
-                        <li>Music is provided via <strong>Jamendo</strong> (royalty-free music)</li>
-                        <li>The catalog is limited to content available on Jamendo</li>
-                        <li>Music service availability may vary</li>
+                        <li>La musique est fournie via <strong>Jamendo</strong> (musique libre de droits)</li>
+                        <li>Le catalogue est limité au contenu disponible sur Jamendo</li>
+                        <li>The availability of the music service may vary</li>
                         <li>Respect copyrights and <a href="https://www.jamendo.com/legal/terms-of-use" target="_blank">Jamendo's ToS</a></li>
                     </ul>
 
-                    <h3>6. Service availability</h3>
-                    <p>We strive to keep Assistante Barbara operational 24/7, but:</p>
+                    <h3>6. Disponibilité du service</h3>
+                    <p>Nous nous efforçons de maintenir Assistante Barbara opérationnelle 24/7, mais :</p>
                     <ul>
-                        <li>The service may be interrupted for maintenance, updates, or improvements</li>
-                        <li>Interruptions may occur due to technical issues</li>
-                        <li>We do not guarantee absolute or uninterrupted availability</li>
-                        <li>No refunds are applicable (free service)</li>
-                        <li>No compensation can be claimed in case of unavailability</li>
+                        <li>Le service peut être interrompu pour maintenance, mises à jour ou améliorations</li>
+                        <li>Des interruptions peuvent survenir en cas de problème technique</li>
+                        <li>Nous ne garantissons pas une disponibilité absolue ou ininterrompue</li>
+                        <li>Aucun remboursement n'est applicable (service gratuit)</li>
+                        <li>Aucun dédommagement ne pourra être réclamé en cas d'indisponibilité</li>
                     </ul>
 
-                    <h3>6. bis. Force majeure</h3>
-                    <p>We shall not be held liable for service interruptions resulting from force majeure events, including:</p>
+                    <h3>6 bis. Force majeure</h3>
+                    <p>Nous ne saurions être tenus responsables en cas d'interruption du service résultant d'un événement de force majeure, notamment :</p>
                     <ul>
-                        <li>Infrastructure or hosting failures (KataBump, servers)</li>
-                        <li>Third-party service failures (Discord, OpenAI, Mistral AI, Jamendo)</li>
-                        <li>Network outages, Internet access interruptions</li>
-                        <li>Cyberattacks, hacking, denial of service (DDoS)</li>
-                        <li>Administrative or judicial decisions</li>
-                        <li>Natural disasters or any other event beyond our reasonable control</li>
+                        <li>Panne d'infrastructure ou d'hébergement (KataBump, serveurs)</li>
+                        <li>Défaillance des services tiers (Discord, OpenAI, Mistral AI, Jamendo)</li>
+                        <li>Coupure réseau, interruption d'accès à Internet</li>
+                        <li>Cyberattaque, piratage informatique, déni de service (DDoS)</li>
+                        <li>Décision administrative ou judiciaire</li>
+                        <li>Catastrophe naturelle or any other event beyond our reasonable control</li>
                     </ul>
                     <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant à un délai de rétablissement.</p>
 
-                    <h3>7. Limitation de responsibility</h3>
+                    <h3>7. Limitation de responsabilité</h3>
                     <div class="highlight-box">
-                        <p><strong>Assistante Barbara is provided "as is" and "as available".</strong> To the fullest extent permitted by applicable law, we disclaim all liability for:</p>
+                        <p><strong>Assistante Barbara is provided "as is" and "as available".</strong> Dans toute la mesure permise par la loi applicable, nous déclinons toute responsabilité concernant :</p>
                         <ul>
-                            <li>Direct, indirect, incidental, special, consequential, or punitive damages resulting from use or inability to use the bot</li>
-                            <li>Accuracy, reliability, or completeness of information provided by AI</li>
-                            <li>Data loss, service interruptions, or any technical malfunction</li>
-                            <li>Content generated by AI or provided by third-party APIs</li>
-                            <li>Decisions made based on information provided by the bot</li>
-                            <li>Harm caused by third-party users or malicious acts</li>
-                            <li>Compatibility with other services or applications</li>
+                            <li>Les dommages directs, indirects, accessoires, spéciaux, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le bot</li>
+                            <li>La précision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
+                            <li>Les pertes de données, interruptions de service ou tout dysfonctionnement technique</li>
+                            <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
+                            <li>Les décisions prises sur la base des informations fournies par le bot</li>
+                            <li>Les préjudices causés par des utilisateurs tiers ou des actes malveillants</li>
+                            <li>The compatibility with other services or applications</li>
                         </ul>
-                        <p><strong>No warranty:</strong> We do not guarantee that the service will be uninterrupted, error-free, secure, or free from viruses or other harmful components.</p>
+                        <p><strong>Absence de garantie :</strong> Nous ne garantissons pas que le service sera ininterrompu, sans erreur, sécurisé ou exempt de virus or other harmful components.</p>
                     </div>
-                    <p><strong>Indemnisation:</strong> You agree to indemnify and hold harmless the Assistante Barbara team against any claim resulting from your use of the service in violation of these ToS.</p>
+                    <p><strong>Indemnisation :</strong> Vous acceptez d'indemniser et de dégager de toute responsabilité l'équipe d'Assistante Barbara contre toute réclamation résultant de votre utilisation du service en violation des présentes CGU.</p>
 
-                    <h3>8. Intellectual property</h3>
+                    <h3>8. Propriété intellectuelle</h3>
                     <ul>
                         <li>Assistante Barbara and its source code belong to their creator</li>
-                        <li>AI-generated responses follow OpenAI and Mistral AI's intellectual property policies</li>
-                        <li>Music is subject to Jamendo licenses</li>
-                        <li>Discord and its logo are registered trademarks of Discord Inc.</li>
+                        <li>Les réponses générées par l'IA suivent les politiques de propriété intellectuelle d'OpenAI et Mistral AI</li>
+                        <li>La musique est soumise aux licences de Jamendo</li>
+                        <li>Discord et son logo sont des marques déposées de Discord Inc.</li>
                     </ul>
 
-                    <h3>9. Service modifications</h3>
-                    <p>We reserve the right, at our sole discretion, to:</p>
+                    <h3>9. Modifications du service</h3>
+                    <p>Nous nous réservons le droit, à notre seule discrétion, de :</p>
                     <ul>
                         <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
                         <li>Modifier les fonctionnalités disponibles</li>
-                        <li>Block access to users or servers in case of abuse, violation of these ToS, or Discord's Terms of Service</li>
+                        <li>Bloquer l'accès à des utilisateurs ou serveurs en cas d'abus, de violation des présentes CGU ou des conditions d'utilisation de Discord</li>
                         <li>Modifier les présentes CGU. Substantial changes will be communicated via the website. Continued use after changes constitutes acceptance</li>
                     </ul>
-                    <p>We shall not be liable to you or any third party for any modification, suspension, or discontinuation of the service.</p>
+                    <p>Nous ne serons pas responsables envers vous ou envers des tiers de toute modification, suspension ou interruption du service.</p>
 
-                    <h3>10. Legal compliance</h3>
-                    <p>This service complies with:</p>
+                    <h3>10. Conformité légale</h3>
+                    <p>Ce service est conforme à :</p>
                     <ul>
-                        <li>GDPR (General Data Protection Regulation)</li>
-                        <li>Discord's Terms of Service</li>
-                        <li>Applicable French and European laws</li>
+                        <li>RGPD (Règlement Général sur la Protection des Données)</li>
+                        <li>Conditions d'Utilisation de Discord</li>
+                        <li>Lois françaises et européennes applicables</li>
                     </ul>
 
-                    <h3>11. Termination</h3>
+                    <h3>11. Résiliation</h3>
                     <p><strong>Par l'utilisateur :</strong> You may stop using Assistante Barbara at any time by:</p>
                     <ul>
-                        <li>Removing the bot from your Discord server</li>
+                        <li>Retirant le bot de votre serveur Discord</li>
                         <li>Ceasing to interact with the bot</li>
                     </ul>
-                    <p><strong>By Assistante Barbara:</strong> We may suspend or block your access to the service, immediately and without notice, in case of:</p>
+                    <p><strong>Par Assistante Barbara :</strong> Nous pouvons suspendre ou bloquer votre accès au service, immédiatement et sans préavis, en cas de :</p>
                     <ul>
-                        <li>Violation of these ToS</li>
-                        <li>Violation of Discord's Terms of Service</li>
-                        <li>Abusive or fraudulent use of the service</li>
-                        <li>Harmful behavior toward other users</li>
-                        <li>Illegal activity</li>
+                        <li>Violation des présentes CGU</li>
+                        <li>Violation des Conditions d'Utilisation de Discord</li>
+                        <li>Utilisation abusive ou frauduleuse du service</li>
+                        <li>Comportement nuisible envers d'autres utilisateurs</li>
+                        <li>Activity illegal</li>
                     </ul>
-                    <p><strong>Effects of termination:</strong> Upon termination, you immediately lose all rights to use the service. Provisions of these ToS that by their nature should survive termination (including liability limitations) will remain in effect.</p>
+                    <p><strong>Effets de la résiliation :</strong> En cas de résiliation, vous perdez immédiatement tout droit d'utiliser le service. Les dispositions des présentes CGU qui, par leur nature, doivent survivre à la résiliation (notamment les limitations de responsabilité) resteront en vigueur.</p>
 
-                    <h3>12. Applicable law and jurisdiction</h3>
-                    <p>These ToS are governed by and construed in accordance with French law, without regard to conflict of law principles.</p>
-                    <p><strong>Dispute resolution:</strong> In the event of a dispute relating to the interpretation or execution of these ToS, the parties will endeavor to resolve it amicably. Failing that, French courts shall have exclusive jurisdiction.</p>
-                    <p><strong>Mediation:</strong> In accordance with Articles L.611-1 et seq. of the French Consumer Code, if you are a consumer, you have the right to use a consumer mediator free of charge in the event of a dispute.</p>
-                    <p><strong>Severability:</strong> If any provision of these ToS is deemed invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
+                    <h3>12. Droit applicable et juridiction</h3>
+                    <p>Les présentes CGU sont régies et interprétées conformément au droit français, sans égard aux principes de conflits de lois.</p>
+                    <p><strong>Résolution des litiges :</strong> En cas de litige relatif à l'interprétation ou à l'exécution des présentes CGU, les parties s'efforceront de le résoudre à l'amiable. À défaut, les tribunaux français seront seuls compétents.</p>
+                    <p><strong>Mediation :</strong> Conformément aux articles L.611-1 et suivants du Code de la consommation, if you are a consumer, you have the right to use a consumer mediator free of charge in the event of a dispute.</p>
+                    <p><strong>Divisibilité :</strong> Si une disposition des présentes CGU est jugée invalide ou inapplicable, les autres dispositions resteront en vigueur.</p>
 
                     <div class="contact-box">
                         <h4>13. Contact</h4>
-                        <p>For any questions regarding these ToS:</p>
+                        <p>Pour toute question concernant ces CGU :</p>
                         <ul>
-                            <li><strong>Email:</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord:</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[YOUR_DISCORD_SERVER]</a></li>
-                            <li><strong>Bluesky:</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
+                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
+                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
+                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
                         </ul>
                     </div>
                 </div>
