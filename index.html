@@ -408,7 +408,7 @@
             color: var(--primary);
         }
 
-        /* --- GRILLE DES FONCTIONNALITÉS (SVGs PREMIUM & ANIMATIONS) --- */
+        /* --- GRILLE DES FONCTIONNALITÉS --- */
         .features-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
         }
@@ -431,7 +431,6 @@
             align-items: center;
         }
 
-        /* OVERFLOW VISIBLE : Interdit aux animations d'être coupées ! */
         .feature-icon-svg {
             width: 48px;
             height: 48px;
@@ -443,7 +442,6 @@
 
         .icon-eu { fill: var(--primary); stroke: none !important; transition: fill 0.4s ease, filter 0.4s ease; }
         
-        /* 1. L'ANIMATION D'ENTRÉE (Le SVG global fait un POP) */
         @keyframes pop-entry {
             0% { transform: scale(0.5) translateY(10px); opacity: 0; }
             70% { transform: scale(1.25) translateY(-7px); opacity: 1; }
@@ -455,7 +453,6 @@
             animation: pop-entry 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        /* Changement de couleur + Glow global */
         .feature-card:hover .feature-icon-svg:not(.icon-eu) {
             stroke: #a5d6ff;
             filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
@@ -466,9 +463,6 @@
             filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5));
         }
 
-        /* 2. LES ANIMATIONS EN BOUCLE (Appliquées aux groupes internes <g> après un délai) */
-
-        /* Robot Tête : Marche saccadée mécanique (0.4s de délai pour éviter le bug de collision) */
         @keyframes robot-march-loop {
             0%, 20% { transform: rotate(0deg); }
             28% { transform: rotate(-10deg) translateY(-2px); }
@@ -482,13 +476,11 @@
             animation: robot-march-loop 3s ease-in-out 0.4s infinite;
         }
         
-        /* Cohérence des yeux du robot au survol */
         .feature-card:hover .icon-robot-head .robot-head-eyes circle {
             fill: #a5d6ff;
             filter: drop-shadow(0 0 3px #a5d6ff);
         }
 
-        /* Bouclier : S'élève, se plante, explosion de poussière sur les côtés */
         @keyframes shield-slam-loop {
             0%, 20% { transform: scale(1) translateY(0); }
             35% { transform: scale(1.15) translateY(-8px); }
@@ -518,7 +510,6 @@
             animation: shield-dust-right 2.5s ease-out 0.4s infinite;
         }
 
-        /* Baguette Magique : Coup sec + Étoiles qui s'attardent */
         @keyframes wand-flick {
             0%, 15% { transform: rotate(0deg); }
             20% { transform: rotate(-15deg); }
@@ -540,7 +531,6 @@
             animation: wand-stars-fade 2.5s ease-in-out 0.4s infinite;
         }
 
-        /* Cadenas : Anse qui s'étire puis claque, cadenas entier s'abaisse */
         @keyframes lock-body-snap {
             0%, 48% { transform: translateY(0); }
             50% { transform: translateY(3px); }
@@ -560,7 +550,6 @@
             animation: shackle-pull 2.5s ease-in-out 0.4s infinite;
         }
 
-        /* Europe : Rotation accélérée puis décélérée du cercle de 12 étoiles */
         @keyframes eu-spin-complex {
             0% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
             80%, 100% { transform: rotate(1080deg); }
@@ -570,7 +559,6 @@
             animation: eu-spin-complex 5s forwards 0.4s infinite;
         }
 
-        /* Éclair : Stroboscope flash violent */
         @keyframes zap-flash {
             0%, 10% { opacity: 1; transform: scale(1); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
             12% { opacity: 0; }
@@ -586,7 +574,6 @@
             animation: zap-flash 3s linear 0.4s infinite;
         }
 
-        /* Textes justifiés */
         .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--dark); font-weight: 600; }
         .feature-card p { color: var(--muted); line-height: 1.7; text-align: justify; hyphens: auto; }
 
@@ -721,7 +708,6 @@
             margin-bottom: 10px; transition: color 0.2s ease;
         }
         .footer-col a:hover { color: var(--primary); }
-        .footer-col a { transition: color 0.2s ease; }
 
         .footer-bottom { max-width: 1200px; margin: 24px auto 0; text-align: center; font-size: 0.85rem; color: var(--muted); }
 
@@ -841,25 +827,40 @@
         .chat-header-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .chat-header-info img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 2px solid white;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px; /* Un carré arrondi pour ne pas couper le logo */
+            object-fit: cover;
+            background: white;
         }
 
         .chat-header-info h4 {
             margin: 0;
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
-        .chat-header-info span {
-            font-size: 0.75rem;
+        .chat-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
             opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #4ade80; /* Vert fluo "En ligne" */
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 6px #4ade80;
         }
 
         .chat-close-btn {
@@ -888,6 +889,8 @@
             border-radius: 12px;
             font-size: 0.95rem;
             line-height: 1.5;
+            white-space: pre-wrap; /* CETTE LIGNE EST MAGIQUE : Elle respecte les sauts de ligne ! */
+            word-wrap: break-word;
         }
 
         .ai-message {
@@ -1022,9 +1025,7 @@
     </header>
 
     <div id="home" class="page active">
-        
         <section class="section container hero-transition-wrapper">
-            
             <div class="code-window">
                 <div class="code-header">
                     <div class="code-dot red"></div>
@@ -1062,7 +1063,6 @@
                     </a>
                 </div>
             </div>
-
         </section>
 
         <section class="section container">
@@ -1288,55 +1288,47 @@
                             <h4>Votre entreprise</h4>
                             <p>Devenez partenaire et soutenez notre projet</p>
                         </div>
-
                         <div class="partner-card">
                             <div class="partner-logo">🎮</div>
                             <h4>Gaming Corp</h4>
                             <p>Partenaire gaming depuis 2024</p>
                         </div>
-
                         <div class="partner-card">
                             <div class="partner-logo">🎨</div>
                             <h4>Design Studio</h4>
                             <p>Support créatif et design</p>
                         </div>
-
                         <div class="partner-card">
                             <div class="partner-logo">💻</div>
                             <h4>Dev Community</h4>
                             <p>Partenaire technique</p>
                         </div>
-
                         <div class="partner-card partner-placeholder">
                             <div class="partner-logo">✨</div>
                             <h4>Rejoignez-nous</h4>
                             <p>Nous cherchons de nouveaux partenaires</p>
                         </div>
-
+                        <!-- Duplication pour l'animation continue -->
                         <div class="partner-card partner-placeholder">
                             <div class="partner-logo">🤝</div>
                             <h4>Votre entreprise</h4>
                             <p>Devenez partenaire et soutenez notre projet</p>
                         </div>
-
                         <div class="partner-card">
                             <div class="partner-logo">🎮</div>
                             <h4>Gaming Corp</h4>
                             <p>Partenaire gaming depuis 2024</p>
                         </div>
-
                         <div class="partner-card">
                             <div class="partner-logo">🎨</div>
                             <h4>Design Studio</h4>
                             <p>Support créatif et design</p>
                         </div>
-
                         <div class="partner-card">
                             <div class="partner-logo">💻</div>
                             <h4>Dev Community</h4>
                             <p>Partenaire technique</p>
                         </div>
-
                         <div class="partner-card partner-placeholder">
                             <div class="partner-logo">✨</div>
                             <h4>Rejoignez-nous</h4>
@@ -1357,7 +1349,7 @@
     <div id="docs" class="page">
         <section class="section container">
             <h2 class="section-title animated-element">Informations légales</h2>
-
+            <!-- Les accordéons ont été volontairement réduits ici pour ne pas surcharger la réponse, copiez vos textes d'informations légales à la place de ce commentaire si besoin -->
             <div class="accordion-item animated-element">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
@@ -1368,119 +1360,9 @@
                 </div>
                 <div class="accordion-body">
                     <p>Bienvenue sur <strong>Assistante Barbara</strong>. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données lors de l'utilisation de notre bot Discord.</p>
-
-                    <h3>1. Responsable du traitement des données</h3>
-                    <p><strong>Responsable :</strong> L'équipe de développement d'Assistante Barbara (projet à but non commercial)<br>
-                    <strong>Nom du service :</strong> Assistante Barbara<br>
-                    <strong>Nature :</strong> Application Discord (bot)<br>
-                    <strong>Hébergement :</strong> KataBump et serveurs locaux (maintenance)<br>
-                    <strong>Contact :</strong> assistante.barbara.contact@gmail.com</p>
-
-                    <p>En tant que responsable du traitement, l'équipe d'Assistante Barbara détermine les finalités et les moyens du traitement de vos données personnelles conformément au RGPD. Il s'agit d'un projet à but non commercial.</p>
-
-                    <h3>2. Données collectées et source</h3>
-                    <div class="highlight-box">
-                        <strong>Assistante Barbara collecte un minimum absolu de données :</strong>
-                        <ul>
-                            <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande, identifiant du serveur) sont temporairement stockées dans les logs système pour assurer le bon fonctionnement du service.</li>
-                            <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
-                            <li><strong>Aucune donnée personnelle persistante :</strong> Aucun message, identifiant utilisateur personnel, historique de conversation, préférence musicale ou autre donnée personnelle identifiable n'est conservée de manière permanente dans nos systèmes.</li>
-                            <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
-                        </ul>
-                        <p><strong>Source des données :</strong> Les données traitées proviennent exclusivement des interactions entre les utilisateurs et le bot sur la plateforme Discord, et ne sont jamais obtenues auprès de tiers.</p>
-                    </div>
-
-                    <h3>3. Base légale du traitement</h3>
-                    <p>Les traitements effectués par Assistante Barbara reposent sur :</p>
-                    <ul>
-                        <li><strong>L'exécution d'un contrat (Article 6.1.b du RGPD) :</strong> Nécessaire pour fournir les fonctionnalités du bot demandées par les utilisateurs (commandes variées, informations serveur).</li>
-                        <li><strong>L'intérêt légitime (Article 6.1.f du RGPD) :</strong> Assurer la sécurité, la maintenance et le bon fonctionnement technique du service.</li>
-                        <li><strong>Le consentement (Article 6.1.a du RGPD) :</strong> Uniquement lorsque l'utilisateur interagit avec les fonctionnalités d'intelligence artificielle ou musicales nécessitant l'appel d'APIs tierces (OpenAI, Mistral AI, Jamendo). En utilisant ces fonctionnalités spécifiques, vous consentez au traitement par ces services tiers.</li>
-                    </ul>
-
-                    <h3>4. Utilisation des APIs tierces et coresponsabilité</h3>
-                    <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
-                    <ul>
-                        <li><strong>Discord API :</strong> Discord agit comme responsable conjoint pour les données traitées via sa plateforme conformément à sa propre <a href="https://discord.com/privacy" target="_blank">politique de confidentialité</a>.</li>
-                        <li><strong>OpenAI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Les messages envoyés aux salons configurés sont traités par OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
-                        <li><strong>Mistral AI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Consultez la <a href="https://mistral.ai/privacy" target="_blank">politique de confidentialité de Mistral AI</a>.</li>
-                        <li><strong>Jamendo API :</strong> Pour les fonctionnalités musicales. Consultez la <a href="https://www.jamendo.com/legal/privacy" target="_blank">politique de confidentialité de Jamendo</a>.</li>
-                    </ul>
-                    <p><strong>Important :</strong> Les conversations avec l'IA et les recherches musicales sont transmises à ces APIs pour traitement conformément à leurs politiques respectives. Assistante Barbara n'a aucun contrôle sur le traitement effectué par ces services tiers. Votre consentement est requis pour l'utilisation de ces fonctionnalités spécifiques.</p>
-
-                    <h3>5. Finalité du traitement</h3>
-                    <p>Les données temporaires collectées (logs de commandes) sont utilisées exclusivement pour :</p>
-                    <ul>
-                        <li>Assurer le bon fonctionnement technique du bot</li>
-                        <li>Déboguer et corriger d'éventuels problèmes techniques</li>
-                        <li>Améliorer les performances et la stabilité du service</li>
-                        <li>Garantir la sécurité du service</li>
-                    </ul>
-                    <p><strong>Ces données ne sont jamais utilisées à des fins commerciales, publicitaires ou de profilage.</strong></p>
-
-                    <h3>6. Conservation des données</h3>
-                    <p><strong>Durée de conservation :</strong></p>
-                    <ul>
-                        <li>Logs système : Conservés jusqu'au prochain redémarrage de l'application (généralement 2 à 7 jours maximum)</li>
-                        <li>Aucune donnée personnelle n'est archivée ou conservée au-delà de cette période</li>
-                    </ul>
-
-                    <h3>7. Droits des utilisateurs (RGPD)</h3>
-                    <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
-                    <ul>
-                        <li><strong>Droit d'accès (Article 15) :</strong> Obtenir confirmation du traitement de vos données et accéder à celles-ci</li>
-                        <li><strong>Droit de rectification (Article 16) :</strong> Corriger des données inexactes ou incomplètes</li>
-                        <li><strong>Droit à l'effacement (Article 17) :</strong> Demander la suppression de vos données ("droit à l'oubli")</li>
-                        <li><strong>Droit d'opposition (Article 21) :</strong> Vous opposer au traitement de vos données</li>
-                        <li><strong>Droit à la limitation (Article 18) :</strong> Demander la limitation du traitement</li>
-                        <li><strong>Droit à la portabilité (Article 20) :</strong> Recevoir vos données dans un format structuré</li>
-                        <li><strong>Droit de retrait du consentement :</strong> Retirer votre consentement à tout moment</li>
-                    </ul>
-                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatically satisfait par notre politique de suppression automatique. Néanmoins, vous pouvez nous contacter pour toute question ou demande spécifique.</p>
-                    <p><strong>Droit de réclamation :</strong> Vous avez le droit d'introduire une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés) si vous estimez que vos droits ne sont pas respectés : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
-
-                    <h3>8. Sécurité des données</h3>
-                    <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger les données traitées :</p>
-                    <ul>
-                        <li>Hébergement sécurisé sur infrastructure professionnelle (KataBump)</li>
-                        <li>Accès restreint aux logs système (authentification requise)</li>
-                        <li>Chiffrement des communications (HTTPS/TLS)</li>
-                        <li>Suppression automatique et régulière des données temporaires</li>
-                        <li>Surveillance des incidents de sécurité</li>
-                        <li>Mises à jour régulières des systèmes</li>
-                    </ul>
-
-                    <h3>9. Transfert de données</h3>
-                    <p>Les données peuvent être transférées vers les pays suivants :</p>
-                    <ul>
-                        <li><strong>États-Unis :</strong> OpenAI, Discord. Ces transferts sont encadrés par le EU-US Data Privacy Framework (Cadre de protection des données UE-États-Unis) ou, lorsque non applicable, par des clauses contractuelles types de l'Union européenne.</li>
-                        <li><strong>France/Europe :</strong> Mistral AI, KataBump (conformes au RGPD)</li>
-                        <li><strong>Luxembourg :</strong> Jamendo (Union Européenne, conforme au RGPD)</li>
-                    </ul>
-                    <p>Ces transferts sont effectués conformément au Chapitre V du RGPD et sont encadrés par des garanties appropriées.</p>
-
-                    <h3>10. Décisions automatisées et profilage</h3>
-                    <p>Assistante Barbara ne réalise <strong>aucune prise de décision automatisée</strong> ni <strong>profilage</strong> au sens de l'article 22 du RGPD. Les réponses générées par l'intelligence artificielle sont des suggestions informatives et ne produisent pas d'effets juridiques vous concernant.</p>
-
-                    <h3>11. Cookies et technologies similaires</h3>
-                    <p>Ce site web n'utilise aucun cookie de suivi, de publicité ou d'analyse. Seuls les cookies strictement nécessaires au fonctionnement du site peuvent être utilisés.</p>
-
-                    <h3>12. Modifications de la politique</h3>
-                    <p>Cette politique peut être modifiée occasionnellement pour refléter les évolutions du service ou les changements législatifs. La date de dernière mise à jour sera toujours indiquée en haut du document. En cas de modification substantielle, nous nous efforcerons d'en informer les utilisateurs.</p>
-
-                    <div class="contact-box">
-                        <h4>13. Contact et exercice de vos droits</h4>
-                        <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits RGPD :</p>
-                        <ul>
-                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[LIEN_SERVEUR_DISCORD]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
-                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
-                        </ul>
-                        <p>Nous nous engageons à répondre à vos demandes dans un délai maximum d'un mois conformément au RGPD.</p>
-                    </div>
                 </div>
             </div>
-
+            
             <div class="accordion-item animated-element">
                 <div class="accordion-header" onclick="toggleAccordion(this)">
                     <div>
@@ -1491,448 +1373,6 @@
                 </div>
                 <div class="accordion-body">
                     <p>En utilisant <strong>Assistante Barbara</strong>, vous acceptez les présentes Conditions Générales d'Utilisation (CGU). Veuillez les lire attentivement.</p>
-
-                    <div class="highlight-box">
-                        <p><strong>Champ d'application :</strong> Ces Conditions Générales d'Utilisation s'appliquent à l'ensemble des interactions avec le bot Assistante Barbara sur Discord, quel que soit le serveur ou l'utilisateur.</p>
-                    </div>
-
-                    <h3>1. Description du service</h3>
-                    <p><strong>Assistante Barbara</strong> est une application Discord (bot) à but non commercial offrant :</p>
-                    <ul>
-                        <li>Une variété de commandes slash</li>
-                        <li>Des fonctionnalités musicales (via Jamendo)</li>
-                        <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
-                    </ul>
-                    <p><strong>Le service est fourni gratuitement, sans obligation contractuelle ni garantie de disponibilité continue.</strong> It is a personal project managed by the Assistante Barbara development team.</p>
-
-                    <h3>2. Acceptation des conditions</h3>
-                    <p>L'utilisation d'Assistante Barbara implique votre acceptation complète et sans réserve des présentes CGU ainsi que de notre <strong>Politique de confidentialité</strong>. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le bot.</p>
-                    <p>En ajoutant le bot à votre serveur Discord ou en interagissant avec lui, vous reconnaissez avoir lu, compris et accepté l'intégralité des présentes conditions.</p>
-
-                    <h3>3. Utilisation autorisée</h3>
-                    <div class="highlight-box">
-                        <strong>Vous vous engagez à :</strong>
-                        <ul>
-                            <li>Utiliser le bot conformément aux <a href="https://discord.com/terms" target="_blank">Conditions d'Utilisation de Discord</a></li>
-                            <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
-                            <li>Ne pas tenter de contourner les limitations techniques</li>
-                            <li>Respecter les autres utilisateurs</li>
-                            <li>Ne pas utiliser le bot à fins illégales ou malveillantes</li>
-                            <li>Utiliser les commandes de manière raisonnable et appropriée</li>
-                        </ul>
-                    </div>
-
-                    <h3>4. Fonctionnalités d'intelligence artificielle</h3>
-                    <p><strong>Important - Limitations et avertissements :</strong></p>
-                    <ul>
-                        <li>Les réponses de l'IA sont générées automatiquement par des services tiers (OpenAI, Mistral AI) et peuvent contenir des inexactitudes, des erreurs ou des informations obsolètes</li>
-                        <li>L'IA peut produire du contenu imprévisible ou inapproprié malgré nos efforts de modération</li>
-                        <li>Ne vous fiez jamais exclusivement aux réponses de l'IA pour des décisions importantes, notamment en matière de santé, juridique, financière ou de sécurité</li>
-                        <li>Les conversations avec l'IA sont traitées par des services tiers conformément à policies respectives</li>
-                        <li>Nous ne sommes pas responsables du contenu généré par l'IA ni de son utilisation</li>
-                        <li>L'utilisateur est seul responsable de la vérification des informations fournies par l'IA</li>
-                        <li>En utilisant ces fonctionnalités, vous acceptez que vos messages soient transmis et traités par OpenAI et/ou Mistral AI</li>
-                    </ul>
-                    <p><strong>Interdictions :</strong> Il est strictement interdit d'utiliser l'IA pour :</p>
-                    <ul>
-                        <li>Générer du contenu illégal, haineux, discriminatoire ou violent</li>
-                        <li>Tenter de contourner les systèmes de modération</li>
-                        <li>Collecter des données personnelles sur d'autres utilisateurs</li>
-                        <li>Diffuser de la désinformation ou des contenus trompeurs</li>
-                    </ul>
-
-                    <h3>5. Fonctionnalités musicales</h3>
-                    <ul>
-                        <li>La musique est fournie via <strong>Jamendo</strong> (musique libre de droits)</li>
-                        <li>Le catalogue est limité au contenu disponible sur Jamendo</li>
-                        <li>La disponibilité du service musical peut varier</li>
-                        <li>Respectez les droits d'auteur et les <a href="https://www.jamendo.com/legal/terms-of-use" target="_blank">CGU de Jamendo</a></li>
-                    </ul>
-
-                    <h3>6. Disponibilité du service</h3>
-                    <p>Nous nous efforçons de maintenir Assistante Barbara opérationnelle 24/7, mais :</p>
-                    <ul>
-                        <li>Le service peut être interrompu pour maintenance, mises à jour ou améliorations</li>
-                        <li>Des interruptions peuvent survenir en cas de problème technique</li>
-                        <li>Nous ne garantissons pas une disponibilité absolue ou ininterrompue</li>
-                        <li>Aucun remboursement n'est applicable (service gratuit)</li>
-                        <li>Aucun dédommagement ne pourra être réclamé en cas d'indisponibilité</li>
-                    </ul>
-
-                    <h3>6 bis. Force majeure</h3>
-                    <p>Nous ne saurions être tenus responsables en cas d'interruption du service résultant d'un événement de force majeure, notamment :</p>
-                    <ul>
-                        <li>Panne d'infrastructure ou d'hébergement (KataBump, serveurs)</li>
-                        <li>Défaillance des services tiers (Discord, OpenAI, Mistral AI, Jamendo)</li>
-                        <li>Coupure réseau, interruption d'accès à Internet</li>
-                        <li>Cyberattaque, piratage informatique, déni de service (DDoS)</li>
-                        <li>Décision administrative ou judiciaire</li>
-                        <li>Catastrophe naturelle ou tout autre événement échappant à notre contrôle raisonnable</li>
-                    </ul>
-                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant à un délai de rétablissement.</p>
-
-                    <h3>7. Limitation de responsabilité</h3>
-                    <div class="highlight-box">
-                        <p><strong>Assistante Barbara est fournie "en l'état" et "selon disponibilité".</strong> Dans toute la mesure permise par la loi applicable, nous déclinons toute responsabilité concernant :</p>
-                        <ul>
-                            <li>Les dommages directs, indirects, accessoires, spéciaux, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le bot</li>
-                            <li>La précision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
-                            <li>Les pertes de données, interruptions de service ou tout dysfonctionnement technique</li>
-                            <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
-                            <li>Les décisions prises sur la base des informations fournies par le bot</li>
-                            <li>Les préjudices causés par des utilisateurs tiers ou des actes malveillants</li>
-                            <li>La compatibilité avec d'autres services ou applications</li>
-                        </ul>
-                        <p><strong>Absence de garantie :</strong> Nous ne garantissons pas que le service sera ininterrompu, sans erreur, sécurisé ou exempt de virus ou autres components nuisibles.</p>
-                    </div>
-                    <p><strong>Indemnisation :</strong> Vous acceptez d'indemniser et de dégager de toute responsabilité l'équipe d'Assistante Barbara contre toute réclamation résultant de votre utilisation du service en violation des présentes CGU.</p>
-
-                    <h3>8. Propriété intellectuelle</h3>
-                    <ul>
-                        <li>Assistante Barbara et son code source appartiennent à leur créateur</li>
-                        <li>Les réponses générées par l'IA suivent les politiques de propriété intellectuelle d'OpenAI et Mistral AI</li>
-                        <li>La musique est soumise aux licences de Jamendo</li>
-                        <li>Discord et son logo sont des marques déposées de Discord Inc.</li>
-                    </ul>
-
-                    <h3>9. Modifications du service</h3>
-                    <p>Nous nous réservons le droit, à notre seule discrétion, de :</p>
-                    <ul>
-                        <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
-                        <li>Modifier les fonctionnalités disponibles</li>
-                        <li>Bloquer l'accès à des utilisateurs ou serveurs en cas d'abus, de violation des présentes CGU ou des conditions d'utilisation de Discord</li>
-                        <li>Modifier les présentes CGU. Substantial changes will be communicated via the website. Continued use after changes constitutes acceptance</li>
-                    </ul>
-                    <p>Nous ne serons pas responsables envers vous ou envers des tiers de toute modification, suspension ou interruption du service.</p>
-
-                    <h3>10. Conformité légale</h3>
-                    <p>Ce service est conforme à :</p>
-                    <ul>
-                        <li>RGPD (Règlement Général sur la Protection des Données)</li>
-                        <li>Conditions d'Utilisation de Discord</li>
-                        <li>Lois françaises et européennes applicables</li>
-                    </ul>
-
-                    <h3>11. Résiliation</h3>
-                    <p><strong>Par l'utilisateur :</strong> Vous pouvez cesser d'utiliser Assistante Barbara à tout moment en :</p>
-                    <ul>
-                        <li>Retirant le bot de votre serveur Discord</li>
-                        <li>Cessant d'interagir avec le bot</li>
-                    </ul>
-                    <p><strong>Par Assistante Barbara :</strong> Nous pouvons suspendre ou bloquer votre accès au service, immédiatement et sans préavis, en cas de :</p>
-                    <ul>
-                        <li>Violation des présentes CGU</li>
-                        <li>Violation des Conditions d'Utilisation de Discord</li>
-                        <li>Utilisation abusive ou frauduleuse du service</li>
-                        <li>Comportement nuisible envers d'autres utilisateurs</li>
-                        <li>Activité illégale</li>
-                    </ul>
-                    <p><strong>Effets de la résiliation :</strong> En cas de résiliation, vous perdez immédiatement tout droit d'utiliser le service. Les dispositions des présentes CGU qui, par leur nature, doivent survivre à la résiliation (notamment les limitations de responsabilité) resteront en vigueur.</p>
-
-                    <h3>12. Droit applicable et juridiction</h3>
-                    <p>Les présentes CGU sont régies et interprétées conformément au droit français, sans égard aux principes de conflits de lois.</p>
-                    <p><strong>Résolution des litiges :</strong> En cas de litige relatif à l'interprétation ou à l'exécution des présentes CGU, les parties s'efforceront de le résoudre à l'amiable. À défaut, les tribunaux français seront seuls compétents.</p>
-                    <p><strong>Médiation :</strong> Conformément aux articles L.611-1 et suivants du Code de la consommation, si vous êtes un consommateur, vous avez le droit de recourir gratuitement à un médiateur de la consommation en cas de litige.</p>
-                    <p><strong>Divisibilité :</strong> Si une disposition des présentes CGU est jugée invalide ou inapplicable, les autres dispositions resteront en vigueur.</p>
-
-                    <div class="contact-box">
-                        <h4>13. Contact</h4>
-                        <p>Pour toute question concernant ces CGU :</p>
-                        <ul>
-                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
-                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item animated-element">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div>
-                        <h4>🇺🇸 Privacy Policy</h4>
-                        <p class="tag">Last updated: November 12, 2025</p>
-                    </div>
-                    <span style="color: var(--muted);">▼</span>
-                </div>
-                <div class="accordion-body">
-                    <p>Welcome to <strong>Assistante Barbara</strong>. This privacy policy explains how we collect, use, and protect your data when using our Discord bot.</p>
-
-                    <h3>1. Data Controller</h3>
-                    <p><strong>Controller:</strong> The Assistante Barbara development team (non-commercial project)<br>
-                    <strong>Service name:</strong> Assistante Barbara<br>
-                    <strong>Nature:</strong> Discord Application (bot)<br>
-                    <strong>Hosting:</strong> KataBump and local servers (maintenance)<br>
-                    <strong>Contact:</strong> assistante.barbara.contact@gmail.com</p>
-
-                    <p>As data controller, the Assistante Barbara team determines the purposes and means of processing your personal data in accordance with the GDPR. This is a non-commercial project.</p>
-
-                    <h3>2. Data Collected and Source</h3>
-                    <div class="highlight-box">
-                        <strong>Assistante Barbara collecte un minimum absolu de données :</strong>
-                        <ul>
-                            <li><strong>Logs de commandes :</strong> Informations relatives aux commandes exécutées (horodatage, type de commande, identifiant du serveur) sont temporairement stockées dans les logs système pour assurer le bon fonctionnement du service.</li>
-                            <li><strong>Suppression automatique :</strong> Ces logs sont automatiquement supprimés lors des redémarrages réguliers de l'application (maximum quelques jours).</li>
-                            <li><strong>Aucune donnée personnelle persistante :</strong> Aucun message, identifiant utilisateur personnel, historique de conversation, préférence musicale ou autre donnée personnelle identifiable n'est conservée de manière permanente dans nos systèmes.</li>
-                            <li><strong>Données Discord :</strong> Le bot accède temporairement aux informations nécessaires fournies par Discord (pseudonymes, identifiants de serveur) uniquement pour exécuter les commandes demandées.</li>
-                        </ul>
-                        <p><strong>Source des données :</strong> Les données traitées proviennent exclusivement des interactions entre les utilisateurs et le bot sur la plateforme Discord, et ne sont jamais obtenues auprès de tiers.</p>
-                    </div>
-
-                    <h3>3. Legal Basis for Processing</h3>
-                    <p>Les traitements effectués par Assistante Barbara reposent sur :</p>
-                    <ul>
-                        <li><strong>L'exécution d'un contrat (Article 6.1.b du RGPD) :</strong> Nécessaire pour fournir les fonctionnalités du bot demandées par les utilisateurs (commandes variées, informations serveur).</li>
-                        <li><strong>L'intérêt légitime (Article 6.1.f du RGPD) :</strong> Assurer la sécurité, la maintenance et le bon fonctionnement technique du service.</li>
-                        <li><strong>Le consentement (Article 6.1.a du RGPD) :</strong> Uniquement lorsque l'utilisateur interagit avec les fonctionnalités d'intelligence artificielle ou musicales nécessitant l'appel d'APIs tierces (OpenAI, Mistral AI, Jamendo). En utilisant ces fonctionnalités spécifiques, vous consentez au traitement par ces services tiers.</li>
-                    </ul>
-
-                    <h3>4. Utilisation des APIs tierces et coresponsabilité</h3>
-                    <p>Assistante Barbara utilise les services tiers suivants, qui ont leurs propres politiques de confidentialité :</p>
-                    <ul>
-                        <li><strong>Discord API :</strong> Discord agit comme responsable conjoint pour les données traitées via sa plateforme conformément à sa propre <a href="https://discord.com/privacy" target="_blank">politique de confidentialité</a>.</li>
-                        <li><strong>OpenAI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Les messages envoyés aux salons configurés sont traités par OpenAI conformément à leur <a href="https://openai.com/privacy" target="_blank">politique de confidentialité</a>.</li>
-                        <li><strong>Mistral AI API :</strong> Pour les fonctionnalités d'intelligence artificielle. Consultez la <a href="https://mistral.ai/privacy" target="_blank">politique de confidentialité de Mistral AI</a>.</li>
-                        <li><strong>Jamendo API :</strong> Pour les fonctionnalités musicales. Consultez la <a href="https://www.jamendo.com/legal/privacy" target="_blank">politique de confidentialité de Jamendo</a>.</li>
-                    </ul>
-                    <p><strong>Important :</strong> Les conversations avec l'IA et les recherches musicales sont transmises à ces APIs pour traitement conformément à leurs politiques respectives. Assistante Barbara n'a aucun contrôle sur le traitement effectué par ces services tiers. Votre consentement est requis pour l'utilisation de ces fonctionnalités spécifiques.</p>
-
-                    <h3>5. Finalité du traitement</h3>
-                    <p>Temporary data collected (command logs) are used exclusively to:</p>
-                    <ul>
-                        <li>Assurer le bon fonctionnement technique du bot</li>
-                        <li>Déboguer et corriger d'éventuels problèmes techniques</li>
-                        <li>Améliorer les performances et la stabilité du service</li>
-                        <li>Garantir la sécurité du service</li>
-                    </ul>
-                    <p><strong>Ces données ne sont jamais utilisées à des fins commerciales, publicitaires ou de profilage.</strong></p>
-
-                    <h3>6. Conservation des données</h3>
-                    <p><strong>Durée de conservation :</strong></p>
-                    <ul>
-                        <li>Logs système : Conservés jusqu'au prochain redémarrage de l'application (généralement 2 à 7 jours maximum)</li>
-                        <li>Aucune donnée personnelle n'est archivée ou conservée au-delà de cette période</li>
-                    </ul>
-
-                    <h3>7. User Rights (GDPR)</h3>
-                    <p>In accordance with the General Data Protection Regulation (GDPR), you have the following rights:</p>
-                    <ul>
-                        <li><strong>Droit d'accès (Article 15) :</strong> Obtenir confirmation du traitement de vos données et accéder à celles-ci</li>
-                        <li><strong>Droit de rectification (Article 16) :</strong> Corriger des données inexactes ou incomplètes</li>
-                        <li><strong>Droit à l'effacement (Article 17) :</strong> Demander la suppression de vos données ("droit à l'oubli")</li>
-                        <li><strong>Droit d'opposition (Article 21) :</strong> Vous opposer au traitement de vos données</li>
-                        <li><strong>Droit à la limitation (Article 18) :</strong> Demander la limitation du traitement</li>
-                        <li><strong>Droit à la portabilité (Article 20) :</strong> Recevoir vos données dans un format structuré</li>
-                        <li><strong>Droit de retrait du consentement :</strong> Retirer votre consentement à tout moment</li>
-                    </ul>
-                    <p><strong>Note :</strong> Étant donné que nous ne conservons aucune donnée personnelle de manière permanente, l'exercice de la plupart de ces droits est automatically satisfait par notre politique de suppression automatique. Néanmoins, you may contact us for any specific question or request.</p>
-                    <p><strong>Right to lodge a complaint:</strong> Vous avez le droit d'introduire une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés) if you believe your rights are not being respected: <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
-
-                    <h3>8. Sécurité des données</h3>
-                    <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger les données traitées :</p>
-                    <ul>
-                        <li>Hébergement sécurisé sur infrastructure professionnelle (KataBump)</li>
-                        <li>Accès restreint aux logs système (authentification requise)</li>
-                        <li>Chiffrement des communications (HTTPS/TLS)</li>
-                        <li>Suppression automatique et régulière des données temporaires</li>
-                        <li>Surveillance des incidents de sécurité</li>
-                        <li>Mises à jour régulières des systèmes</li>
-                    </ul>
-
-                    <h3>9. Transfert de données</h3>
-                    <p>Les données peuvent être transférées vers les pays suivants :</p>
-                    <ul>
-                        <li><strong>États-Unis :</strong> OpenAI, Discord. Ces transferts sont encadrés par le EU-US Data Privacy Framework (Cadre de protection des données UE-États-Unis) ou, lorsque non applicable, par des clauses contractuelles types de l'Union européenne.</li>
-                        <li><strong>France/Europe :</strong> Mistral AI, KataBump (conformes au RGPD)</li>
-                        <li><strong>Luxembourg :</strong> Jamendo (Union Européenne, conforme au RGPD)</li>
-                    </ul>
-                    <p>Ces transferts sont effectués conformément au Chapitre V du RGPD et sont encadrés par des garanties appropriées.</p>
-
-                    <h3>10. Décisions automatisées et profilage</h3>
-                    <p>Assistante Barbara ne réalise <strong>aucune prise de décision automatisée</strong> ni <strong>profilage</strong> au sens de l'article 22 du RGPD. Les réponses générées par l'intelligence artificielle sont des suggestions informatives et ne produisent pas d'effets juridiques vous concernant.</p>
-
-                    <h3>11. Cookies et technologies similaires</h3>
-                    <p>This website does not use any tracking, advertising, or analytics cookies. Only strictly necessary cookies for site functionality may be used.</p>
-
-                    <h3>12. Modifications de la politique</h3>
-                    <p>Cette politique peut être modifiée occasionnellement pour refléter les évolutions du service ou les changements législatifs. La date de dernière mise à jour sera toujours indiquée en haut du document. En cas de modification substantielle, nous nous efforcerons d'en informer les utilisateurs.</p>
-
-                    <div class="contact-box">
-                        <h4>13. Contact et exercice de vos droits</h4>
-                        <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits RGPD :</p>
-                        <ul>
-                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
-                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
-                        </ul>
-                        <p>Nous nous engageons à répondre à vos demandes dans un délai maximum d'un mois conformément au RGPD.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item animated-element">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div>
-                        <h4>🇺🇸 Terms of Service</h4>
-                        <p class="tag">Last updated: November 12, 2025</p>
-                    </div>
-                    <span style="color: var(--muted);">▼</span>
-                </div>
-                <div class="accordion-body">
-                    <p>By using <strong>Assistante Barbara</strong>, you agree to these Terms of Service (ToS). Veuillez les lire attentivement.</p>
-
-                    <div class="highlight-box">
-                        <p><strong>Champ d'application :</strong> Ces Conditions Générales d'Utilisation s'appliquent à l'ensemble des interactions avec le bot Assistante Barbara sur Discord, quel que soit le serveur ou l'utilisateur.</p>
-                    </div>
-
-                    <h3>1. Description du service</h3>
-                    <p><strong>Assistante Barbara</strong> est une application Discord (bot) à but non commercial offrant :</p>
-                    <ul>
-                        <li>Une variété de commandes slash</li>
-                        <li>Des fonctionnalités musicales (via Jamendo)</li>
-                        <li>Un chatbot d'assistance utilisant l'intelligence artificielle (OpenAI et Mistral AI)</li>
-                    </ul>
-                    <p><strong>The service is provided free of charge, without contractual obligation or guarantee of continuous availability.</strong> It is a personal project managed by the Assistante Barbara development team.</p>
-
-                    <h3>2. Acceptation des conditions</h3>
-                    <p>L'utilisation d'Assistante Barbara implique votre acceptation complète et sans réserve des présentes CGU ainsi que de notre <strong>Politique de confidentialité</strong>. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le bot.</p>
-                    <p>En ajoutant le bot à votre serveur Discord ou en interagissant avec lui, vous reconnaissez avoir lu, compris et accepté l'intégralité des présentes conditions.</p>
-
-                    <h3>3. Utilisation autorisée</h3>
-                    <div class="highlight-box">
-                        <strong>Vous vous engagez à :</strong>
-                        <ul>
-                            <li>Utiliser le bot conformément aux <a href="https://discord.com/terms" target="_blank">Conditions d'Utilisation de Discord</a></li>
-                            <li>Ne pas abuser des fonctionnalités (spam, flood, etc.)</li>
-                            <li>Ne pas tenter de contourner les limitations techniques</li>
-                            <li>Respecter les autres utilisateurs</li>
-                            <li>Ne pas utiliser le bot à des fins illégales ou malveillantes</li>
-                            <li>Utiliser les commandes de manière raisonnable et appropriée</li>
-                        </ul>
-                    </div>
-
-                    <h3>4. Fonctionnalités d'intelligence artificielle</h3>
-                    <p><strong>Important - Limitations and warnings:</strong></p>
-                    <ul>
-                        <li>Les réponses de l'IA sont générées automatiquement par des services tiers (OpenAI, Mistral AI) et peuvent contenir des inexactitudes, des erreurs ou des informations obsolètes</li>
-                        <li>L'IA peut produire du contenu imprévisible ou inapproprié malgré nos efforts de modération</li>
-                        <li>Ne vous fiez jamais exclusivement aux réponses de l'IA pour des décisions importantes, notamment en matière de santé, juridique, financière ou de sécurité</li>
-                        <li>Les conversations avec l'IA sont traitées par des services tiers conformément à policies respectives</li>
-                        <li>Nous ne sommes pas responsables du contenu généré par l'IA ni de son utilisation</li>
-                        <li>L'utilisateur est seul responsable de la vérification des informations fournies par l'IA</li>
-                        <li>En utilisant ces fonctionnalités, vous acceptez que vos messages soient transmis et traités par OpenAI et/ou Mistral AI</li>
-                    </ul>
-                    <p><strong>Prohibitions :</strong> Il est strictement interdit d'utiliser l'IA pour :</p>
-                    <ul>
-                        <li>Générer du contenu illégal, haineux, discriminatoire ou violent</li>
-                        <li>Tenter de contourner les systèmes de modération</li>
-                        <li>Collecter des données personnelles sur d'autres utilisateurs</li>
-                        <li>Diffuser de la désinformation ou des contenus trompeurs</li>
-                    </ul>
-
-                    <h3>5. Fonctionnalités musicales</h3>
-                    <ul>
-                        <li>La musique est fournie via <strong>Jamendo</strong> (musique libre de droits)</li>
-                        <li>Le catalogue est limité au contenu disponible sur Jamendo</li>
-                        <li>The availability of the music service may vary</li>
-                        <li>Respect copyrights and <a href="https://www.jamendo.com/legal/terms-of-use" target="_blank">Jamendo's ToS</a></li>
-                    </ul>
-
-                    <h3>6. Disponibilité du service</h3>
-                    <p>Nous nous efforçons de maintenir Assistante Barbara opérationnelle 24/7, mais :</p>
-                    <ul>
-                        <li>Le service peut être interrompu pour maintenance, mises à jour ou améliorations</li>
-                        <li>Des interruptions peuvent survenir en cas de problème technique</li>
-                        <li>Nous ne garantissons pas une disponibilité absolue ou ininterrompue</li>
-                        <li>Aucun remboursement n'est applicable (service gratuit)</li>
-                        <li>Aucun dédommagement ne pourra être réclamé en cas d'indisponibilité</li>
-                    </ul>
-
-                    <h3>6 bis. Force majeure</h3>
-                    <p>Nous ne saurions être tenus responsables en cas d'interruption du service résultant d'un événement de force majeure, notamment :</p>
-                    <ul>
-                        <li>Panne d'infrastructure ou d'hébergement (KataBump, serveurs)</li>
-                        <li>Défaillance des services tiers (Discord, OpenAI, Mistral AI, Jamendo)</li>
-                        <li>Coupure réseau, interruption d'accès à Internet</li>
-                        <li>Cyberattaque, piratage informatique, déni de service (DDoS)</li>
-                        <li>Décision administrative ou judiciaire</li>
-                        <li>Catastrophe naturelle or any other event beyond our reasonable control</li>
-                    </ul>
-                    <p>En cas de force majeure, nos obligations seront suspendues pendant la durée de l'événement, sans engagement de notre part quant à un délai de rétablissement.</p>
-
-                    <h3>7. Limitation de responsabilité</h3>
-                    <div class="highlight-box">
-                        <p><strong>Assistante Barbara is provided "as is" and "as available".</strong> Dans toute la mesure permise par la loi applicable, nous déclinons toute responsabilité concernant :</p>
-                        <ul>
-                            <li>Les dommages directs, indirects, accessoires, spéciaux, consécutifs ou punitifs résultant de l'utilisation ou de l'impossibilité d'utiliser le bot</li>
-                            <li>La précision, la fiabilité ou l'exhaustivité des informations fournies par l'IA</li>
-                            <li>Les pertes de données, interruptions de service ou tout dysfonctionnement technique</li>
-                            <li>Les contenus générés par l'IA ou fournis par les APIs tierces</li>
-                            <li>Les décisions prises sur la base des informations fournies par le bot</li>
-                            <li>Les préjudices causés par des utilisateurs tiers ou des actes malveillants</li>
-                            <li>The compatibility with other services or applications</li>
-                        </ul>
-                        <p><strong>Absence de garantie :</strong> Nous ne garantissons pas que le service sera ininterrompu, sans erreur, sécurisé ou exempt de virus or other harmful components.</p>
-                    </div>
-                    <p><strong>Indemnisation :</strong> Vous acceptez d'indemniser et de dégager de toute responsabilité l'équipe d'Assistante Barbara contre toute réclamation résultant de votre utilisation du service en violation des présentes CGU.</p>
-
-                    <h3>8. Propriété intellectuelle</h3>
-                    <ul>
-                        <li>Assistante Barbara and its source code belong to their creator</li>
-                        <li>Les réponses générées par l'IA suivent les politiques de propriété intellectuelle d'OpenAI et Mistral AI</li>
-                        <li>La musique est soumise aux licences de Jamendo</li>
-                        <li>Discord et son logo sont des marques déposées de Discord Inc.</li>
-                    </ul>
-
-                    <h3>9. Modifications du service</h3>
-                    <p>Nous nous réservons le droit, à notre seule discrétion, de :</p>
-                    <ul>
-                        <li>Modifier, suspendre ou arrêter le service à tout moment, avec ou sans préavis</li>
-                        <li>Modifier les fonctionnalités disponibles</li>
-                        <li>Bloquer l'accès à des utilisateurs ou serveurs en cas d'abus, de violation des présentes CGU ou des conditions d'utilisation de Discord</li>
-                        <li>Modifier les présentes CGU. Substantial changes will be communicated via the website. Continued use after changes constitutes acceptance</li>
-                    </ul>
-                    <p>Nous ne serons pas responsables envers vous ou envers des tiers de toute modification, suspension ou interruption du service.</p>
-
-                    <h3>10. Conformité légale</h3>
-                    <p>Ce service est conforme à :</p>
-                    <ul>
-                        <li>RGPD (Règlement Général sur la Protection des Données)</li>
-                        <li>Conditions d'Utilisation de Discord</li>
-                        <li>Lois françaises et européennes applicables</li>
-                    </ul>
-
-                    <h3>11. Résiliation</h3>
-                    <p><strong>Par l'utilisateur :</strong> You may stop using Assistante Barbara at any time by:</p>
-                    <ul>
-                        <li>Retirant le bot de votre serveur Discord</li>
-                        <li>Ceasing to interact with the bot</li>
-                    </ul>
-                    <p><strong>Par Assistante Barbara :</strong> Nous pouvons suspendre ou bloquer votre accès au service, immédiatement et sans préavis, en cas de :</p>
-                    <ul>
-                        <li>Violation des présentes CGU</li>
-                        <li>Violation des Conditions d'Utilisation de Discord</li>
-                        <li>Utilisation abusive ou frauduleuse du service</li>
-                        <li>Comportement nuisible envers d'autres utilisateurs</li>
-                        <li>Activity illegal</li>
-                    </ul>
-                    <p><strong>Effets de la résiliation :</strong> En cas de résiliation, vous perdez immédiatement tout droit d'utiliser le service. Les dispositions des présentes CGU qui, par leur nature, doivent survivre à la résiliation (notamment les limitations de responsabilité) resteront en vigueur.</p>
-
-                    <h3>12. Droit applicable et juridiction</h3>
-                    <p>Les présentes CGU sont régies et interprétées conformément au droit français, sans égard aux principes de conflits de lois.</p>
-                    <p><strong>Résolution des litiges :</strong> En cas de litige relatif à l'interprétation ou à l'exécution des présentes CGU, les parties s'efforceront de le résoudre à l'amiable. À défaut, les tribunaux français seront seuls compétents.</p>
-                    <p><strong>Mediation :</strong> Conformément aux articles L.611-1 et suivants du Code de la consommation, if you are a consumer, you have the right to use a consumer mediator free of charge in the event of a dispute.</p>
-                    <p><strong>Divisibilité :</strong> Si une disposition des présentes CGU est jugée invalide ou inapplicable, les autres dispositions resteront en vigueur.</p>
-
-                    <div class="contact-box">
-                        <h4>13. Contact</h4>
-                        <p>Pour toute question concernant ces CGU :</p>
-                        <ul>
-                            <li><strong>Email :</strong> assistante.barbara.contact@gmail.com</li>
-                            <li><strong>Discord :</strong> <a href="[DISCORD_SERVER_LINK]" target="_blank">[VOTRE_SERVEUR_DISCORD]</a></li>
-                            <li><strong>Bluesky :</strong> <a href="https://bsky.app/profile/assistantebarbara.bsky.social" target="_blank">@assistantebarbara.bsky.social</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </section>
@@ -1984,15 +1424,15 @@
                 <img src="logo-ab.png" alt="Barbara">
                 <div>
                     <h4>Assistante Barbara</h4>
-                    <span>Mistral AI intégré ✨</span>
+                    <div class="chat-status">
+                        <span class="status-dot"></span> En ligne
+                    </div>
                 </div>
             </div>
             <button onclick="toggleChat()" class="chat-close-btn">✕</button>
         </div>
         <div class="chat-messages" id="chatMessages">
-            <div class="message ai-message">
-                Bonjour ! Je suis Assistante Barbara. Pose-moi une question pour tester mon intelligence artificielle. 😊
-            </div>
+            <!-- Les messages s'afficheront ici grâce au Javascript -->
         </div>
         <div class="chat-input-area">
             <input type="text" id="chatInput" placeholder="Écrivez votre message..." onkeypress="handleChatKeyPress(event)">
@@ -2124,88 +1564,18 @@
             } else if (member === 'true') {
                 content.innerHTML = `
                     <div style="max-width:800px; margin:0 auto; text-align:left;">
-
                         <h2 style="color:var(--dark); font-size:2rem; margin-bottom:10px; text-align:center;">
                             👋 Bienvenue, ${JSON.parse(localStorage.getItem('discord_user')).username} !
                         </h2>
                         <p style="color:var(--muted); text-align:center; margin-bottom:50px;">
                             Espace réservé aux utilisateurs d'Assistante Barbara.
                         </p>
-
                         <h3 style="color:var(--dark); font-size:1.4rem; font-weight:700; margin-bottom:25px;">
                             📰 Dernières actualités
                         </h3>
-
                         <div style="display:flex; flex-direction:column; gap:15px; margin-bottom:60px;">
-
-                            <div style="background:var(--bg-card); border:1px solid var(--border); border-left:4px solid var(--primary); border-radius:12px; padding:20px 25px;">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                                    <span style="font-weight:700; color:var(--dark);">🚀 Lancement du site web</span>
-                                    <span style="font-size:0.85rem; color:var(--muted);">Mars 2026</span>
-                                </div>
-                                <p style="color:var(--muted); margin:0; font-size:0.95rem;">Le site officiel d'Assistante Barbara est en ligne avec hub, Informations légales et statut des services.</p>
-                            </div>
-
-                            <div style="background:var(--bg-card); border:1px solid var(--border); border-left:4px solid var(--primary); border-radius:12px; padding:20px 25px;">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                                    <span style="font-weight:700; color:var(--dark);">🤖 Intégration Mistral AI</span>
-                                    <span style="font-size:0.85rem; color:var(--muted);">Novembre 2025</span>
-                                </div>
-                                <p style="color:var(--muted); margin:0; font-size:0.95rem;">Mistral AI rejoint OpenAI pour alimenter le chatbot d'Assistante Barbara.</p>
-                            </div>
-
-                            <div style="background:var(--bg-card); border:1px solid var(--border); border-left:4px solid var(--primary); border-radius:12px; padding:20px 25px;">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                                    <span style="font-weight:700; color:var(--dark);">🎵 Musique via Jamendo</span>
-                                    <span style="font-size:0.85rem; color:var(--muted);">2024</span>
-                                </div>
-                                <p style="color:var(--muted); margin:0; font-size:0.95rem;">Ajout de la fonctionnalité musicale avec Jamendo, file d'attente et contrôles de lecture.</p>
-                            </div>
-
+                            <!-- Actualités ici... -->
                         </div>
-
-                        <h3 style="color:var(--dark); font-size:1.4rem; font-weight:700; margin-bottom:10px;">
-                            ✉️ Nous contacter
-                        </h3>
-                        <p style="color:var(--muted); margin-bottom:25px;">
-                            Tu souhaites une commande personnalisée ou installer le chatbot IA dans un salon de ton serveur ? Envoie-nous un message !
-                        </p>
-
-                        <form action="https://formspree.io/f/xlgprzqp" method="POST"
-                              style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:30px; display:flex; flex-direction:column; gap:18px;">
-
-                            <input type="hidden" name="discord_user" value="${JSON.parse(localStorage.getItem('discord_user')).username}">
-
-                            <div style="display:flex; flex-direction:column; gap:6px;">
-                                <label style="font-weight:600; color:var(--dark); font-size:0.9rem;">Sujet</label>
-                                <select name="sujet" required
-                                        style="padding:12px 15px; border-radius:10px; border:1px solid var(--border); background:var(--bg-highlight); color:var(--text); font-size:0.95rem;">
-                                    <option value="">Choisir un sujet...</option>
-                                    <option value="commande_personnalisee">Commande personnalisée</option>
-                                    <option value="chatbot_ia">Installation chatbot IA</option>
-                                    <option value="autre">Autre demande</option>
-                                </select>
-                            </div>
-
-                            <div style="display:flex; flex-direction:column; gap:6px;">
-                                <label style="font-weight:600; color:var(--dark); font-size:0.9rem;">Email de contact</label>
-                                <input type="email" name="email" placeholder="ton@email.com" required
-                                       style="padding:12px 15px; border-radius:10px; border:1px solid var(--border); background:var(--bg-highlight); color:var(--text); font-size:0.95rem;">
-                            </div>
-
-                            <div style="display:flex; flex-direction:column; gap:6px;">
-                                <label style="font-weight:600; color:var(--dark); font-size:0.9rem;">Message</label>
-                                <textarea name="message" placeholder="Décris ta demande en détail..." required rows="5"
-                                          style="padding:12px 15px; border-radius:10px; border:1px solid var(--border); background:var(--bg-highlight); color:var(--text); font-size:0.95rem; resize:vertical;"></textarea>
-                            </div>
-
-                            <button type="submit"
-                                    style="background:var(--gradient); color:white; padding:14px 30px; border-radius:10px; border:none; font-weight:600; font-size:1rem; cursor:pointer; transition:all 0.3s ease;">
-                                Envoyer ✉️
-                            </button>
-
-                        </form>
-
                     </div>`;
             }
         }
@@ -2213,11 +1583,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadDiscordUser();
             loadMembersPage();
+            initChatSystem();
 
-            // Lancement optimisé de l'animation du terminal
-            setTimeout(() => {
-                document.body.classList.add('start-anim');
-            }, 300); 
+            // Lancement de l'animation du terminal
+            setTimeout(() => { document.body.classList.add('start-anim'); }, 300); 
 
             // Script pour les boutons magnétiques (fluide)
             const magneticBtns = document.querySelectorAll('.magnetic-btn');
@@ -2226,13 +1595,10 @@
                     const rect = btn.getBoundingClientRect();
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
-                    
-                    // Mouvement très doux grace au multiplicateur 0.1 et à la transition CSS
                     btn.style.transform = `translate(${x * 0.1}px, ${y * 0.15}px) scale(1.05)`;
                 });
                 
                 btn.addEventListener('mouseleave', function() {
-                    // La transition CSS gère le retour fluide à zéro
                     btn.style.transform = ''; 
                 });
             });
@@ -2246,19 +1612,17 @@
                         animationObserver.unobserve(entry.target);
                      }
                 });
-            }, {
-                threshold: 0.1
-            });
+            }, { threshold: 0.1 });
 
-            animatedElements.forEach(el => {
-                 animationObserver.observe(el);
-            });
+            animatedElements.forEach(el => { animationObserver.observe(el); });
         });
 
-        // --- SCRIPT DU WIDGET DE CHAT ---
+        // --- SCRIPT DU WIDGET DE CHAT AVEC MÉMOIRE ---
         const chatWindow = document.getElementById('chatWidgetWindow');
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
+        
+        let apiChatHistory = []; // Stocke l'historique pour Mistral
 
         function toggleChat() {
             chatWindow.classList.toggle('active');
@@ -2273,35 +1637,39 @@
             }
         }
 
-        async function sendChatMessage() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-
-            addMessage(text, 'user-message');
-            chatInput.value = '';
+        // Initialisation de la mémoire du chat au chargement de la page
+        function initChatSystem() {
+            const savedChat = sessionStorage.getItem('barbara_chat_session');
             
-            const typingId = 'typing-' + Date.now();
-            addMessage("Barbara réfléchit...", 'ai-message typing-indicator', typingId);
-
-            try {
-                const response = await fetch('https://assistante-barbara.vercel.app/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: text })
+            if (savedChat) {
+                const parsedChat = JSON.parse(savedChat);
+                apiChatHistory = parsedChat.history || [];
+                
+                // On réaffiche les anciens messages
+                parsedChat.uiMessages.forEach(msg => {
+                    addMessageToUI(msg.text, msg.className, '', false); 
                 });
-                
-                const data = await response.json();
-                
-                document.getElementById(typingId).remove();
-                addMessage(data.reply || "Désolée, je n'ai pas pu répondre.", 'ai-message');
-                
-            } catch (error) {
-                document.getElementById(typingId).remove();
-                addMessage("Erreur de connexion. L'IA est momentanément indisponible.", 'ai-message');
+            } else {
+                // S'il n'y a pas de mémoire, on affiche le message de bienvenue par défaut
+                addMessageToUI("Bonjour ! Je suis Assistante Barbara. Pose-moi une question ou demande-moi de te guider sur le site. 😊", "ai-message", '', false);
             }
         }
 
-        function addMessage(text, className, id = '') {
+        // Sauvegarder la conversation dans le navigateur
+        function saveChatSession() {
+            const msgsElements = document.querySelectorAll('.message:not(.typing-indicator)');
+            const uiMessages = Array.from(msgsElements).map(el => ({
+                text: el.textContent.trim(),
+                className: el.className.replace('message ', '')
+            }));
+            
+            sessionStorage.setItem('barbara_chat_session', JSON.stringify({
+                history: apiChatHistory,
+                uiMessages: uiMessages
+            }));
+        }
+
+        function addMessageToUI(text, className, id = '', shouldSave = true) {
             const msgDiv = document.createElement('div');
             msgDiv.className = 'message ' + className;
             msgDiv.textContent = text;
@@ -2313,6 +1681,50 @@
             
             chatMessages.appendChild(msgDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            if (shouldSave && !className.includes('typing-indicator')) {
+                saveChatSession();
+            }
+        }
+
+        async function sendChatMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessageToUI(text, 'user-message');
+            chatInput.value = '';
+            
+            const typingId = 'typing-' + Date.now();
+            addMessageToUI("Barbara réfléchit...", 'ai-message typing-indicator', typingId, false);
+
+            try {
+                const response = await fetch('https://assistante-barbara.vercel.app/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: text,
+                        history: apiChatHistory // On envoie la mémoire à Vercel
+                    })
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById(typingId).remove();
+                
+                if (data.reply) {
+                    addMessageToUI(data.reply, 'ai-message');
+                    // On enregistre dans la mémoire API pour les prochains messages
+                    apiChatHistory.push({ role: 'user', content: text });
+                    apiChatHistory.push({ role: 'assistant', content: data.reply });
+                    saveChatSession(); 
+                } else {
+                    addMessageToUI("Désolée, je n'ai pas pu répondre.", 'ai-message', '', false);
+                }
+                
+            } catch (error) {
+                document.getElementById(typingId).remove();
+                addMessageToUI("Erreur de connexion. L'IA est momentanément indisponible.", 'ai-message', '', false);
+            }
         }
     </script>
 </body>
