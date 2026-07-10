@@ -470,11 +470,11 @@
 
         /* Robot Tête : Marche saccadée mécanique (0.4s de délai pour éviter le bug de collision) */
         @keyframes robot-march-loop {
-            0%, 20% { transform: rotate(0deg); } /* Stable center (Pause) */
-            28% { transform: rotate(-10deg) translateY(-2px); } /* Sèche à gauche */
-            48%, 68% { transform: rotate(-10deg); } /* Pause stable à gauche */
-            76% { transform: rotate(10deg) translateY(-2px); }  /* Sèche à droite */
-            96%, 100% { transform: rotate(0deg); } /* Revient et pause center */
+            0%, 20% { transform: rotate(0deg); }
+            28% { transform: rotate(-10deg) translateY(-2px); }
+            48%, 68% { transform: rotate(-10deg); }
+            76% { transform: rotate(10deg) translateY(-2px); } 
+            96%, 100% { transform: rotate(0deg); }
         }
         
         .feature-card:hover .icon-loop-robot-head {
@@ -491,9 +491,9 @@
         /* Bouclier : S'élève, se plante, explosion de poussière sur les côtés */
         @keyframes shield-slam-loop {
             0%, 20% { transform: scale(1) translateY(0); }
-            35% { transform: scale(1.15) translateY(-8px); } /* S'élève en s'agrandissant */
-            45% { transform: scale(0.95) translateY(4px); }  /* Plante lourdement */
-            60%, 100% { transform: scale(1) translateY(0); } /* Revient en place */
+            35% { transform: scale(1.15) translateY(-8px); }
+            45% { transform: scale(0.95) translateY(4px); } 
+            60%, 100% { transform: scale(1) translateY(0); }
         }
         @keyframes shield-dust-left {
             0%, 40% { opacity: 0; transform: translate(0, 0) scale(0.5); }
@@ -528,7 +528,7 @@
         @keyframes wand-stars-fade {
             0%, 25% { opacity: 0; transform: scale(0.5); }
             30% { opacity: 1; transform: scale(1.1); }
-            70% { opacity: 1; transform: scale(1); } /* Reste visible et brille */
+            70% { opacity: 1; transform: scale(1); }
             85%, 100% { opacity: 0; transform: scale(0.8); }
         }
         .feature-card:hover .icon-loop-wand {
@@ -543,13 +543,13 @@
         /* Cadenas : Anse qui s'étire puis claque, cadenas entier s'abaisse */
         @keyframes lock-body-snap {
             0%, 48% { transform: translateY(0); }
-            50% { transform: translateY(3px); } /* Le cadenas entier sursaute vers le bas au claquement */
+            50% { transform: translateY(3px); }
             65%, 100% { transform: translateY(0); }
         }
         @keyframes shackle-pull {
             0%, 20% { transform: translateY(0); }
-            45% { transform: translateY(-4px); } /* L'anse monte doucement */
-            50% { transform: translateY(0); } /* Claque */
+            45% { transform: translateY(-4px); }
+            50% { transform: translateY(0); }
             100% { transform: translateY(0); }
         }
         .feature-card:hover .icon-loop-lock {
@@ -563,10 +563,10 @@
         /* Europe : Rotation accélérée puis décélérée du cercle de 12 étoiles */
         @keyframes eu-spin-complex {
             0% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-            80%, 100% { transform: rotate(1080deg); } /* Fait exactement 3 tours complets puis pause */
+            80%, 100% { transform: rotate(1080deg); }
         }
         .feature-card:hover .icon-loop-eu {
-            transform-origin: 12px 12px; /* Centre exact du SVG */
+            transform-origin: 12px 12px;
             animation: eu-spin-complex 5s forwards 0.4s infinite;
         }
 
@@ -574,7 +574,7 @@
         @keyframes zap-flash {
             0%, 10% { opacity: 1; transform: scale(1); filter: drop-shadow(0 4px 10px rgba(102, 126, 234, 0.5)); }
             12% { opacity: 0; }
-            14% { opacity: 1; transform: scale(1.25); filter: drop-shadow(0 0 20px #a5d6ff); } /* Flash massif */
+            14% { opacity: 1; transform: scale(1.25); filter: drop-shadow(0 0 20px #a5d6ff); }
             16% { opacity: 0; }
             18% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 10px #a5d6ff); }
             20% { opacity: 0; }
@@ -774,16 +774,185 @@
 
         /* --- TOAST DE BIENVENUE --- */
         .welcome-toast {
-            position: fixed; bottom: 30px; right: 30px; background: var(--bg-card);
+            position: fixed; bottom: 30px; left: 30px; background: var(--bg-card);
             border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: 12px;
             padding: 16px 20px; display: flex; align-items: center; gap: 12px;
-            box-shadow: 0 8px 25px var(--shadow); z-index: 9999; transform: translateX(150%);
+            box-shadow: 0 8px 25px var(--shadow); z-index: 9999; transform: translateX(-150%);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .welcome-toast.show { transform: translateX(0); }
         .welcome-toast img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary); }
         .welcome-toast-text strong { display: block; color: var(--dark); font-size: 0.95rem; }
         .welcome-toast-text span { color: var(--muted); font-size: 0.85rem; }
+
+        /* --- WIDGET DE CHAT (MISTRAL AI) --- */
+        .chat-widget-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 25px var(--shadow);
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        .chat-widget-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .chat-widget-window.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-header {
+            background: var(--gradient);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header-info img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .chat-header-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .chat-header-info span {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .chat-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .chat-close-btn:hover { opacity: 1; }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .ai-message {
+            background: var(--bg-highlight);
+            color: var(--text);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .user-message {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 15px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            background: var(--bg-card);
+        }
+
+        .chat-input-area input {
+            flex-grow: 1;
+            background: var(--bg-highlight);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 15px;
+            border-radius: 12px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .chat-input-area input:focus { border-color: var(--primary); }
+
+        .chat-input-area button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 45px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .chat-input-area button:hover { transform: scale(1.05); }
+        
+        .typing-indicator {
+            font-style: italic;
+            color: var(--muted);
+            font-size: 0.85rem;
+            display: none;
+        }
+        
+        @media (max-width: 600px) {
+            .chat-widget-window {
+                width: 90%;
+                height: 70vh;
+                right: 5%;
+                bottom: 90px;
+            }
+        }
 
         /* --- GESTION DES PAGES --- */
         .page { display: none; }
@@ -1803,6 +1972,36 @@
         </div>
     </div>
 
+    <!-- BULLE DE CHAT -->
+    <div class="chat-widget-button magnetic-btn" id="chatWidgetBtn" onclick="toggleChat()">
+        💬
+    </div>
+
+    <!-- FENÊTRE DE CHAT -->
+    <div class="chat-widget-window" id="chatWidgetWindow">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <img src="logo-ab.png" alt="Barbara">
+                <div>
+                    <h4>Assistante Barbara</h4>
+                    <span>Mistral AI intégré ✨</span>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="chat-close-btn">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai-message">
+                Bonjour ! Je suis Assistante Barbara. Pose-moi une question pour tester mon intelligence artificielle. 😊
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Écrivez votre message..." onkeypress="handleChatKeyPress(event)">
+            <button onclick="sendChatMessage()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2"/></svg>
+            </button>
+        </div>
+    </div>
+
     <script>
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
@@ -2055,6 +2254,66 @@
                  animationObserver.observe(el);
             });
         });
+
+        // --- SCRIPT DU WIDGET DE CHAT ---
+        const chatWindow = document.getElementById('chatWidgetWindow');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+
+        function toggleChat() {
+            chatWindow.classList.toggle('active');
+            if (chatWindow.classList.contains('active')) {
+                chatInput.focus();
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        async function sendChatMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user-message');
+            chatInput.value = '';
+            
+            const typingId = 'typing-' + Date.now();
+            addMessage("Barbara réfléchit...", 'ai-message typing-indicator', typingId);
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById(typingId).remove();
+                addMessage(data.reply || "Désolée, je n'ai pas pu répondre.", 'ai-message');
+                
+            } catch (error) {
+                document.getElementById(typingId).remove();
+                addMessage("Erreur de connexion. L'IA est momentanément indisponible.", 'ai-message');
+            }
+        }
+
+        function addMessage(text, className, id = '') {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message ' + className;
+            msgDiv.textContent = text;
+            if (id) msgDiv.id = id;
+            
+            if(className.includes('typing-indicator')){
+                 msgDiv.style.display = 'block';
+            }
+            
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
     </script>
 </body>
 </html>
